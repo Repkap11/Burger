@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "460649868737",
+    "firebase_url": "https://burger-1af72.firebaseio.com",
+    "project_id": "burger-1af72",
+    "storage_bucket": "burger-1af72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460649868737:android:b3c883a8ad4b5fc9",
+        "android_client_info": {
+          "package_name": "com.repkap11.burger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460649868737-ema3vksgs8c4bsv9tf53lqv9jk1lb3v7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.repkap11.burger",
+            "certificate_hash": "606992a76bc525bd4f22c27821ccc0250306dd0c"
+          }
+        },
+        {
+          "client_id": "460649868737-kso8pp20gtjdanrbdr0jitnumlh35na3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCg32_oVQWQf1u9g2FI5aGYJ5h-A2c_4UU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "460649868737-kso8pp20gtjdanrbdr0jitnumlh35na3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
