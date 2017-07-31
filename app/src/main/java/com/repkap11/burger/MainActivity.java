@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Connect to the Firebase database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseMessaging.getInstance().subscribeToTopic("lunch");
 
         // Get a reference to the todoItems child items it the database
         final DatabaseReference myRef = database.getReference("todoItems");
