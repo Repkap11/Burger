@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Burger.iml" filepath="$PROJECT_DIR$/Burger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BurgerNotifier/BurgerNotifier.iml" filepath="$PROJECT_DIR$/BurgerNotifier/BurgerNotifier.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
