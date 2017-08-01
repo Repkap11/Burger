@@ -20,6 +20,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.management.NotificationBroadcaster;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -81,6 +82,7 @@ public class BurgerServlet extends HttpServlet {
                     DataSnapshot childSnapshot = (DataSnapshot) children.next();
                     todoText = todoText + " * " + childSnapshot.getValue().toString() + "\n";
                 }
+
 
                 // Now send the email
 

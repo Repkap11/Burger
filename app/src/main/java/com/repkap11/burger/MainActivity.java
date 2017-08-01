@@ -23,8 +23,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
+    private static String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +47,15 @@ public class MainActivity extends AppCompatActivity {
 
         // Connect to the Firebase database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        FirebaseMessaging.getInstance().subscribeToTopic("lunch");
+        final FirebaseMessaging messaging = FirebaseMessaging.getInstance();
+        messaging.subscribeToTopic("lunch");
 
         // Get a reference to the todoItems child items it the database
-        final DatabaseReference myRef = database.getReference("todoItems");
+        final DatabaseReference databaseRef = database.getReference("todoItems");
 
         // Assign a listener to detect changes to the child items
         // of the database reference.
-        myRef.addChildEventListener(new ChildEventListener() {
+        databaseRef.addChildEventListener(new ChildEventListener() {
 
             // This function is called once for each child that exists
             // when the listener is added. Then it is called
@@ -89,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // Create a new child with a auto-generated ID.
-                DatabaseReference childRef = myRef.push();
+                DatabaseReference childRef = databaseRef.push();
 
                 // Set the child's data to the value passed in from the text box.
                 childRef.setValue(text.getText().toString());
@@ -103,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                Query myQuery = myRef.orderByValue().equalTo((String)
+                Query myQuery = databaseRef.orderByValue().equalTo((String)
                         listView.getItemAtPosition(position));
 
                 myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -121,29 +126,19 @@ public class MainActivity extends AppCompatActivity {
                 })
                 ;
             }
-        })
-        ;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        });
+        Button sendButton = (Button) findViewById(R.id.sendButton);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RemoteMessage.Builder message = new RemoteMessage.Builder("lunch");
+                AtomicInteger id = new AtomicInteger();
+                message.setMessageId(id.toString());
+                message.addData("my_message", "Hello World");
+                message.addData("my_action", "SAY_HELLO");
+                messaging.send(message.build());
+                Log.e(TAG, "Click");
+            }
+        });
     }
 }
