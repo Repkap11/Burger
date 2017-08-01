@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
 
         // Get ListView object from xml
-        final ListView listView = (ListView) findViewById(R.id.listView);
+        final ListView listView = (ListView) findViewById(0);
 
         // Create a new Adapter
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
@@ -87,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Add items via the Button and EditText at the bottom of the window.
-        final EditText text = (EditText) findViewById(R.id.todoText);
-        final Button button = (Button) findViewById(R.id.addButton);
+        final EditText text = (EditText) findViewById(0);
+        final Button button = (Button) findViewById(0);
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 ;
             }
         });
-        Button sendButton = (Button) findViewById(R.id.sendButton);
+        Button sendButton = (Button) findViewById(0);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
