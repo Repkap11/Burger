@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+
 
 public class UsersActivity extends FirebaseAdapterFractivity<UsersActivity.Holder> {
 
@@ -28,6 +31,11 @@ public class UsersActivity extends FirebaseAdapterFractivity<UsersActivity.Holde
         @Override
         protected String adapterReference() {
             return "users";
+        }
+
+        @Override
+        protected Query getQuery(DatabaseReference databaseRef) {
+            return databaseRef.orderByValue();
         }
 
         //Into list listview

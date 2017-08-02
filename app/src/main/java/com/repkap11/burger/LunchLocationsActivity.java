@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+
 
 public class LunchLocationsActivity extends FirebaseAdapterFractivity<LunchLocationsActivity.Holder> {
 
@@ -28,6 +31,11 @@ public class LunchLocationsActivity extends FirebaseAdapterFractivity<LunchLocat
         @Override
         protected String adapterReference() {
             return "lunch_locations";
+        }
+
+        @Override
+        protected Query getQuery(DatabaseReference databaseRef) {
+            return null;
         }
 
         //Into list listview

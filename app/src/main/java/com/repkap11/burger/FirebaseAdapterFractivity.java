@@ -13,6 +13,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 
@@ -43,7 +44,8 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder> extends Fractivit
 
             String reference = adapterReference();
             final DatabaseReference databaseRef = database.getReference(reference);
-            databaseRef.addChildEventListener(new ChildEventListener() {
+            Query refQuery = getQuery(databaseRef);
+            refQuery.addChildEventListener(new ChildEventListener() {
 
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
@@ -68,6 +70,10 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder> extends Fractivit
                     Log.w("TAG:", "Failed to read value.", error.toException());
                 }
             });
+        }
+
+        protected Query getQuery(DatabaseReference databaseRef) {
+            return databaseRef.orderByKey();
         }
 
 
