@@ -1,10 +1,13 @@
 package com.repkap11.burger;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
@@ -20,11 +23,25 @@ public class LunchLocationsActivity extends FirebaseAdapterFractivity<LunchLocat
 
     public static class LunchLocationFragment<AdapterHolder> extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
 
+        private ListView mListView;
+        private Button mAddLocationButton;
 
         //Using this activity view
         @Override
         protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fractivity_firebase_adapter, container, false);
+            View rootView = inflater.inflate(R.layout.fractivity_lunch_locations, container, false);
+            mListView = (ListView) rootView.findViewById(R.id.fractivity_lunch_locations_list);
+            //mAddLocationButton = (Button) rootView.findViewById(R.id.fractivity_lunch_locations_button_add_user);
+            Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+            toolbar.setTitle(R.string.activity_lunch_locations_title);
+            return rootView;
+        }
+
+        @Override
+        protected void destroyView() {
+            mListView = null;
+            mAddLocationButton = null;
+            super.destroyView();
         }
 
         //Put this data
@@ -33,15 +50,16 @@ public class LunchLocationsActivity extends FirebaseAdapterFractivity<LunchLocat
             return "lunch_locations";
         }
 
+        //With this filter
         @Override
         protected Query getQuery(DatabaseReference databaseRef) {
-            return null;
+            return databaseRef.orderByValue();
         }
 
         //Into list listview
         @Override
         protected AbsListView getListView(View rootView) {
-            return (AbsListView) rootView.findViewById(R.id.fractivity_adaptertest_list);
+            return mListView;
         }
 
         //Where each element uses this view
@@ -49,6 +67,7 @@ public class LunchLocationsActivity extends FirebaseAdapterFractivity<LunchLocat
         public int getListResource() {
             return R.layout.fractivity_firebase_adapter_list_element;
         }
+
 
         //And that view has a holder caching position and subviews
         @Override

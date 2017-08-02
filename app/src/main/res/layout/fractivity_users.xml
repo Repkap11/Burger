@@ -6,7 +6,7 @@
     tools:context=".FirebaseAdapterFractivity">
 
     <ListView
-        android:id="@+id/fractivity_adaptertest_list"
+        android:id="@+id/fractivity_users_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </RelativeLayout>

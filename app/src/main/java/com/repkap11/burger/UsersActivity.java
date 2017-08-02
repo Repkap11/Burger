@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
@@ -21,10 +22,20 @@ public class UsersActivity extends FirebaseAdapterFractivity<UsersActivity.Holde
     public static class LunchLocationFragment<AdapterHolder> extends FirebaseAdapterFragment {
 
 
+        private ListView mListView;
+
         //Using this activity view
         @Override
         protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fractivity_firebase_adapter, container, false);
+            View rootView = inflater.inflate(R.layout.fractivity_users, container, false);
+            mListView = (ListView) rootView.findViewById(R.id.fractivity_users_list);
+            return rootView;
+        }
+
+        @Override
+        protected void destroyView() {
+            mListView = null;
+            super.destroyView();
         }
 
         //Put this data
@@ -33,6 +44,7 @@ public class UsersActivity extends FirebaseAdapterFractivity<UsersActivity.Holde
             return "users";
         }
 
+        //With this filter
         @Override
         protected Query getQuery(DatabaseReference databaseRef) {
             return databaseRef.orderByValue();
@@ -41,7 +53,7 @@ public class UsersActivity extends FirebaseAdapterFractivity<UsersActivity.Holde
         //Into list listview
         @Override
         protected AbsListView getListView(View rootView) {
-            return (AbsListView) rootView.findViewById(R.id.fractivity_adaptertest_list);
+            return mListView;
         }
 
         //Where each element uses this view

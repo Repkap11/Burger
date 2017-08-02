@@ -77,7 +77,7 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder> extends Fractivit
         }
 
 
-        AbsListView mListView;
+        private AbsListView mListView;
 
         @Override
         protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
