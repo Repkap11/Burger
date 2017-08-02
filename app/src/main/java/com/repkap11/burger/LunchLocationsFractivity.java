@@ -1,6 +1,8 @@
 package com.repkap11.burger;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,17 +16,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
 
-public class LunchLocationsActivity extends FirebaseAdapterFractivity<LunchLocationsActivity.Holder> {
+public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLocationsFractivity.Holder> {
 
     @Override
     protected FirebaseAdapterFragment createFirebaseFragment() {
-        return new LunchLocationFragment<LunchLocationsActivity.Holder>();
+        return new LunchLocationFragment<LunchLocationsFractivity.Holder>();
     }
 
     public static class LunchLocationFragment<AdapterHolder> extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
 
         private ListView mListView;
         private Button mAddLocationButton;
+        private FloatingActionButton mFab;
 
         //Using this activity view
         @Override
@@ -33,7 +36,14 @@ public class LunchLocationsActivity extends FirebaseAdapterFractivity<LunchLocat
             mListView = (ListView) rootView.findViewById(R.id.fractivity_lunch_locations_list);
             //mAddLocationButton = (Button) rootView.findViewById(R.id.fractivity_lunch_locations_button_add_user);
             Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-            toolbar.setTitle(R.string.activity_lunch_locations_title);
+            toolbar.setTitle(R.string.fractivity_lunch_locations_title);
+            mFab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+            mFab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getActivity(), AddLunchLocationsFractivity.class));
+                }
+            });
             return rootView;
         }
 
@@ -41,6 +51,7 @@ public class LunchLocationsActivity extends FirebaseAdapterFractivity<LunchLocat
         protected void destroyView() {
             mListView = null;
             mAddLocationButton = null;
+            mFab = null;
             super.destroyView();
         }
 

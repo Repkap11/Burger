@@ -12,11 +12,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
 
-public class UsersActivity extends FirebaseAdapterFractivity<UsersActivity.Holder> {
+public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.Holder> {
 
     @Override
     protected FirebaseAdapterFragment createFirebaseFragment() {
-        return new LunchLocationFragment<UsersActivity.Holder>();
+        return new LunchLocationFragment<UsersFractivity.Holder>();
     }
 
     public static class LunchLocationFragment<AdapterHolder> extends FirebaseAdapterFragment {

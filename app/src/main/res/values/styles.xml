@@ -6,6 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="colorControlNormal">#c5c5c5</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="colorControlActivated">#c5c5c5</item>
+        <item name="android:textCursorDrawable">@drawable/color_cursor</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
