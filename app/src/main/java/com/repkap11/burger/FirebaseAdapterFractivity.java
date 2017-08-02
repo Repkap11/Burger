@@ -42,7 +42,6 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder> extends Fractivit
             messaging.subscribeToTopic("lunch");
 
             String reference = adapterReference();
-
             final DatabaseReference databaseRef = database.getReference(reference);
             databaseRef.addChildEventListener(new ChildEventListener() {
 

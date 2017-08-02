@@ -8,14 +8,14 @@ import android.widget.AbsListView;
 import android.widget.TextView;
 
 
-public class LunchLocationsActivity extends FirebaseAdapterFractivity<LunchLocationsActivity.Holder> {
+public class UsersActivity extends FirebaseAdapterFractivity<UsersActivity.Holder> {
 
     @Override
     protected FirebaseAdapterFragment createFirebaseFragment() {
-        return new LunchLocationFragment<LunchLocationsActivity.Holder>();
+        return new LunchLocationFragment<UsersActivity.Holder>();
     }
 
-    public static class LunchLocationFragment<AdapterHolder> extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
+    public static class LunchLocationFragment<AdapterHolder> extends FirebaseAdapterFragment {
 
 
         //Using this activity view
@@ -27,7 +27,7 @@ public class LunchLocationsActivity extends FirebaseAdapterFractivity<LunchLocat
         //Put this data
         @Override
         protected String adapterReference() {
-            return "lunch_locations";
+            return "users";
         }
 
         //Into list listview
