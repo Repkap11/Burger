@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -15,31 +16,36 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 
-public class FirebaseAdapterFractivity extends Fractivity<FirebaseAdapterFractivity.FirebaseAdapterFragment> {
+public abstract class FirebaseAdapterFractivity<AdapterHolder> extends Fractivity<FirebaseAdapterFractivity.FirebaseAdapterFragment> {
 
     @Override
     protected FirebaseAdapterFragment createFragment(Bundle savedInstanceState) {
         //use the bundle to create the fragment
-        return new FirebaseAdapterFragment();
+        FirebaseAdapterFragment<AdapterHolder> fragment = createFirebaseFragment();
+        return fragment;
     }
 
-    public static final class FirebaseAdapterFragment extends Fractivity.FractivityFragment {
+    protected abstract FirebaseAdapterFragment createFirebaseFragment();
+
+
+    public static abstract class FirebaseAdapterFragment<AdapterHolder> extends Fractivity.FractivityFragment {
         FirebaseAdapter mAdapter;
+
+        protected abstract String adapterReference();
 
         @Override
         protected void create(Bundle savedInstanceState) {
-            mAdapter = new FirebaseAdapter(this);
+            mAdapter = new FirebaseAdapter<AdapterHolder>(this);
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             final FirebaseMessaging messaging = FirebaseMessaging.getInstance();
             messaging.subscribeToTopic("lunch");
 
-            final DatabaseReference databaseRef = database.getReference("todoItems");
+            String reference = adapterReference();
+
+            final DatabaseReference databaseRef = database.getReference(reference);
             databaseRef.addChildEventListener(new ChildEventListener() {
 
-                // This function is called once for each child that exists
-                // when the listener is added. Then it is called
-                // each time a new child is added.
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                     mAdapter.add(dataSnapshot);
@@ -65,19 +71,30 @@ public class FirebaseAdapterFractivity extends Fractivity<FirebaseAdapterFractiv
             });
         }
 
+
         AbsListView mListView;
 
         @Override
         protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fractivity_firebase_adapter, container, false);
-            mListView = (AbsListView) rootView.findViewById(R.id.fractivity_adaptertest_list);
+            View rootView = createAdapterView(inflater, container, savedInstanceState);
+            mListView = getListView(rootView);
             mListView.setAdapter(mAdapter);
             return rootView;
         }
+
+        protected abstract AbsListView getListView(View rootView);
+
+        protected abstract View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
         @Override
         protected void destroyView() {
             mListView = null;
         }
+
+        public abstract int getListResource();
+
+        public abstract <AdapterHolder> AdapterHolder populateHolder(View convertView);
+
+        public abstract void populateView(View convertView, AdapterHolder holder, int position, FirebaseAdapter.AdapterData data);
     }
 }

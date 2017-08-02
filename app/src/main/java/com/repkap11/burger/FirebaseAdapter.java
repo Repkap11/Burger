@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 
@@ -15,13 +14,13 @@ import java.util.List;
 /**
  * Created by paul on 2/16/16.
  */
-public class FirebaseAdapter extends BaseAdapter {
+public class FirebaseAdapter<AdapterHolder> extends BaseAdapter {
     private static final String TAG = FirebaseAdapter.class.getSimpleName();
-    private final FirebaseAdapterFractivity.FirebaseAdapterFragment mFragment;
+    private final FirebaseAdapterFractivity.FirebaseAdapterFragment<AdapterHolder> mFragment;
 
-    class AdapterData {
-        private String key;
-        private Object value;
+    public static class AdapterData {
+        public String key;
+        public Object value;
 
         public AdapterData(String key, Object value) {
             this.key = key;
@@ -65,18 +64,16 @@ public class FirebaseAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Holder holder;
+        AdapterHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mFragment.getActivity()).inflate(R.layout.fractivity_firebase_adapter_list_element, parent, false);
-            holder = new Holder();
-            holder.mName = (TextView) convertView.findViewById(R.id.fractivity_firebase_adapter_list_element_text);
+            convertView = LayoutInflater.from(mFragment.getActivity()).inflate(mFragment.getListResource(), parent, false);
+            holder = mFragment.populateHolder(convertView);
             convertView.setTag(holder);
         } else {
-            holder = (Holder) convertView.getTag();
+            holder = (AdapterHolder) convertView.getTag();
         }
         AdapterData data = mData.get(position);
-        holder.mName.setText(data.key + ":" + data.value);
-        holder.mIndex = position;
+        mFragment.populateView(convertView, holder, position, data);
 
         return convertView;
     }
@@ -98,10 +95,5 @@ public class FirebaseAdapter extends BaseAdapter {
         }
         return result;
 
-    }
-
-    public class Holder {
-        public TextView mName;
-        public int mIndex;
     }
 }
