@@ -9,6 +9,9 @@ public class User {
     public String lastName;
     public String carSize;
 
+    public User() {
+    }
+
     public User(String firstName, String lastName, String carSize) {
         this.firstName = firstName;
         this.lastName = lastName;

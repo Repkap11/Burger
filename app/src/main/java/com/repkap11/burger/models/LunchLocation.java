@@ -7,6 +7,9 @@ package com.repkap11.burger.models;
 public class LunchLocation {
     public String displayName;
 
+    public LunchLocation() {
+    }
+
     public LunchLocation(String displayName) {
         this.displayName = displayName;
     }
