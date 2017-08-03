@@ -37,18 +37,8 @@
 
         <activity-alias
             android:name=".Launcher"
-            android:label="Burger Users"
+            android:label="@string/app_name"
             android:targetActivity=".activities.UsersFractivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-        <activity-alias
-            android:name=".Launcher2"
-            android:label="Burger Locations"
-            android:targetActivity=".activities.LunchLocationsFractivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

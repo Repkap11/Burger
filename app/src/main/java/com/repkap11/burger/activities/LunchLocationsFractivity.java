@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +22,22 @@ import com.repkap11.burger.models.LunchLocation;
 
 public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLocationsFractivity.Holder, LunchLocation> {
 
+    private static final String TAG = LunchLocationsFractivity.class.getSimpleName();
+
+    public static final int REQUEST_CODE_PICK_LOCATION = 42;
+    public static final String STARTING_INTENT_LOCATION_INDEX = "com.repkap11.burger.STARTING_INTENT_LOCATION_INDEX";
+    private String mResultIndex;
+
     @Override
     protected FirebaseAdapterFragment createFirebaseFragment() {
+        Intent startingIntent = getIntent();
+        if (startingIntent == null) {
+            finish();
+        }
         return new LunchLocationFragment<LunchLocationsFractivity.Holder>();
     }
 
     public static class LunchLocationFragment<AdapterHolder> extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
-
         private ListView mListView;
         private FloatingActionButton mFab;
 
@@ -46,6 +56,8 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
                     startActivity(new Intent(getActivity(), AddLunchLocationFractivity.class));
                 }
             });
+
+
             return rootView;
         }
 
@@ -106,6 +118,20 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
         protected void onItemClicked(View view, Object o, int position, String key, Object value) {
             LunchLocation location = (LunchLocation) value;
             Holder holder = (Holder) o;
+            Intent startingIntent = getActivity().getIntent();
+            if (startingIntent == null) {
+                Log.e(TAG, "Somehow we want to give a result, but don't have a starting intent");
+                getActivity().finish();
+                return;
+            }
+            int resultIndex = startingIntent.getIntExtra(STARTING_INTENT_LOCATION_INDEX, -1);
+
+            Intent intent = new Intent();
+            intent.putExtra(AboutUserFractivity.RESULT_INTENT_LOCATION_KEY, key);
+            intent.putExtra(AboutUserFractivity.RESULT_INTENT_LOCATION_INDEX, resultIndex);
+
+            getActivity().setResult(RESULT_OK, intent);
+            getActivity().finish();
         }
 
     }

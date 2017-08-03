@@ -3,9 +3,9 @@ package com.repkap11.burger.activities;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,20 +24,25 @@ import com.repkap11.burger.models.User;
 
 public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUserFragment> {
 
+    private static final String TAG = AboutUserFractivity.class.getSimpleName();
     public static final String STARTING_INTENT_USER_INITIAL_NAME = "com.repkap11.burger.STARTING_INTENT_USER_INITIAL_NAME";
     public static final String STARTING_INTENT_USER_KEY = "com.repkap11.burger.STARTING_INTENT_USER_KEY";
 
+    public static final String RESULT_INTENT_LOCATION_KEY = "com.repkap11.burger.RESULT_INTENT_LOCATION_KEY";
+    public static final String RESULT_INTENT_LOCATION_INDEX = "com.repkap11.burger.RESULT_INTENT_LOCATION_INDEX";
+
+
     @Override
     protected AboutUserFragment createFragment(Bundle savedInstanceState) {
-        Intent strtingIntent = getIntent();
-        if (strtingIntent == null) {
+        Intent startingIntent = getIntent();
+        if (startingIntent == null) {
             finish();
         }
         return new AboutUserFragment();
     }
 
     public static class AboutUserFragment extends Fractivity.FractivityFragment {
-        private TextView mEditTextFullName;
+        private TextView mTextFullName;
         private TextView mEditTextCarSize;
         private Toolbar mToolbar;
         private TextView mLunchChoiceLabel1;
@@ -50,9 +55,38 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
         private DatabaseReference mLunchPreference3Ref;
         private DatabaseReference mLunchPreference4Ref;
         private DatabaseReference mLunchPreference5Ref;
+        private String mLunchPreference1Key = null;
+        private String mLunchPreference2Key = null;
+        private String mLunchPreference3Key = null;
+        private String mLunchPreference4Key = null;
+        private String mLunchPreference5Key = null;
 
         @Override
         protected void create(Bundle savedInstanceState) {
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (resultCode == RESULT_OK && requestCode == LunchLocationsFractivity.REQUEST_CODE_PICK_LOCATION && data != null) {
+                Log.e(TAG, "Good result");
+                Intent startingIntent = getActivity().getIntent();
+                if (startingIntent == null) {
+                    Log.e(TAG, "Exiting result because starting intent is gone");
+                    getActivity().finish();
+                }
+                String userKey = startingIntent.getStringExtra(STARTING_INTENT_USER_KEY);
+                int location_index = data.getIntExtra(RESULT_INTENT_LOCATION_INDEX, -1);
+                String location_key = data.getStringExtra(RESULT_INTENT_LOCATION_KEY);
+                if (location_index == -1) {
+                    Log.e(TAG, "Error, location_index is invalid (-1) not adding result location");
+                    return;
+                }
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference location_ref = database.getReference("users/" + userKey + "/lunch_preference_" + location_index);
+                location_ref.setValue(location_key);
+            }
         }
 
         @Override
@@ -68,7 +102,7 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                     getActivity().finish();
                 }
             });
-            mEditTextFullName = (TextView) rootView.findViewById(R.id.fractivity_about_user_edit_text_full_name);
+            mTextFullName = (TextView) rootView.findViewById(R.id.fractivity_about_user_edit_text_full_name);
             mEditTextCarSize = (TextView) rootView.findViewById(R.id.fractivity_about_user_edit_text_car_size);
 
 
@@ -96,14 +130,44 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
             mLunchChoiceLabel4 = (TextView) rootDay4.findViewById(R.id.fractivity_about_user_lunch_location_label);
             mLunchChoiceLabel5 = (TextView) rootDay5.findViewById(R.id.fractivity_about_user_lunch_location_label);
 
+            mLunchChoiceLabel1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    launchAddLocation(1, mLunchPreference1Key);
+                }
+            });
+            mLunchChoiceLabel2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    launchAddLocation(2, mLunchPreference2Key);
+                }
+            });
+            mLunchChoiceLabel3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    launchAddLocation(3, mLunchPreference3Key);
+                }
+            });
+            mLunchChoiceLabel4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    launchAddLocation(4, mLunchPreference4Key);
+                }
+            });
+            mLunchChoiceLabel5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    launchAddLocation(5, mLunchPreference5Key);
+                }
+            });
 
             Intent startingIntent = getActivity().getIntent();
             if (startingIntent == null) {
                 getActivity().finish();
             }
             String initialName = startingIntent.getStringExtra(STARTING_INTENT_USER_INITIAL_NAME);
-            ;
             String userKey = startingIntent.getStringExtra(STARTING_INTENT_USER_KEY);
+
             if (userKey == null) {
                 getActivity().finish();
                 return rootView;
@@ -124,7 +188,10 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                     if (user == null) {
                         return;
                     }
-                    mEditTextFullName.setText(user.firstName + " " + user.lastName);
+                    if (mTextFullName == null) {
+                        return;
+                    }
+                    mTextFullName.setText(user.firstName + " " + user.lastName);
                     mToolbar.setTitle(user.firstName);
                     mEditTextCarSize.setText(user.carSize);
 
@@ -143,7 +210,6 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                     if (mLunchPreference5Ref != null) {
                         mLunchPreference5Ref.removeEventListener(mLunchPreference5Listener);
                     }
-
 
                     mLunchPreference1Ref = database.getReference("lunch_locations/" + user.lunch_preference_1);
                     mLunchPreference2Ref = database.getReference("lunch_locations/" + user.lunch_preference_2);
@@ -166,6 +232,12 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
             return rootView;
         }
 
+        private void launchAddLocation(int i, String lunch_pref_key) {
+            Intent intent = new Intent(getContext(), LunchLocationsFractivity.class);
+            intent.putExtra(LunchLocationsFractivity.STARTING_INTENT_LOCATION_INDEX, i);
+            startActivityForResult(intent, LunchLocationsFractivity.REQUEST_CODE_PICK_LOCATION);
+        }
+
 
         private ValueEventListener mLunchPreference1Listener = new ValueEventListener() {
             @Override
@@ -180,6 +252,7 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                     return;
                 }
                 mLunchChoiceLabel1.setText(location.displayName);
+                mLunchPreference1Key = dataSnapshot.getKey();
             }
 
             @Override
@@ -200,6 +273,7 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                     return;
                 }
                 mLunchChoiceLabel2.setText(location.displayName);
+                mLunchPreference2Key = dataSnapshot.getKey();
             }
 
             @Override
@@ -220,6 +294,7 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                     return;
                 }
                 mLunchChoiceLabel3.setText(location.displayName);
+                mLunchPreference3Key = dataSnapshot.getKey();
             }
 
             @Override
@@ -240,6 +315,7 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                     return;
                 }
                 mLunchChoiceLabel4.setText(location.displayName);
+                mLunchPreference4Key = dataSnapshot.getKey();
             }
 
             @Override
@@ -260,6 +336,7 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                     return;
                 }
                 mLunchChoiceLabel5.setText(location.displayName);
+                mLunchPreference5Key = dataSnapshot.getKey();
             }
 
             @Override
@@ -271,7 +348,7 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
         @Override
         protected void destroyView() {
             mEditTextCarSize = null;
-            mEditTextFullName = null;
+            mTextFullName = null;
             mLunchChoiceLabel1 = null;
             mLunchChoiceLabel2 = null;
             mLunchChoiceLabel3 = null;
