@@ -1,8 +1,8 @@
-package com.repkap11.burger;
+package com.repkap11.burger.activities;
 
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,21 +12,20 @@ import android.widget.EditText;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.repkap11.burger.R;
+import com.repkap11.burger.activities.base.Fractivity;
 import com.repkap11.burger.models.LunchLocation;
-import com.repkap11.burger.models.User;
 
-public class AddUserFractivity extends Fractivity<AddUserFractivity.AddUserFragment> {
+public class AddLunchLocationFractivity extends Fractivity<AddLunchLocationFractivity.AddLunchLocationsFragment> {
 
     @Override
-    protected AddUserFragment createFragment(Bundle savedInstanceState) {
-        return new AddUserFragment();
+    protected AddLunchLocationFractivity.AddLunchLocationsFragment createFragment(Bundle savedInstanceState) {
+        return new AddLunchLocationsFragment();
     }
 
-    public static class AddUserFragment extends Fractivity.FractivityFragment {
-        private EditText mEditTextCarSize;
+    public static class AddLunchLocationsFragment extends Fractivity.FractivityFragment {
+        private EditText mEditTextName;
         private Button mSaveLocationButtion;
-        private EditText mEditTextFirstName;
-        private EditText mEditTextLastName;
 
         @Override
         protected void create(Bundle savedInstanceState) {
@@ -35,9 +34,9 @@ public class AddUserFractivity extends Fractivity<AddUserFractivity.AddUserFragm
 
         @Override
         protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fractivity_add_user, container, false);
+            View rootView = inflater.inflate(R.layout.fractivity_add_lunch_locations, container, false);
             Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-            toolbar.setTitle(R.string.fractivity_add_user_title);
+            toolbar.setTitle(R.string.fractivity_add_lunch_location_title);
             Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_clear_black, null);
             toolbar.setNavigationIcon(drawable);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -46,18 +45,15 @@ public class AddUserFractivity extends Fractivity<AddUserFractivity.AddUserFragm
                     getActivity().finish();
                 }
             });
-            mEditTextCarSize = (EditText) rootView.findViewById(R.id.fractivity_add_user_edit_text_car_size);
-            mEditTextFirstName = (EditText) rootView.findViewById(R.id.fractivity_add_user_edit_text_first_name);
-            mEditTextLastName = (EditText) rootView.findViewById(R.id.fractivity_add_user_edit_text_last_name);
-
-            mSaveLocationButtion = (Button) rootView.findViewById(R.id.fractivity_add_user_button_save);
+            mEditTextName = (EditText) rootView.findViewById(R.id.fractivity_add_lunch_location_edit_text_name);
+            mSaveLocationButtion = (Button) rootView.findViewById(R.id.fractivity_add_lunch_location_button_save);
             mSaveLocationButtion.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference locationsRef = database.getReference("users");
+                    DatabaseReference locationsRef = database.getReference("lunch_locations");
                     DatabaseReference newLocation = locationsRef.push();
-                    newLocation.setValue(new User(mEditTextFirstName.getText().toString(), mEditTextLastName.getText().toString(), mEditTextCarSize.getText().toString()));
+                    newLocation.setValue(new LunchLocation(mEditTextName.getText().toString()));
                     getActivity().finish();
                 }
             });
@@ -66,9 +62,7 @@ public class AddUserFractivity extends Fractivity<AddUserFractivity.AddUserFragm
 
         @Override
         protected void destroyView() {
-            mEditTextCarSize = null;
-            mEditTextFirstName = null;
-            mEditTextLastName = null;
+            mEditTextName = null;
             mSaveLocationButtion = null;
         }
     }

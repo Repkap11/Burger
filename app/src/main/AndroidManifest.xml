@@ -13,20 +13,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".UsersFractivity"
+            android:name=".activities.UsersFractivity"
             android:label="@string/fractivity_users_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LunchLocationsFractivity"
+            android:name=".activities.LunchLocationsFractivity"
             android:label="@string/fractivity_lunch_locations_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AddLunchLocationFractivity"
+            android:name=".activities.AddLunchLocationFractivity"
             android:label="@string/fractivity_add_lunch_location_title"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name=".AddUserFractivity"
+            android:name=".activities.AddUserFractivity"
             android:label="@string/fractivity_add_user_title"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible" />
@@ -34,7 +34,7 @@
         <activity-alias
             android:name=".Launcher"
             android:label="@string/app_name"
-            android:targetActivity=".UsersFractivity">
+            android:targetActivity=".activities.UsersFractivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

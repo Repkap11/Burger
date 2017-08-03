@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirebaseAdapterFractivity">
+    tools:context=".activities.base.FirebaseAdapterFractivity">
 
     <TextView
         android:id="@+id/fractivity_firebase_adapter_list_element_text"

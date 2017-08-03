@@ -1,4 +1,4 @@
-package com.repkap11.burger;
+package com.repkap11.burger.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,16 +13,20 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
+import com.repkap11.burger.FirebaseAdapter;
+import com.repkap11.burger.R;
+import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 
 
-public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLocationsFractivity.Holder> {
+public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.Holder> {
 
     @Override
     protected FirebaseAdapterFragment createFirebaseFragment() {
-        return new LunchLocationFragment<LunchLocationsFractivity.Holder>();
+        return new LunchLocationFragment<UsersFractivity.Holder>();
     }
 
-    public static class LunchLocationFragment<AdapterHolder> extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
+    public static class LunchLocationFragment<AdapterHolder> extends FirebaseAdapterFragment {
+
 
         private ListView mListView;
         private FloatingActionButton mFab;
@@ -30,16 +34,15 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
         //Using this activity view
         @Override
         protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fractivity_lunch_locations, container, false);
-            mListView = (ListView) rootView.findViewById(R.id.fractivity_lunch_locations_list);
-            //mAddLocationButton = (Button) rootView.findViewById(R.id.fractivity_lunch_locations_button_add_user);
+            View rootView = inflater.inflate(R.layout.fractivity_users, container, false);
+            mListView = (ListView) rootView.findViewById(R.id.fractivity_users_list);
             Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-            toolbar.setTitle(R.string.fractivity_lunch_locations_title);
+            toolbar.setTitle(R.string.fractivity_users_title);
             mFab = (FloatingActionButton) rootView.findViewById(R.id.fab);
             mFab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(getActivity(), AddLunchLocationFractivity.class));
+                    startActivity(new Intent(getActivity(), AddUserFractivity.class));
                 }
             });
             return rootView;
@@ -55,7 +58,7 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
         //Put this data
         @Override
         protected String adapterReference() {
-            return "lunch_locations";
+            return "users";
         }
 
         //With this filter
@@ -75,7 +78,6 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
         public int getListResource() {
             return R.layout.fractivity_firebase_adapter_list_element;
         }
-
 
         //And that view has a holder caching position and subviews
         @Override

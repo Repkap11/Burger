@@ -1,4 +1,4 @@
-package com.repkap11.burger;
+package com.repkap11.burger.activities.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.repkap11.burger.R;
 
 public abstract class Fractivity<FragType extends Fractivity.FractivityFragment> extends AppCompatActivity {
 

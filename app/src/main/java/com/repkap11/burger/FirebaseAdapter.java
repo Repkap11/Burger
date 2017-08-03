@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.google.firebase.database.DataSnapshot;
+import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 
 import java.util.ArrayList;
 import java.util.List;
