@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +31,7 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
     protected abstract FirebaseAdapterFragment createFirebaseFragment();
 
 
-    public static abstract class FirebaseAdapterFragment<AdapterHolder, AdapterData> extends Fractivity.FractivityFragment {
+    public static abstract class FirebaseAdapterFragment<AdapterHolder, AdapterData> extends Fractivity.FractivityFragment implements AdapterView.OnItemClickListener {
         FirebaseAdapter mAdapter;
 
         protected abstract String adapterReference();
@@ -85,6 +86,7 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
             View rootView = createAdapterView(inflater, container, savedInstanceState);
             mListView = getListView(rootView);
             mListView.setAdapter(mAdapter);
+            mListView.setOnItemClickListener(this);
             return rootView;
         }
 
@@ -104,5 +106,15 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
         public abstract void populateView(View convertView, AdapterHolder holder, int position, String key, Object value);
 
         public abstract Class<AdapterData> getAdapterDataClass();
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            FirebaseAdapter.AdapterKeyValue keyValuePair = (FirebaseAdapter.AdapterKeyValue) mAdapter.getItem(position);
+            AdapterHolder holder = (AdapterHolder) view.getTag();
+            onItemClicked(view, holder, position, keyValuePair.key, (AdapterData) keyValuePair.value);
+        }
+
+        protected abstract void onItemClicked(View view, AdapterHolder holder, int position, String key, AdapterData value);
+
     }
 }

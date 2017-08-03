@@ -1,5 +1,6 @@
 package com.repkap11.burger.activities;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -22,8 +23,15 @@ import com.repkap11.burger.models.User;
 
 public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUserFragment> {
 
+    public static final String STARTING_INTENT_USER_INITIAL_NAME = "com.repkap11.burger.STARTING_INTENT_USER_INITIAL_NAME";
+    public static final String STARTING_INTENT_USER_KEY = "com.repkap11.burger.STARTING_INTENT_USER_KEY";
+
     @Override
     protected AboutUserFragment createFragment(Bundle savedInstanceState) {
+        Intent strtingIntent = getIntent();
+        if (strtingIntent == null) {
+            finish();
+        }
         return new AboutUserFragment();
     }
 
@@ -34,7 +42,6 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
 
         @Override
         protected void create(Bundle savedInstanceState) {
-
         }
 
         @Override
@@ -53,8 +60,19 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
             mEditTextFullName = (TextView) rootView.findViewById(R.id.fractivity_about_user_edit_text_full_name);
             mEditTextCarSize = (TextView) rootView.findViewById(R.id.fractivity_about_user_edit_text_car_size);
 
+            Intent startingIntent = getActivity().getIntent();
+            if (startingIntent == null) {
+                getActivity().finish();
+            }
+            String initialName = startingIntent.getStringExtra(STARTING_INTENT_USER_INITIAL_NAME);
+            ;
+            String userKey = startingIntent.getStringExtra(STARTING_INTENT_USER_KEY);
+            if (userKey == null) {
+                getActivity().finish();
+                return rootView;
+            }
+            mToolbar.setTitle(initialName);
 
-            String userKey = "-Kq__ik09zLOUVFLkc2z";
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference locationsRef = database.getReference("users/" + userKey);
             locationsRef.addValueEventListener(new ValueEventListener() {

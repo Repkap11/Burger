@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -101,6 +102,16 @@ public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.H
         @Override
         public Class getAdapterDataClass() {
             return User.class;
+        }
+
+        @Override
+        protected void onItemClicked(View view, Object o, int position, String key, Object value) {
+            User user = (User) value;
+            Holder holder = (Holder) o;
+            Intent intent = new Intent(getActivity(), AboutUserFractivity.class);
+            intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_INITIAL_NAME, user.firstName);
+            intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_KEY, key);
+            startActivity(intent);
         }
     }
 

@@ -56,7 +56,7 @@ public class FirebaseAdapter<AdapterHolder, AdapterData> extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return mData.get(position);
     }
 
     @Override

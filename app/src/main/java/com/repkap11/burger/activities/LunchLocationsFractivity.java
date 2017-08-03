@@ -103,6 +103,12 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
             return LunchLocation.class;
         }
 
+        @Override
+        protected void onItemClicked(View view, Object o, int position, String key, Object value) {
+            LunchLocation location = (LunchLocation) value;
+            Holder holder = (Holder) o;
+        }
+
     }
 
     public static class Holder {
