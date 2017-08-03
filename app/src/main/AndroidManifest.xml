@@ -21,13 +21,20 @@
             android:label="@string/fractivity_lunch_locations_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AddLunchLocationsFractivity"
-            android:label="@string/fractivity_add_lunch_locations_title"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".AddLunchLocationFractivity"
+            android:label="@string/fractivity_add_lunch_location_title"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name=".AddUserFractivity"
+            android:label="@string/fractivity_add_user_title"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible" />
 
         <activity-alias
             android:name=".Launcher"
-            android:targetActivity=".LunchLocationsFractivity">
+            android:label="@string/app_name"
+            android:targetActivity=".UsersFractivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

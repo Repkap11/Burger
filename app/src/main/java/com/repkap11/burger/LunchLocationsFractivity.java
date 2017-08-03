@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,7 +25,6 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
     public static class LunchLocationFragment<AdapterHolder> extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
 
         private ListView mListView;
-        private Button mAddLocationButton;
         private FloatingActionButton mFab;
 
         //Using this activity view
@@ -41,7 +39,7 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
             mFab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(getActivity(), AddLunchLocationsFractivity.class));
+                    startActivity(new Intent(getActivity(), AddLunchLocationFractivity.class));
                 }
             });
             return rootView;
@@ -50,7 +48,6 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
         @Override
         protected void destroyView() {
             mListView = null;
-            mAddLocationButton = null;
             mFab = null;
             super.destroyView();
         }

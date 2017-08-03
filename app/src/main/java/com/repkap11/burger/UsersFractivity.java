@@ -1,6 +1,9 @@
 package com.repkap11.burger;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,18 +26,29 @@ public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.H
 
 
         private ListView mListView;
+        private FloatingActionButton mFab;
 
         //Using this activity view
         @Override
         protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fractivity_users, container, false);
             mListView = (ListView) rootView.findViewById(R.id.fractivity_users_list);
+            Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+            toolbar.setTitle(R.string.fractivity_users_title);
+            mFab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+            mFab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getActivity(), AddUserFractivity.class));
+                }
+            });
             return rootView;
         }
 
         @Override
         protected void destroyView() {
             mListView = null;
+            mFab = null;
             super.destroyView();
         }
 
