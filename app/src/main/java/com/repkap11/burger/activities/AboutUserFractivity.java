@@ -39,6 +39,11 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
         private TextView mEditTextFullName;
         private TextView mEditTextCarSize;
         private Toolbar mToolbar;
+        private TextView mLunchChoiceLabel1;
+        private TextView mLunchChoiceLabel2;
+        private TextView mLunchChoiceLabel3;
+        private TextView mLunchChoiceLabel4;
+        private TextView mLunchChoiceLabel5;
 
         @Override
         protected void create(Bundle savedInstanceState) {
@@ -79,6 +84,12 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
             dayLabel4.setText(getResources().getText(R.string.fractivity_about_user_day_label4));
             dayLabel5.setText(getResources().getText(R.string.fractivity_about_user_day_label5));
 
+            mLunchChoiceLabel1 = (TextView) rootDay1.findViewById(R.id.fractivity_about_user_lunch_location_label);
+            mLunchChoiceLabel2 = (TextView) rootDay2.findViewById(R.id.fractivity_about_user_lunch_location_label);
+            mLunchChoiceLabel3 = (TextView) rootDay3.findViewById(R.id.fractivity_about_user_lunch_location_label);
+            mLunchChoiceLabel4 = (TextView) rootDay4.findViewById(R.id.fractivity_about_user_lunch_location_label);
+            mLunchChoiceLabel5 = (TextView) rootDay5.findViewById(R.id.fractivity_about_user_lunch_location_label);
+
 
             Intent startingIntent = getActivity().getIntent();
             if (startingIntent == null) {
@@ -110,6 +121,12 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                     mEditTextFullName.setText(user.firstName + " " + user.lastName);
                     mToolbar.setTitle(user.firstName);
                     mEditTextCarSize.setText(user.carSize);
+
+                    mLunchChoiceLabel1.setText(user.lunch_preference_1);
+                    mLunchChoiceLabel2.setText(user.lunch_preference_2);
+                    mLunchChoiceLabel3.setText(user.lunch_preference_3);
+                    mLunchChoiceLabel4.setText(user.lunch_preference_4);
+                    mLunchChoiceLabel5.setText(user.lunch_preference_5);
                 }
 
                 @Override
@@ -124,6 +141,11 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
         protected void destroyView() {
             mEditTextCarSize = null;
             mEditTextFullName = null;
+            mLunchChoiceLabel1 = null;
+            mLunchChoiceLabel2 = null;
+            mLunchChoiceLabel3 = null;
+            mLunchChoiceLabel4 = null;
+            mLunchChoiceLabel5 = null;
         }
     }
 }

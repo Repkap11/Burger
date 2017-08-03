@@ -19,12 +19,12 @@
         android:text="Day" />
 
     <TextView
+        android:id="@+id/fractivity_about_user_lunch_location_label"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:layout_weight="1"
         android:background="@android:color/background_light"
         android:gravity="center"
-        android:text="Lunch Choice" />
+        android:text="No Lunch Choice" />
 
 </LinearLayout>
