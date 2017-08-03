@@ -6,7 +6,10 @@
     tools:context=".activities.base.FirebaseAdapterFractivity">
 
     <TextView
-        android:id="@+id/fractivity_firebase_adapter_list_element_text"
+        android:id="@+id/fractivity_users_list_element_text"
         android:layout_width="match_parent"
-        android:layout_height="@android:dimen/app_icon_size" />
+        android:layout_height="@android:dimen/app_icon_size"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:textSize="20sp" />
 </RelativeLayout>

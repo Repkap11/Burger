@@ -77,15 +77,14 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
         //Where each element uses this view
         @Override
         public int getListResource() {
-            return R.layout.fractivity_firebase_adapter_list_element;
+            return R.layout.fractivity_lunch_locations_list_element;
         }
-
 
         //And that view has a holder caching position and subviews
         @Override
         public Holder populateHolder(View convertView) {
             Holder holder = new Holder();
-            holder.mName = (TextView) convertView.findViewById(R.id.fractivity_firebase_adapter_list_element_text);
+            holder.mName = (TextView) convertView.findViewById(R.id.fractivity_lunch_locations_list_element_text);
             return holder;
         }
 
@@ -94,7 +93,7 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
         public void populateView(View convertView, Object o, int position, String key, Object value) {
             Holder holder = (Holder) o;
             LunchLocation location = (LunchLocation) value;
-            holder.mName.setText(key + ":" + location.displayName);
+            holder.mName.setText(location.displayName);
             holder.mIndex = position;
         }
 

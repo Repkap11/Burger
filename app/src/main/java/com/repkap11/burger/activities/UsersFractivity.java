@@ -79,14 +79,14 @@ public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.H
         //Where each element uses this view
         @Override
         public int getListResource() {
-            return R.layout.fractivity_firebase_adapter_list_element;
+            return R.layout.fractivity_users_list_element;
         }
 
         //And that view has a holder caching position and subviews
         @Override
         public Holder populateHolder(View convertView) {
             Holder holder = new Holder();
-            holder.mName = (TextView) convertView.findViewById(R.id.fractivity_firebase_adapter_list_element_text);
+            holder.mName = (TextView) convertView.findViewById(R.id.fractivity_users_list_element_text);
             return holder;
         }
 
@@ -95,7 +95,7 @@ public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.H
         public void populateView(View convertView, Object o, int position, String key, Object value) {
             Holder holder = (Holder) o;
             User user = (User) value;
-            holder.mName.setText(key + ":" + user.firstName + " " + user.lastName + " with a " + user.carSize + " seat car.");
+            holder.mName.setText(user.firstName + " " + user.lastName);
             holder.mIndex = position;
         }
 

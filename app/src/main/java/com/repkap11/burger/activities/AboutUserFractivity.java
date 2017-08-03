@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.base.Fractivity;
+import com.repkap11.burger.models.LunchLocation;
 import com.repkap11.burger.models.User;
 
 public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUserFragment> {
@@ -44,6 +45,11 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
         private TextView mLunchChoiceLabel3;
         private TextView mLunchChoiceLabel4;
         private TextView mLunchChoiceLabel5;
+        private DatabaseReference mLunchPreference1Ref;
+        private DatabaseReference mLunchPreference2Ref;
+        private DatabaseReference mLunchPreference3Ref;
+        private DatabaseReference mLunchPreference4Ref;
+        private DatabaseReference mLunchPreference5Ref;
 
         @Override
         protected void create(Bundle savedInstanceState) {
@@ -104,9 +110,9 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
             }
             mToolbar.setTitle(initialName);
 
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference locationsRef = database.getReference("users/" + userKey);
-            locationsRef.addValueEventListener(new ValueEventListener() {
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            final DatabaseReference userRef = database.getReference("users/" + userKey);
+            userRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     User user = null;
@@ -122,11 +128,34 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                     mToolbar.setTitle(user.firstName);
                     mEditTextCarSize.setText(user.carSize);
 
-                    mLunchChoiceLabel1.setText(user.lunch_preference_1);
-                    mLunchChoiceLabel2.setText(user.lunch_preference_2);
-                    mLunchChoiceLabel3.setText(user.lunch_preference_3);
-                    mLunchChoiceLabel4.setText(user.lunch_preference_4);
-                    mLunchChoiceLabel5.setText(user.lunch_preference_5);
+                    if (mLunchPreference1Ref != null) {
+                        mLunchPreference1Ref.removeEventListener(mLunchPreference1Listener);
+                    }
+                    if (mLunchPreference2Ref != null) {
+                        mLunchPreference2Ref.removeEventListener(mLunchPreference2Listener);
+                    }
+                    if (mLunchPreference3Ref != null) {
+                        mLunchPreference3Ref.removeEventListener(mLunchPreference3Listener);
+                    }
+                    if (mLunchPreference4Ref != null) {
+                        mLunchPreference4Ref.removeEventListener(mLunchPreference4Listener);
+                    }
+                    if (mLunchPreference5Ref != null) {
+                        mLunchPreference5Ref.removeEventListener(mLunchPreference5Listener);
+                    }
+
+
+                    mLunchPreference1Ref = database.getReference("lunch_locations/" + user.lunch_preference_1);
+                    mLunchPreference2Ref = database.getReference("lunch_locations/" + user.lunch_preference_2);
+                    mLunchPreference3Ref = database.getReference("lunch_locations/" + user.lunch_preference_3);
+                    mLunchPreference4Ref = database.getReference("lunch_locations/" + user.lunch_preference_4);
+                    mLunchPreference5Ref = database.getReference("lunch_locations/" + user.lunch_preference_5);
+
+                    mLunchPreference1Ref.addValueEventListener(mLunchPreference1Listener);
+                    mLunchPreference2Ref.addValueEventListener(mLunchPreference2Listener);
+                    mLunchPreference3Ref.addValueEventListener(mLunchPreference3Listener);
+                    mLunchPreference4Ref.addValueEventListener(mLunchPreference4Listener);
+                    mLunchPreference5Ref.addValueEventListener(mLunchPreference5Listener);
                 }
 
                 @Override
@@ -136,6 +165,108 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
             });
             return rootView;
         }
+
+
+        private ValueEventListener mLunchPreference1Listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                LunchLocation location = null;
+                try {
+                    location = dataSnapshot.getValue(LunchLocation.class);
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                }
+                if (location == null) {
+                    return;
+                }
+                mLunchChoiceLabel1.setText(location.displayName);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        private ValueEventListener mLunchPreference2Listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                LunchLocation location = null;
+                try {
+                    location = dataSnapshot.getValue(LunchLocation.class);
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                }
+                if (location == null) {
+                    return;
+                }
+                mLunchChoiceLabel2.setText(location.displayName);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        private ValueEventListener mLunchPreference3Listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                LunchLocation location = null;
+                try {
+                    location = dataSnapshot.getValue(LunchLocation.class);
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                }
+                if (location == null) {
+                    return;
+                }
+                mLunchChoiceLabel3.setText(location.displayName);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        private ValueEventListener mLunchPreference4Listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                LunchLocation location = null;
+                try {
+                    location = dataSnapshot.getValue(LunchLocation.class);
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                }
+                if (location == null) {
+                    return;
+                }
+                mLunchChoiceLabel4.setText(location.displayName);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        private ValueEventListener mLunchPreference5Listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                LunchLocation location = null;
+                try {
+                    location = dataSnapshot.getValue(LunchLocation.class);
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                }
+                if (location == null) {
+                    return;
+                }
+                mLunchChoiceLabel5.setText(location.displayName);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
 
         @Override
         protected void destroyView() {

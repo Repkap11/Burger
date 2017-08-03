@@ -24,7 +24,6 @@
         android:layout_weight="1"
 
         android:background="@android:color/background_light"
-        android:gravity="center"
-        android:text="Lunch Choice" />
+        android:gravity="center" />
 
 </LinearLayout>
