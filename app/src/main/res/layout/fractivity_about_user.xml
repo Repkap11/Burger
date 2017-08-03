@@ -29,7 +29,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp"
 
@@ -50,6 +50,35 @@
             android:drawableLeft="@drawable/ic_car_black"
 
             android:padding="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"
+
+            android:orientation="@integer/fractivity_about_user_linear_orientation"
+            android:padding="2dp">
+
+            <include
+                android:id="@+id/fractivity_about_user_day_1"
+                layout="@layout/fractivity_about_user_day_view" />
+
+            <include
+                android:id="@+id/fractivity_about_user_day_2"
+                layout="@layout/fractivity_about_user_day_view" />
+
+            <include
+                android:id="@+id/fractivity_about_user_day_3"
+                layout="@layout/fractivity_about_user_day_view" />
+
+            <include
+                android:id="@+id/fractivity_about_user_day_4"
+                layout="@layout/fractivity_about_user_day_view" />
+
+            <include
+                android:id="@+id/fractivity_about_user_day_5"
+                layout="@layout/fractivity_about_user_day_view" />
+        </LinearLayout>
 
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

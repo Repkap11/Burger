@@ -6,4 +6,12 @@
     <string name="fractivity_lunch_locations_title">Lunch Locations</string>
     <string name="fractivity_add_lunch_location_title">Add Location</string>
     <string name="fractivity_add_user_title">Add User</string>
+
+    <string name="fractivity_about_user_day_label1">Monday</string>
+    <string name="fractivity_about_user_day_label2">Tuesday</string>
+    <string name="fractivity_about_user_day_label3">Wednesday</string>
+    <string name="fractivity_about_user_day_label4">Thursday</string>
+    <string name="fractivity_about_user_day_label5">Friday</string>
+
+
 </resources>

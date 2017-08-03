@@ -60,6 +60,26 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
             mEditTextFullName = (TextView) rootView.findViewById(R.id.fractivity_about_user_edit_text_full_name);
             mEditTextCarSize = (TextView) rootView.findViewById(R.id.fractivity_about_user_edit_text_car_size);
 
+
+            View rootDay1 = rootView.findViewById(R.id.fractivity_about_user_day_1);
+            View rootDay2 = rootView.findViewById(R.id.fractivity_about_user_day_2);
+            View rootDay3 = rootView.findViewById(R.id.fractivity_about_user_day_3);
+            View rootDay4 = rootView.findViewById(R.id.fractivity_about_user_day_4);
+            View rootDay5 = rootView.findViewById(R.id.fractivity_about_user_day_5);
+
+            TextView dayLabel1 = (TextView) rootDay1.findViewById(R.id.fractivity_about_user_day_label);
+            TextView dayLabel2 = (TextView) rootDay2.findViewById(R.id.fractivity_about_user_day_label);
+            TextView dayLabel3 = (TextView) rootDay3.findViewById(R.id.fractivity_about_user_day_label);
+            TextView dayLabel4 = (TextView) rootDay4.findViewById(R.id.fractivity_about_user_day_label);
+            TextView dayLabel5 = (TextView) rootDay5.findViewById(R.id.fractivity_about_user_day_label);
+
+            dayLabel1.setText(getResources().getText(R.string.fractivity_about_user_day_label1));
+            dayLabel2.setText(getResources().getText(R.string.fractivity_about_user_day_label2));
+            dayLabel3.setText(getResources().getText(R.string.fractivity_about_user_day_label3));
+            dayLabel4.setText(getResources().getText(R.string.fractivity_about_user_day_label4));
+            dayLabel5.setText(getResources().getText(R.string.fractivity_about_user_day_label5));
+
+
             Intent startingIntent = getActivity().getIntent();
             if (startingIntent == null) {
                 getActivity().finish();
