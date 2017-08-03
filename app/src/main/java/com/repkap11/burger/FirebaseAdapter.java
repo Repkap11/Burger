@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseException;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 
 import java.util.ArrayList;
@@ -15,15 +16,15 @@ import java.util.List;
 /**
  * Created by paul on 2/16/16.
  */
-public class FirebaseAdapter<AdapterHolder> extends BaseAdapter {
+public class FirebaseAdapter<AdapterHolder, AdapterData> extends BaseAdapter {
     private static final String TAG = FirebaseAdapter.class.getSimpleName();
-    private final FirebaseAdapterFractivity.FirebaseAdapterFragment<AdapterHolder> mFragment;
+    private final FirebaseAdapterFractivity.FirebaseAdapterFragment<AdapterHolder, AdapterData> mFragment;
 
-    public static class AdapterData {
+    public static class AdapterKeyValue {
         public String key;
         public Object value;
 
-        public AdapterData(String key, Object value) {
+        public AdapterKeyValue(String key, Object value) {
             this.key = key;
             this.value = value;
         }
@@ -31,8 +32,8 @@ public class FirebaseAdapter<AdapterHolder> extends BaseAdapter {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof AdapterData)) return false;
-            return key.equals(((AdapterData) o).key);
+            if (!(o instanceof AdapterKeyValue)) return false;
+            return key.equals(((AdapterKeyValue) o).key);
         }
 
         @Override
@@ -41,7 +42,7 @@ public class FirebaseAdapter<AdapterHolder> extends BaseAdapter {
         }
     }
 
-    private List<AdapterData> mData;
+    private List<AdapterKeyValue> mData;
 
     public FirebaseAdapter(FirebaseAdapterFractivity.FirebaseAdapterFragment firebaseAdapterFragment) {
         mFragment = firebaseAdapterFragment;
@@ -73,15 +74,24 @@ public class FirebaseAdapter<AdapterHolder> extends BaseAdapter {
         } else {
             holder = (AdapterHolder) convertView.getTag();
         }
-        AdapterData data = mData.get(position);
-        mFragment.populateView(convertView, holder, position, data);
+        AdapterKeyValue data = mData.get(position);
+        mFragment.populateView(convertView, holder, position, data.key, data.value);
 
         return convertView;
     }
 
     public boolean add(DataSnapshot data) {
         Log.e(TAG, "Adding data:" + data.getKey());
-        boolean result = mData.add(new AdapterData(data.getKey(), data.getValue()));
+        Object value = null;
+        try {
+            value = data.getValue(mFragment.getAdapterDataClass());
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+        if (value == null) {
+            return false;
+        }
+        boolean result = mData.add(new AdapterKeyValue(data.getKey(), value));
         if (result) {
             notifyDataSetChanged();
         }
@@ -90,7 +100,16 @@ public class FirebaseAdapter<AdapterHolder> extends BaseAdapter {
 
     public boolean remove(DataSnapshot data) {
         Log.e(TAG, "Removing data:" + data.getKey());
-        boolean result = mData.remove(new AdapterData(data.getKey(), data.getValue()));
+        Object value = null;
+        try {
+            value = data.getValue(mFragment.getAdapterDataClass());
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+        if (value == null) {
+            return false;
+        }
+        boolean result = mData.remove(new AdapterKeyValue(data.getKey(), value));
         if (result) {
             notifyDataSetChanged();
         }

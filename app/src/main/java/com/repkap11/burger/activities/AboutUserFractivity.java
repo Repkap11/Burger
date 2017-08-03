@@ -2,6 +2,7 @@ package com.repkap11.burger.activities;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -58,7 +60,15 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
             locationsRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    User user = dataSnapshot.getValue(User.class);
+                    User user = null;
+                    try {
+                        user = dataSnapshot.getValue(User.class);
+                    } catch (DatabaseException e) {
+                        e.printStackTrace();
+                    }
+                    if (user == null) {
+                        return;
+                    }
                     mEditTextFullName.setText(user.firstName + " " + user.lastName);
                     mToolbar.setTitle(user.firstName);
                     mEditTextCarSize.setText(user.carSize);

@@ -16,9 +16,10 @@ import com.google.firebase.database.Query;
 import com.repkap11.burger.FirebaseAdapter;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
+import com.repkap11.burger.models.LunchLocation;
 
 
-public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLocationsFractivity.Holder> {
+public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLocationsFractivity.Holder, LunchLocation> {
 
     @Override
     protected FirebaseAdapterFragment createFirebaseFragment() {
@@ -90,11 +91,18 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
 
         //And each subview is populated with data
         @Override
-        public void populateView(View convertView, Object o, int position, FirebaseAdapter.AdapterData data) {
+        public void populateView(View convertView, Object o, int position, String key, Object value) {
             Holder holder = (Holder) o;
-            holder.mName.setText(data.key + ":" + data.value);
+            LunchLocation location = (LunchLocation) value;
+            holder.mName.setText(key + ":" + location.displayName);
             holder.mIndex = position;
         }
+
+        @Override
+        public Class getAdapterDataClass() {
+            return LunchLocation.class;
+        }
+
     }
 
     public static class Holder {

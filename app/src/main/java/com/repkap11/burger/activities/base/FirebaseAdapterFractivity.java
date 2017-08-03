@@ -12,31 +12,32 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.repkap11.burger.FirebaseAdapter;
 
 
-public abstract class FirebaseAdapterFractivity<AdapterHolder> extends Fractivity<FirebaseAdapterFractivity.FirebaseAdapterFragment> {
+public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> extends Fractivity<FirebaseAdapterFractivity.FirebaseAdapterFragment> {
 
     @Override
     protected FirebaseAdapterFragment createFragment(Bundle savedInstanceState) {
         //use the bundle to create the fragment
-        FirebaseAdapterFragment<AdapterHolder> fragment = createFirebaseFragment();
+        FirebaseAdapterFragment<AdapterHolder, AdapterData> fragment = createFirebaseFragment();
         return fragment;
     }
 
     protected abstract FirebaseAdapterFragment createFirebaseFragment();
 
 
-    public static abstract class FirebaseAdapterFragment<AdapterHolder> extends Fractivity.FractivityFragment {
+    public static abstract class FirebaseAdapterFragment<AdapterHolder, AdapterData> extends Fractivity.FractivityFragment {
         FirebaseAdapter mAdapter;
 
         protected abstract String adapterReference();
 
         @Override
         protected void create(Bundle savedInstanceState) {
-            mAdapter = new FirebaseAdapter<AdapterHolder>(this);
+            mAdapter = new FirebaseAdapter<AdapterHolder, AdapterData>(this);
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             final FirebaseMessaging messaging = FirebaseMessaging.getInstance();
@@ -98,8 +99,10 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder> extends Fractivit
 
         public abstract int getListResource();
 
-        public abstract <AdapterHolder> AdapterHolder populateHolder(View convertView);
+        public abstract AdapterHolder populateHolder(View convertView);
 
-        public abstract void populateView(View convertView, AdapterHolder holder, int position, FirebaseAdapter.AdapterData data);
+        public abstract void populateView(View convertView, AdapterHolder holder, int position, String key, Object value);
+
+        public abstract Class<AdapterData> getAdapterDataClass();
     }
 }
