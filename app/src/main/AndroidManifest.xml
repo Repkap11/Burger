@@ -26,6 +26,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible" />
         <activity
+            android:name=".activities.AddLunchGroupFractivity"
+            android:label="@string/fractivity_add_lunch_group_title"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
             android:name=".activities.AddUserFractivity"
             android:label="@string/fractivity_add_user_title"
             android:theme="@style/AppTheme.NoActionBar"
@@ -35,10 +40,15 @@
             android:label="@string/fractivity_add_user_title"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity
+            android:name=".activities.WelcomeFractivity"
+            android:label="@string/fractivity_welcome_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity-alias
             android:name=".Launcher"
             android:label="@string/app_name"
-            android:targetActivity=".activities.UsersFractivity">
+            android:targetActivity=".activities.WelcomeFractivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

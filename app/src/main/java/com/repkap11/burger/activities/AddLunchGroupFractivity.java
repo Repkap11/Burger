@@ -1,8 +1,8 @@
 package com.repkap11.burger.activities;
 
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.res.ResourcesCompat;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +16,14 @@ import com.repkap11.burger.R;
 import com.repkap11.burger.activities.base.Fractivity;
 import com.repkap11.burger.models.LunchLocation;
 
-public class AddLunchLocationFractivity extends Fractivity<AddLunchLocationFractivity.AddLunchLocationsFragment> {
+public class AddLunchGroupFractivity extends Fractivity<Fractivity.FractivityFragment> {
 
     @Override
-    protected AddLunchLocationFractivity.AddLunchLocationsFragment createFragment(Bundle savedInstanceState) {
-        return new AddLunchLocationsFragment();
+    protected AddLunchGroupFractivity.AddLunchGroupFragment createFragment(Bundle savedInstanceState) {
+        return new AddLunchGroupFragment();
     }
 
-    public static class AddLunchLocationsFragment extends Fractivity.FractivityFragment {
+    public static class AddLunchGroupFragment extends FractivityFragment {
         private EditText mEditTextName;
         private Button mSaveLocationButtion;
 
@@ -34,9 +34,9 @@ public class AddLunchLocationFractivity extends Fractivity<AddLunchLocationFract
 
         @Override
         protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fractivity_add_lunch_location, container, false);
+            View rootView = inflater.inflate(R.layout.fractivity_add_lunch_group, container, false);
             Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-            toolbar.setTitle(R.string.fractivity_add_lunch_location_title);
+            toolbar.setTitle(R.string.fractivity_add_lunch_group_title);
             Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_clear_black, null);
             toolbar.setNavigationIcon(drawable);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -45,13 +45,13 @@ public class AddLunchLocationFractivity extends Fractivity<AddLunchLocationFract
                     getActivity().finish();
                 }
             });
-            mEditTextName = (EditText) rootView.findViewById(R.id.fractivity_add_lunch_location_edit_text_name);
-            mSaveLocationButtion = (Button) rootView.findViewById(R.id.fractivity_add_lunch_location_button_save);
+            mEditTextName = (EditText) rootView.findViewById(R.id.fractivity_add_lunch_group_edit_text_name);
+            mSaveLocationButtion = (Button) rootView.findViewById(R.id.fractivity_add_lunch_group_button_save);
             mSaveLocationButtion.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference locationsRef = database.getReference("lunch_locations");
+                    DatabaseReference locationsRef = database.getReference("lunch_groups");
                     DatabaseReference newLocation = locationsRef.push();
                     newLocation.setValue(new LunchLocation(mEditTextName.getText().toString()));
                     getActivity().finish();

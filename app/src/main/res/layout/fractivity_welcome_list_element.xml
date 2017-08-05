@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.base.FirebaseAdapterFractivity">
+
+    <TextView
+        android:id="@+id/fractivity_welcome_list_element_text"
+        android:layout_width="match_parent"
+        android:layout_height="@android:dimen/app_icon_size"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:textSize="20sp" />
+</RelativeLayout>
