@@ -9,9 +9,9 @@
     <string name="fractivity_lunch_locations_title">Lunch Locations</string>
     <string name="fractivity_add_lunch_location_title">Add Location</string>
     <string name="fractivity_add_user_title">Add User</string>
-    <string name="fractivity_lunch_groups_title">Welcome to Burger</string>
+    <string name="fractivity_lunch_groups_title">Lunch Groups</string>
     <string name="fractivity_add_lunch_group_title">Select a Group</string>
-    <string name="fractivity_sign_in_title">Sign In</string>
+    <string name="fractivity_sign_in_title">Welcome to Burger</string>
     <string name="fractivity_settings_title">Settings</string>
 
 
@@ -21,7 +21,15 @@
     <string name="fractivity_about_user_day_label4">Thursday</string>
     <string name="fractivity_about_user_day_label5">Friday</string>
 
-    <string name="fractivity_sign_in_message">Sign in with Google</string>
+    <string name="fractivity_sign_in_message">Sign up for Burger</string>
+    <string name="fractivity_sign_in_with_google">Sign in</string>
+
+
+    <string name="fractivity_lunch_groups_message">Burger will automatically match you with compatible partners in your Lunch Group</string>
+
+
+
+
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->

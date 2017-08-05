@@ -7,25 +7,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.repkap11.burger.activities.LunchLocationsFractivity">
+    tools:context="com.repkap11.burger.activities.LunchGroupsFractivity">
 
     <include layout="@layout/fractivity_bar_menu" />
 
 
-    <ListView
-        android:id="@+id/fractivity_lunch_groups_list"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/fractivity_lunch_locations_fab_add" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="20dp"
+            android:text="@string/fractivity_lunch_groups_message"
+            android:textSize="20sp" />
+
+
+        <ListView
+            android:id="@+id/fractivity_lunch_groups_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/fractivity_lunch_groups_list_element" />
+    </LinearLayout>
+
+    <include layout="@layout/fractivity_fab_add" />
 
 </android.support.design.widget.CoordinatorLayout>
 

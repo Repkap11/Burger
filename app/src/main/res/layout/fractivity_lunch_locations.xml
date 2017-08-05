@@ -11,22 +11,15 @@
 
     <include layout="@layout/fractivity_bar_menu" />
 
-
     <ListView
         android:id="@+id/fractivity_lunch_locations_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
+        tools:listitem="@layout/fractivity_lunch_locations_list_element"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/fractivity_lunch_locations_fab_add" />
+    <include layout="@layout/fractivity_fab_add" />
 
 </android.support.design.widget.CoordinatorLayout>
 
