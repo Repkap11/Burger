@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.repkap11.burger.R;
-import com.repkap11.burger.activities.SettingsFractivity;
+import com.repkap11.burger.activities.SettingsActivity;
 
 /**
  * Created by paul on 8/5/17.
@@ -31,7 +31,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
             switch (item.getItemId()) {
                 case R.id.action_settings:
                     Toast.makeText(getActivity(), "Settings selected", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getActivity(), SettingsFractivity.class);
+                    Intent intent = new Intent(getActivity(), SettingsActivity.class);
                     startActivity(intent);
                     return true;
                 default:
