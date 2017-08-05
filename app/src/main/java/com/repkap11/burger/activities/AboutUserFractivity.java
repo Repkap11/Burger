@@ -347,6 +347,21 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
 
         @Override
         protected void destroyView() {
+            if (mLunchPreference1Ref != null) {
+                mLunchPreference1Ref.removeEventListener(mLunchPreference1Listener);
+            }
+            if (mLunchPreference2Ref != null) {
+                mLunchPreference2Ref.removeEventListener(mLunchPreference2Listener);
+            }
+            if (mLunchPreference3Ref != null) {
+                mLunchPreference3Ref.removeEventListener(mLunchPreference3Listener);
+            }
+            if (mLunchPreference4Ref != null) {
+                mLunchPreference4Ref.removeEventListener(mLunchPreference4Listener);
+            }
+            if (mLunchPreference5Ref != null) {
+                mLunchPreference5Ref.removeEventListener(mLunchPreference5Listener);
+            }
             mEditTextCarSize = null;
             mTextFullName = null;
             mLunchChoiceLabel1 = null;

@@ -5,25 +5,27 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
-// Take the text parameter passed to this HTTP endpoint and insert it into the
-// Realtime Database under the path /messages/:pushId/original
-exports.addMessage = functions.https.onRequest((req, res) => {
-    // Grab the text parameter.
-    const original = req.query.text;
-    // Push the new message into the Realtime Database using the Firebase Admin SDK.
-    admin.database().ref('/messages').push("Test value");
-});
+exports.add_user_to_locations_pref1 = functions.database.ref('/users/{userId}/lunch_preference_1')
+    .onWrite(event => {return add_user_to_locations_pref(event)});
+exports.add_user_to_locations_pref2 = functions.database.ref('/users/{userId}/lunch_preference_2')
+    .onWrite(event => {return add_user_to_locations_pref(event)});
+exports.add_user_to_locations_pref3 = functions.database.ref('/users/{userId}/lunch_preference_3')
+    .onWrite(event => {return add_user_to_locations_pref(event)});
+exports.add_user_to_locations_pref4 = functions.database.ref('/users/{userId}/lunch_preference_4')
+    .onWrite(event => {return add_user_to_locations_pref(event)});
+exports.add_user_to_locations_pref5 = functions.database.ref('/users/{userId}/lunch_preference_5')
+    .onWrite(event => {return add_user_to_locations_pref(event)});
 
-exports.group_users_with_locations = functions.database.ref('/users/{userId}/lunch_preference_1')
-    .onWrite(event => {return group_users_with_locations(event, 1)});
-
-function group_users_with_locations(event, pref_number){
+function add_user_to_locations_pref(event){
     // Grab the current value of what was written to the Realtime Database.
-    console.log('You changed ',event.params.userId, '\'s lunch pref ', event.data.ref.key, pref_number, ' lunch to ', event.data.val());
-    //event.data.ref
-    // You must return a Promise when performing asynchronous tasks inside a Functions such as
-    // writing to the Firebase Realtime Database.
-    // Setting an "uppercase" sibling in the Realtime Database returns a Promise.
-    //return event.data.ref.parent.child('uppercase').set(uppercase);
+    console.log('You changed ',event.params.userId, '\'s lunch pref ', event.data.ref.key, ' lunch to ', event.data.val());
+    var lunch_location_ref = event.data.ref.parent.parent.parent.child("lunch_locations").child(event.data.val());
+    lunch_location_ref.child(event.data.ref.key).child("users").push(event.params.userId);
     return null;
 }
+
+//    lunch_location_ref.once('value').then(function(dataSnapshot) {
+//        // handle read data.
+//        console.log('You changed lunch pref ', event.data.ref.key, pref_number, ' lunch to ', dataSnapshot.val().displayName);
+//
+//     });
