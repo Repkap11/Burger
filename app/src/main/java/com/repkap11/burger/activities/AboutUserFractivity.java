@@ -28,7 +28,7 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
     public static final String STARTING_INTENT_USER_INITIAL_NAME = "com.repkap11.burger.STARTING_INTENT_USER_INITIAL_NAME";
     public static final String STARTING_INTENT_USER_KEY = "com.repkap11.burger.STARTING_INTENT_USER_KEY";
 
-    public static final String RESULT_INTENT_LOCATION_KEY = "com.repkap11.burger.RESULT_INTENT_LOCATION_KEY";
+    public static final String RESULT_INTENT_LOCATION_LINK = "com.repkap11.burger.RESULT_INTENT_LOCATION_LINK";
     public static final String RESULT_INTENT_LOCATION_INDEX = "com.repkap11.burger.RESULT_INTENT_LOCATION_INDEX";
 
 
@@ -61,8 +61,21 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
         private String mLunchPreference4Key = null;
         private String mLunchPreference5Key = null;
 
+        private String mUserKey;
+
         @Override
         protected void create(Bundle savedInstanceState) {
+            Intent startingIntent = getActivity().getIntent();
+            if (startingIntent == null) {
+                Log.e(TAG, "Somehow we want to start, but don't have a starting intent");
+                getActivity().finish();
+                return;
+            }
+            mUserKey = startingIntent.getStringExtra(STARTING_INTENT_USER_KEY);
+            if (mUserKey == null) {
+                Log.e(TAG, "Finishing because we don't have a user key");
+                getActivity().finish();
+            }
         }
 
         @Override
@@ -75,17 +88,16 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                     Log.e(TAG, "Exiting result because starting intent is gone");
                     getActivity().finish();
                 }
-                String userKey = startingIntent.getStringExtra(STARTING_INTENT_USER_KEY);
                 int location_index = data.getIntExtra(RESULT_INTENT_LOCATION_INDEX, -1);
-                String location_key = data.getStringExtra(RESULT_INTENT_LOCATION_KEY);
+                String location_link = data.getStringExtra(RESULT_INTENT_LOCATION_LINK);
                 if (location_index == -1) {
                     Log.e(TAG, "Error, location_index is invalid (-1) not adding result location");
                     return;
                 }
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference location_ref = database.getReference("users/" + userKey + "/lunch_preference_" + location_index);
-                location_ref.setValue(location_key);
+                DatabaseReference userRef = database.getReference(mUserKey + "/lunch_preference_" + location_index);
+                userRef.setValue(location_link);
             }
         }
 
@@ -166,16 +178,10 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                 getActivity().finish();
             }
             String initialName = startingIntent.getStringExtra(STARTING_INTENT_USER_INITIAL_NAME);
-            String userKey = startingIntent.getStringExtra(STARTING_INTENT_USER_KEY);
-
-            if (userKey == null) {
-                getActivity().finish();
-                return rootView;
-            }
             mToolbar.setTitle(initialName);
 
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
-            final DatabaseReference userRef = database.getReference("users/" + userKey);
+            final DatabaseReference userRef = database.getReference(mUserKey);
             userRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -210,12 +216,13 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                     if (mLunchPreference5Ref != null) {
                         mLunchPreference5Ref.removeEventListener(mLunchPreference5Listener);
                     }
-
-                    mLunchPreference1Ref = database.getReference("lunch_locations/" + user.lunch_preference_1);
-                    mLunchPreference2Ref = database.getReference("lunch_locations/" + user.lunch_preference_2);
-                    mLunchPreference3Ref = database.getReference("lunch_locations/" + user.lunch_preference_3);
-                    mLunchPreference4Ref = database.getReference("lunch_locations/" + user.lunch_preference_4);
-                    mLunchPreference5Ref = database.getReference("lunch_locations/" + user.lunch_preference_5);
+                    mLunchPreference1Ref = database.getReference(mUserKey).getParent().getParent().child("lunch_locations/" + user.lunch_preference_1);
+                    mLunchPreference2Ref = database.getReference(mUserKey).getParent().getParent().child("lunch_locations/" + user.lunch_preference_2);
+                    mLunchPreference3Ref = database.getReference(mUserKey).getParent().getParent().child("lunch_locations/" + user.lunch_preference_3);
+                    mLunchPreference4Ref = database.getReference(mUserKey).getParent().getParent().child("lunch_locations/" + user.lunch_preference_4);
+                    mLunchPreference5Ref = database.getReference(mUserKey).getParent().getParent().child("lunch_locations/" + user.lunch_preference_5);
+                    Log.e(TAG, "Watching pref1 based:" + database.getReference(mUserKey).toString());
+                    Log.e(TAG, "Watching pref1 ref:" + mLunchPreference1Ref.toString());
 
                     mLunchPreference1Ref.addValueEventListener(mLunchPreference1Listener);
                     mLunchPreference2Ref.addValueEventListener(mLunchPreference2Listener);
@@ -235,6 +242,10 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
         private void launchAddLocation(int i, String lunch_pref_key) {
             Intent intent = new Intent(getContext(), LunchLocationsFractivity.class);
             intent.putExtra(LunchLocationsFractivity.STARTING_INTENT_LOCATION_INDEX, i);
+            DatabaseReference lunchGroupRef = FirebaseDatabase.getInstance().getReference(mUserKey).getParent().getParent();
+            String lunchGroupKey = lunchGroupRef.toString().substring(lunchGroupRef.getRoot().toString().length() + 1);
+            intent.putExtra(LunchLocationsFractivity.STARTING_INTENT_WHICH_LUNCH_GROUP, lunchGroupKey);
+
             startActivityForResult(intent, LunchLocationsFractivity.REQUEST_CODE_PICK_LOCATION);
         }
 

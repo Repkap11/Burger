@@ -26,6 +26,8 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
 
     public static final int REQUEST_CODE_PICK_LOCATION = 42;
     public static final String STARTING_INTENT_LOCATION_INDEX = "com.repkap11.burger.STARTING_INTENT_LOCATION_INDEX";
+    public static final String STARTING_INTENT_WHICH_LUNCH_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_LUNCH_GROUP";
+
     private String mResultIndex;
 
     @Override
@@ -41,6 +43,24 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
         private ListView mListView;
         private FloatingActionButton mFab;
 
+        private String mLunchGroup;
+
+        @Override
+        protected void create(Bundle savedInstanceState) {
+            Intent startingIntent = getActivity().getIntent();
+            if (startingIntent == null) {
+                Log.e(TAG, "Somehow we want to start, but don't have a starting intent");
+                getActivity().finish();
+                return;
+            }
+            mLunchGroup = startingIntent.getStringExtra(STARTING_INTENT_WHICH_LUNCH_GROUP);
+            Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
+            if (mLunchGroup == null) {
+                getActivity().finish();
+            }
+            super.create(savedInstanceState);
+        }
+
         //Using this activity view
         @Override
         protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,7 +73,9 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
             mFab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(getActivity(), AddLunchLocationFractivity.class));
+                    Intent intent = new Intent(getActivity(), AddLunchLocationFractivity.class);
+                    intent.putExtra(AddLunchLocationFractivity.STARTING_INTENT_WHICH_LUNCH_GROUP, mLunchGroup);
+                    startActivity(intent);
                 }
             });
 
@@ -71,7 +93,7 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
         //Put this data
         @Override
         protected String adapterReference() {
-            return "lunch_locations";
+            return mLunchGroup + "/lunch_locations";
         }
 
         //With this filter
@@ -115,9 +137,9 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
         }
 
         @Override
-        protected void onItemClicked(View view, Object o, int position, String key, Object value) {
+        protected void onItemClicked(View view, Object holderObject, int position, String key, String link, Object value) {
             LunchLocation location = (LunchLocation) value;
-            Holder holder = (Holder) o;
+            Holder holder = (Holder) holderObject;
             Intent startingIntent = getActivity().getIntent();
             if (startingIntent == null) {
                 Log.e(TAG, "Somehow we want to give a result, but don't have a starting intent");
@@ -127,7 +149,7 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
             int resultIndex = startingIntent.getIntExtra(STARTING_INTENT_LOCATION_INDEX, -1);
 
             Intent intent = new Intent();
-            intent.putExtra(AboutUserFractivity.RESULT_INTENT_LOCATION_KEY, key);
+            intent.putExtra(AboutUserFractivity.RESULT_INTENT_LOCATION_LINK, link);
             intent.putExtra(AboutUserFractivity.RESULT_INTENT_LOCATION_INDEX, resultIndex);
 
             getActivity().setResult(RESULT_OK, intent);

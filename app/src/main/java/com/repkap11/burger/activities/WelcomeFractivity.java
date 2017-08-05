@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.repkap11.burger.models.User;
 
 
 public class WelcomeFractivity extends FirebaseAdapterFractivity<WelcomeFractivity.Holder, LunchGroup> {
+    private static final String TAG = WelcomeFractivity.class.getSimpleName();
 
     @Override
     protected FirebaseAdapterFragment createFirebaseFragment() {
@@ -103,7 +105,11 @@ public class WelcomeFractivity extends FirebaseAdapterFractivity<WelcomeFractivi
         }
 
         @Override
-        protected void onItemClicked(View view, Object o, int position, String key, Object value) {
+        protected void onItemClicked(View view, Object holderObject, int position, String key, String link, Object value) {
+            Intent intent = new Intent(getContext(), UsersFractivity.class);
+            Log.e(TAG, "Starting with group:" + key);
+            intent.putExtra(UsersFractivity.STARTING_INTENT_WHICH_LUNCH_GROUP, key);
+            startActivity(intent);
         }
     }
 

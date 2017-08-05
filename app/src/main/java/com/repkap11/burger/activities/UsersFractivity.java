@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,9 @@ import com.repkap11.burger.models.User;
 
 public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.Holder, User> {
 
+    public static final String STARTING_INTENT_WHICH_LUNCH_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_LUNCH_GROUP";
+    private static final String TAG = UsersFractivity.class.getSimpleName();
+
     @Override
     protected FirebaseAdapterFragment createFirebaseFragment() {
         return new LunchLocationFragment<UsersFractivity.Holder>();
@@ -30,6 +34,23 @@ public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.H
 
     public static class LunchLocationFragment<AdapterHolder> extends FirebaseAdapterFragment {
 
+        private String mLunchGroup;
+
+        @Override
+        protected void create(Bundle savedInstanceState) {
+            Intent startingIntent = getActivity().getIntent();
+            if (startingIntent == null) {
+                Log.e(TAG, "Somehow we want to start, but don't have a starting intent");
+                getActivity().finish();
+                return;
+            }
+            mLunchGroup = startingIntent.getStringExtra(STARTING_INTENT_WHICH_LUNCH_GROUP);
+            Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
+            if (mLunchGroup == null) {
+                getActivity().finish();
+            }
+            super.create(savedInstanceState);
+        }
 
         private ListView mListView;
         private FloatingActionButton mFab;
@@ -45,9 +66,12 @@ public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.H
             mFab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(getActivity(), AddUserFractivity.class));
+                    Intent intent = new Intent(getActivity(), AddUserFractivity.class);
+                    intent.putExtra(AddUserFractivity.STARTING_INTENT_WHICH_LUNCH_GROUP, mLunchGroup);
+                    startActivity(intent);
                 }
             });
+
             return rootView;
         }
 
@@ -61,7 +85,7 @@ public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.H
         //Put this data
         @Override
         protected String adapterReference() {
-            return "users";
+            return mLunchGroup + "/users";
         }
 
         //With this filter
@@ -105,9 +129,9 @@ public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.H
         }
 
         @Override
-        protected void onItemClicked(View view, Object o, int position, String key, Object value) {
+        protected void onItemClicked(View view, Object holderObject, int position, String key, String link, Object value) {
             User user = (User) value;
-            Holder holder = (Holder) o;
+            Holder holder = (Holder) holderObject;
             Intent intent = new Intent(getActivity(), AboutUserFractivity.class);
             intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_INITIAL_NAME, user.firstName);
             intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_KEY, key);

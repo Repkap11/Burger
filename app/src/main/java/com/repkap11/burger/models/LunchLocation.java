@@ -11,6 +11,7 @@ public class LunchLocation {
     }
 
     public LunchLocation(String displayName) {
+        this();
         this.displayName = displayName;
     }
 }

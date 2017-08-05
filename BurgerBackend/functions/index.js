@@ -5,15 +5,15 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
-exports.add_user_to_locations_pref1 = functions.database.ref('/users/{userId}/lunch_preference_1')
+exports.add_user_to_locations_pref1 = functions.database.ref('/lunch_groups/{groupID}/users/{userId}/lunch_preference_1')
     .onWrite(event => {return add_user_to_locations_pref(event)});
-exports.add_user_to_locations_pref2 = functions.database.ref('/users/{userId}/lunch_preference_2')
+exports.add_user_to_locations_pref2 = functions.database.ref('/lunch_groups/{groupID}/users/{userId}/lunch_preference_2')
     .onWrite(event => {return add_user_to_locations_pref(event)});
-exports.add_user_to_locations_pref3 = functions.database.ref('/users/{userId}/lunch_preference_3')
+exports.add_user_to_locations_pref3 = functions.database.ref('/lunch_groups/{groupID}/users/{userId}/lunch_preference_3')
     .onWrite(event => {return add_user_to_locations_pref(event)});
-exports.add_user_to_locations_pref4 = functions.database.ref('/users/{userId}/lunch_preference_4')
+exports.add_user_to_locations_pref4 = functions.database.ref('/lunch_groups/{groupID}/users/{userId}/lunch_preference_4')
     .onWrite(event => {return add_user_to_locations_pref(event)});
-exports.add_user_to_locations_pref5 = functions.database.ref('/users/{userId}/lunch_preference_5')
+exports.add_user_to_locations_pref5 = functions.database.ref('/lunch_groups/{groupID}/users/{userId}/lunch_preference_5')
     .onWrite(event => {return add_user_to_locations_pref(event)});
 
 //event is Event (in our case a DeltaSnapshot type event

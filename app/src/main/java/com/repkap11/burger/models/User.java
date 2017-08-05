@@ -9,9 +9,9 @@ public class User {
     public String lastName;
     public String carSize;
     //But it is zero indexed you see, Sunday is day 0.
-    public String lunch_preference_1 = "-Kqa1x8QJ_IG9tScBmCW";//Lunch and Learn
+    public String lunch_preference_1 = "-Kqkv66paMYBnZBAzBHJ";//Lunch and Learn
     public String lunch_preference_2;
-    public String lunch_preference_3 = "-Kq_wkBxe24w3JxHFUqR";//Bill Gray's
+    public String lunch_preference_3 = "-KqkuqYJxlROl2jbW5BY";//Bill Gray's
     public String lunch_preference_4;
     public String lunch_preference_5;
 

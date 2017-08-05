@@ -1,9 +1,11 @@
 package com.repkap11.burger.activities;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,8 @@ import com.repkap11.burger.activities.base.Fractivity;
 import com.repkap11.burger.models.LunchLocation;
 
 public class AddLunchLocationFractivity extends Fractivity<AddLunchLocationFractivity.AddLunchLocationsFragment> {
+    private static final String TAG = AddUserFractivity.class.getSimpleName();
+    public static final String STARTING_INTENT_WHICH_LUNCH_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_LUNCH_GROUP";
 
     @Override
     protected AddLunchLocationFractivity.AddLunchLocationsFragment createFragment(Bundle savedInstanceState) {
@@ -27,9 +31,21 @@ public class AddLunchLocationFractivity extends Fractivity<AddLunchLocationFract
         private EditText mEditTextName;
         private Button mSaveLocationButtion;
 
+        private String mLunchGroup;
+
         @Override
         protected void create(Bundle savedInstanceState) {
-
+            Intent startingIntent = getActivity().getIntent();
+            if (startingIntent == null) {
+                Log.e(TAG, "Somehow we want to start, but don't have a starting intent");
+                getActivity().finish();
+                return;
+            }
+            mLunchGroup = startingIntent.getStringExtra(STARTING_INTENT_WHICH_LUNCH_GROUP);
+            Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
+            if (mLunchGroup == null) {
+                getActivity().finish();
+            }
         }
 
         @Override
@@ -51,9 +67,12 @@ public class AddLunchLocationFractivity extends Fractivity<AddLunchLocationFract
                 @Override
                 public void onClick(View view) {
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference locationsRef = database.getReference("lunch_locations");
+                    Log.e(TAG, "Adding lunch location to:" + mLunchGroup + "/lunch_locations");
+                    DatabaseReference locationsRef = database.getReference(mLunchGroup + "/lunch_locations");
                     DatabaseReference newLocation = locationsRef.push();
+                    Log.e(TAG, "Created new ref lunch location:" + newLocation.toString());
                     newLocation.setValue(new LunchLocation(mEditTextName.getText().toString()));
+
                     getActivity().finish();
                 }
             });

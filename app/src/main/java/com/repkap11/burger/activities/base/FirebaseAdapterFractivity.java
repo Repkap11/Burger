@@ -20,6 +20,7 @@ import com.repkap11.burger.FirebaseAdapter;
 
 
 public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> extends Fractivity<FirebaseAdapterFractivity.FirebaseAdapterFragment> {
+    private static final String TAG = FirebaseAdapterFractivity.class.getSimpleName();
 
     @Override
     protected FirebaseAdapterFragment createFragment(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
             messaging.subscribeToTopic("lunch");
 
             String reference = adapterReference();
+            Log.e(TAG, "Starting Adapter with key:" + reference);
             final DatabaseReference databaseRef = database.getReference(reference);
             Query refQuery = getQuery(databaseRef);
             refQuery.addChildEventListener(new ChildEventListener() {
@@ -111,10 +113,10 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
             FirebaseAdapter.AdapterKeyValue keyValuePair = (FirebaseAdapter.AdapterKeyValue) mAdapter.getItem(position);
             AdapterHolder holder = (AdapterHolder) view.getTag();
-            onItemClicked(view, holder, position, keyValuePair.key, (AdapterData) keyValuePair.value);
+            onItemClicked(view, holder, position, adapterReference() + "/" + keyValuePair.key, keyValuePair.key, (AdapterData) keyValuePair.value);
         }
 
-        protected abstract void onItemClicked(View view, AdapterHolder holder, int position, String key, AdapterData value);
+        protected abstract void onItemClicked(View view, AdapterHolder holder, int position, String key, String link, AdapterData value);
 
     }
 }
