@@ -17,18 +17,17 @@ import com.google.firebase.database.Query;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 import com.repkap11.burger.models.LunchGroup;
-import com.repkap11.burger.models.User;
 
 
-public class WelcomeFractivity extends FirebaseAdapterFractivity<WelcomeFractivity.Holder, LunchGroup> {
-    private static final String TAG = WelcomeFractivity.class.getSimpleName();
+public class LunchGroupsFractivity extends FirebaseAdapterFractivity<LunchGroupsFractivity.Holder, LunchGroup> {
+    private static final String TAG = LunchGroupsFractivity.class.getSimpleName();
 
     @Override
     protected FirebaseAdapterFragment createFirebaseFragment() {
-        return new LunchLocationFragment<WelcomeFractivity.Holder>();
+        return new LunchGroupFragment<Holder>();
     }
 
-    public static class LunchLocationFragment<AdapterHolder> extends FirebaseAdapterFragment {
+    public static class LunchGroupFragment<AdapterHolder> extends FirebaseAdapterFragment {
 
         @Override
         protected void create(Bundle savedInstanceState) {
@@ -41,10 +40,10 @@ public class WelcomeFractivity extends FirebaseAdapterFractivity<WelcomeFractivi
         //Using this activity view
         @Override
         protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fractivity_welcome, container, false);
-            mListView = (ListView) rootView.findViewById(R.id.fractivity_welcome_list);
+            View rootView = inflater.inflate(R.layout.fractivity_lunch_groups, container, false);
+            mListView = (ListView) rootView.findViewById(R.id.fractivity_lunch_groups_list);
             Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-            toolbar.setTitle(R.string.fractivity_welcome_title);
+            toolbar.setTitle(R.string.fractivity_lunch_groups_title);
             mFab = (FloatingActionButton) rootView.findViewById(R.id.fab);
             mFab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,14 +82,14 @@ public class WelcomeFractivity extends FirebaseAdapterFractivity<WelcomeFractivi
         //Where each element uses this view
         @Override
         public int getListResource() {
-            return R.layout.fractivity_welcome_list_element;
+            return R.layout.fractivity_lunch_groups_list_element;
         }
 
         //And that view has a holder caching position and subviews
         @Override
         public Holder populateHolder(View convertView) {
             Holder holder = new Holder();
-            holder.mName = (TextView) convertView.findViewById(R.id.fractivity_welcome_list_element_text);
+            holder.mName = (TextView) convertView.findViewById(R.id.fractivity_lunch_groups_list_element_text);
             return holder;
         }
 
@@ -110,9 +109,9 @@ public class WelcomeFractivity extends FirebaseAdapterFractivity<WelcomeFractivi
 
         @Override
         protected void onItemClicked(View view, Object holderObject, int position, String key, String link, Object value) {
-            Intent intent = new Intent(getContext(), SignInFractivity.class);
+            Intent intent = new Intent(getContext(), UsersFractivity.class);
             Log.e(TAG, "Starting with group:" + key);
-            intent.putExtra(SignInFractivity.STARTING_INTENT_WHICH_LUNCH_GROUP, key);
+            intent.putExtra(UsersFractivity.STARTING_INTENT_WHICH_LUNCH_GROUP, key);
             startActivity(intent);
         }
     }

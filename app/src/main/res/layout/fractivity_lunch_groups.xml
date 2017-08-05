@@ -23,28 +23,12 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
+
+    <ListView
+        android:id="@+id/fractivity_lunch_groups_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:padding="20dp"
-            android:text="@string/fractivity_welcome_select_your_lunch_group"
-            android:textSize="30sp" />
-
-
-        <ListView
-            android:id="@+id/fractivity_welcome_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true" />
-    </LinearLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
     <android.support.design.widget.FloatingActionButton

@@ -70,6 +70,15 @@ public class SignInFractivity extends Fractivity {
             if (mLunchGroup == null) {
                 getActivity().finish();
             }
+            mAuth = FirebaseAuth.getInstance();
+            // Check if user is signed in (non-null) and update UI accordingly.
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            Log.e(TAG, "Sign in done in create for:" + currentUser);
+            if (currentUser != null) {
+                continueAfterSignIn();
+                getActivity().finish();
+                return;
+            }
 
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(getString(R.string.default_web_client_id))
@@ -80,7 +89,7 @@ public class SignInFractivity extends Fractivity {
                     .enableAutoManage(getActivity() /* FragmentActivity */, this /* OnConnectionFailedListener */)
                     .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                     .build();
-            mAuth = FirebaseAuth.getInstance();
+
         }
 
         @Override
@@ -138,19 +147,12 @@ public class SignInFractivity extends Fractivity {
         }
 
         public void activityOnStart() {
-            // Check if user is signed in (non-null) and update UI accordingly.
-            FirebaseUser currentUser = mAuth.getCurrentUser();
-            Log.e(TAG, "Sign in done for:" + currentUser);
-            if (currentUser != null) {
-                continueAfterSignIn();
-            }
         }
 
         private void continueAfterSignIn() {
-            Intent intent = new Intent(getContext(), UsersFractivity.class);
-            intent.putExtra(UsersFractivity.STARTING_INTENT_WHICH_LUNCH_GROUP, mLunchGroup);
+            Intent intent = new Intent(getContext(), LunchGroupsFractivity.class);
             //Clear the back stack
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
     }
