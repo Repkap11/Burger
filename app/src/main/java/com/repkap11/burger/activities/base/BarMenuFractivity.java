@@ -83,7 +83,6 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
                     .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                     .build();
             mGoogleAPIClient.connect();
-            Log.e(TAG, "Google API Connecting");
         }
 
         protected final View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

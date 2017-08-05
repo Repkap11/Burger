@@ -24,4 +24,16 @@ public class User {
         this.lastName = lastName;
         this.carSize = carSize;
     }
+
+    public static String getFirstNameLink() {
+        return "firstName";
+    }
+
+    public static String getLastNameLink() {
+        return "lastName";
+    }
+
+    public static String getCarSizeLink() {
+        return "carSize";
+    }
 }

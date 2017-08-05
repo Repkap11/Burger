@@ -133,9 +133,13 @@ public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.H
         protected void onItemClicked(View view, Object holderObject, int position, String key, String link, Object value) {
             User user = (User) value;
             Holder holder = (Holder) holderObject;
-            Intent intent = new Intent(getActivity(), AboutUserFractivity.class);
-            intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_INITIAL_NAME, user.firstName);
-            intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_KEY, key);
+            //Intent intent = new Intent(getActivity(), AboutUserFractivity.class);
+            //intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_INITIAL_NAME, user.firstName);
+            //intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_KEY, key);
+
+            Intent intent = new Intent(getActivity(), AddUserFractivity.class);
+            intent.putExtra(AddUserFractivity.STARTING_INTENT_WHICH_LUNCH_GROUP, mLunchGroup);
+            intent.putExtra(AddUserFractivity.STARTING_INTENT_EDIT_EXISTING_USER, key);
             startActivity(intent);
         }
     }
