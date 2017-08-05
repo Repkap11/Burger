@@ -3,6 +3,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="action_update">Update</string>
+    <string name="action_sign_out">Sign Out</string>
 
     <string name="fractivity_users_title">User List</string>
     <string name="fractivity_lunch_locations_title">Lunch Locations</string>

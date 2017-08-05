@@ -11,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.SettingsActivity;
+import com.repkap11.burger.activities.SignInActivity;
+import com.repkap11.burger.activities.SignInFractivity;
 
 /**
  * Created by paul on 8/5/17.
@@ -28,12 +31,21 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
+            Intent intent;
             switch (item.getItemId()) {
+
                 case R.id.action_settings:
                     Toast.makeText(getActivity(), "Settings selected", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                    intent = new Intent(getActivity(), SettingsActivity.class);
                     startActivity(intent);
                     return true;
+                case R.id.action_sign_out:
+                    FirebaseAuth.getInstance().signOut();
+                    Toast.makeText(getActivity(), "Sign Out selected", Toast.LENGTH_SHORT).show();
+                    intent = new Intent(getActivity(), SignInFractivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    break;
                 default:
                     Toast.makeText(getActivity(), "Other selected", Toast.LENGTH_SHORT).show();
                     break;

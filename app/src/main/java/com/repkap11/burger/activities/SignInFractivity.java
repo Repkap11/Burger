@@ -59,22 +59,11 @@ public class SignInFractivity extends Fractivity {
 
         @Override
         protected void create(Bundle savedInstanceState) {
-            Intent startingIntent = getActivity().getIntent();
-            if (startingIntent == null) {
-                Log.e(TAG, "Somehow we want to start, but don't have a starting intent");
-                getActivity().finish();
-                return;
-            }
-            mLunchGroup = startingIntent.getStringExtra(STARTING_INTENT_WHICH_LUNCH_GROUP);
-            Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
-            if (mLunchGroup == null) {
-                getActivity().finish();
-            }
             mAuth = FirebaseAuth.getInstance();
             // Check if user is signed in (non-null) and update UI accordingly.
             FirebaseUser currentUser = mAuth.getCurrentUser();
-            Log.e(TAG, "Sign in done in create for:" + currentUser);
             if (currentUser != null) {
+                Log.e(TAG, "Sign in done in create for:" + currentUser);
                 continueAfterSignIn();
                 getActivity().finish();
                 return;
@@ -131,6 +120,7 @@ public class SignInFractivity extends Fractivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.e(TAG, "signInWithCredential:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
+                                continueAfterSignIn();
 
                                 //updateUI(user);
                             } else {
