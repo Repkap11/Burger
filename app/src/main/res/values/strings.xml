@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Burger</string>
+
     <string name="action_settings">Settings</string>
+    <string name="action_update">Update</string>
 
     <string name="fractivity_users_title">User List</string>
     <string name="fractivity_lunch_locations_title">Lunch Locations</string>
@@ -9,6 +11,8 @@
     <string name="fractivity_lunch_groups_title">Welcome to Burger</string>
     <string name="fractivity_add_lunch_group_title">Select a Group</string>
     <string name="fractivity_sign_in_title">Sign In</string>
+    <string name="fractivity_settings_title">Settings</string>
+
 
     <string name="fractivity_about_user_day_label1">Monday</string>
     <string name="fractivity_about_user_day_label2">Tuesday</string>
@@ -17,7 +21,6 @@
     <string name="fractivity_about_user_day_label5">Friday</string>
 
     <string name="fractivity_sign_in_message">Sign in with Google</string>
-
 
 
 </resources>

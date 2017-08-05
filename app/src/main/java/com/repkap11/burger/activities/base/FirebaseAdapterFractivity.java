@@ -32,7 +32,7 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
     protected abstract FirebaseAdapterFragment createFirebaseFragment();
 
 
-    public static abstract class FirebaseAdapterFragment<AdapterHolder, AdapterData> extends Fractivity.FractivityFragment implements AdapterView.OnItemClickListener {
+    public static abstract class FirebaseAdapterFragment<AdapterHolder, AdapterData> extends BarMenuFractivity.BarMenuFragment implements AdapterView.OnItemClickListener {
         FirebaseAdapter mAdapter;
 
         protected abstract String adapterReference();
@@ -84,7 +84,7 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
         private AbsListView mListView;
 
         @Override
-        protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        protected View createBarView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = createAdapterView(inflater, container, savedInstanceState);
             mListView = getListView(rootView);
             mListView.setAdapter(mAdapter);

@@ -106,7 +106,7 @@ public class LunchGroupsFractivity extends FirebaseAdapterFractivity<LunchGroups
         public Class getAdapterDataClass() {
             return LunchGroup.class;
         }
-
+        
         @Override
         protected void onItemClicked(View view, Object holderObject, int position, String key, String link, Object value) {
             Intent intent = new Intent(getContext(), UsersFractivity.class);
