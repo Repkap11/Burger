@@ -7,45 +7,37 @@
     <application
         android:name=".BurgerApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/burger_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.UsersFractivity"
-            android:label="@string/fractivity_users_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.LunchLocationsFractivity"
-            android:label="@string/fractivity_lunch_locations_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.AddLunchLocationFractivity"
-            android:label="@string/fractivity_add_lunch_location_title"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".activities.AddLunchGroupFractivity"
-            android:label="@string/fractivity_add_lunch_group_title"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".activities.AddUserFractivity"
-            android:label="@string/fractivity_add_user_title"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".activities.AboutUserFractivity"
-            android:label="@string/fractivity_add_user_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.LunchGroupsFractivity"
-            android:label="@string/fractivity_lunch_groups_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.SignInFractivity"
-            android:label="@string/fractivity_sign_in_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.SettingsActivity"
