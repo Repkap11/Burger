@@ -30,6 +30,10 @@ public class WelcomeFractivity extends FirebaseAdapterFractivity<WelcomeFractivi
 
     public static class LunchLocationFragment<AdapterHolder> extends FirebaseAdapterFragment {
 
+        @Override
+        protected void create(Bundle savedInstanceState) {
+            super.create(savedInstanceState);
+        }
 
         private ListView mListView;
         private FloatingActionButton mFab;
@@ -106,9 +110,9 @@ public class WelcomeFractivity extends FirebaseAdapterFractivity<WelcomeFractivi
 
         @Override
         protected void onItemClicked(View view, Object holderObject, int position, String key, String link, Object value) {
-            Intent intent = new Intent(getContext(), UsersFractivity.class);
+            Intent intent = new Intent(getContext(), SignInFractivity.class);
             Log.e(TAG, "Starting with group:" + key);
-            intent.putExtra(UsersFractivity.STARTING_INTENT_WHICH_LUNCH_GROUP, key);
+            intent.putExtra(SignInFractivity.STARTING_INTENT_WHICH_LUNCH_GROUP, key);
             startActivity(intent);
         }
     }

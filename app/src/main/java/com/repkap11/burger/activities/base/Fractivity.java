@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.repkap11.burger.R;
 
 public abstract class Fractivity<FragType extends Fractivity.FractivityFragment> extends AppCompatActivity {

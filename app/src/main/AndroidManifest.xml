@@ -39,9 +39,12 @@
             android:name=".activities.AboutUserFractivity"
             android:label="@string/fractivity_add_user_title"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".activities.WelcomeFractivity"
+            android:label="@string/fractivity_welcome_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.SignInFractivity"
             android:label="@string/fractivity_welcome_title"
             android:theme="@style/AppTheme.NoActionBar" />
 
