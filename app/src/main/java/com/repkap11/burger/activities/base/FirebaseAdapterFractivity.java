@@ -39,6 +39,7 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
 
         @Override
         protected void create(Bundle savedInstanceState) {
+            super.create(savedInstanceState);
             mAdapter = new FirebaseAdapter<AdapterHolder, AdapterData>(this);
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();

@@ -46,7 +46,7 @@
         <activity
             android:name=".activities.SignInFractivity"
             android:label="@string/fractivity_sign_in_title"
-            android:theme="@style/AppTheme.Translucent" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings" />

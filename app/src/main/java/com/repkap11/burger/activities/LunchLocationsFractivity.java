@@ -47,6 +47,7 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
 
         @Override
         protected void create(Bundle savedInstanceState) {
+            super.create(savedInstanceState);
             Intent startingIntent = getActivity().getIntent();
             if (startingIntent == null) {
                 Log.e(TAG, "Somehow we want to start, but don't have a starting intent");

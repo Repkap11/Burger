@@ -44,10 +44,20 @@ public class SignInFractivity extends Fractivity {
     private static final String TAG = SignInFragment.class.getSimpleName();
 
     private static final int REQUEST_CODE_SIGN_IN = 43;
+    private FirebaseAuth mAuth;
 
     @Override
     protected FractivityFragment createFragment(Bundle savedInstanceState) {
-        return new SignInFragment();
+        mAuth = FirebaseAuth.getInstance();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            Log.e(TAG, "Sign in done in create for:" + currentUser);
+            //continueAfterSignIn();
+            return new LunchGroupsFractivity.LunchGroupFragment();
+        } else {
+            return new SignInFragment();
+        }
     }
 
 
@@ -60,14 +70,6 @@ public class SignInFractivity extends Fractivity {
         @Override
         protected void create(Bundle savedInstanceState) {
             mAuth = FirebaseAuth.getInstance();
-            // Check if user is signed in (non-null) and update UI accordingly.
-            FirebaseUser currentUser = mAuth.getCurrentUser();
-            if (currentUser != null) {
-                Log.e(TAG, "Sign in done in create for:" + currentUser);
-                continueAfterSignIn();
-                getActivity().finish();
-                return;
-            }
 
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(getString(R.string.default_web_client_id))
@@ -78,7 +80,6 @@ public class SignInFractivity extends Fractivity {
                     .enableAutoManage(getActivity() /* FragmentActivity */, this /* OnConnectionFailedListener */)
                     .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                     .build();
-
         }
 
         @Override
@@ -120,7 +121,7 @@ public class SignInFractivity extends Fractivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.e(TAG, "signInWithCredential:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                continueAfterSignIn();
+                                ((SignInFractivity) getActivity()).continueAfterSignIn();
 
                                 //updateUI(user);
                             } else {
@@ -135,22 +136,13 @@ public class SignInFractivity extends Fractivity {
                         }
                     });
         }
-
-        public void activityOnStart() {
-        }
-
-        private void continueAfterSignIn() {
-            Intent intent = new Intent(getContext(), LunchGroupsFractivity.class);
-            //Clear the back stack
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        ((SignInFragment) mFragment).activityOnStart();
+    private void continueAfterSignIn() {
+        Intent intent = new Intent(this, LunchGroupsFractivity.class);
+        //Clear the back stack
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
 
