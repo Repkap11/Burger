@@ -1,5 +1,6 @@
 package com.repkap11.burger.activities.base;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.repkap11.burger.R;
 
 public abstract class Fractivity<FragType extends Fractivity.FractivityFragment> extends AppCompatActivity {
@@ -71,7 +71,22 @@ public abstract class Fractivity<FragType extends Fractivity.FractivityFragment>
         }
 
         protected abstract View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
+
         protected abstract void destroyView();
+
+        protected void resuestPermissionResult(int requestCode, String[] permissions, int[] grantResults){}
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.e(TAG, "Permission: " + permissions[0] + "was " + grantResults[0]);
+            //resume tasks needing this permission
+            mFragment.resuestPermissionResult(requestCode, permissions, grantResults);
+        } else {
+            Log.e(TAG, "Permissions not granted");
+        }
     }
 
 

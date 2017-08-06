@@ -25,10 +25,13 @@
     <string name="fractivity_sign_in_message">Sign up for Burger</string>
     <string name="fractivity_sign_in_with_google">Sign in</string>
 
-
     <string name="fractivity_lunch_groups_message">Burger will automatically match you with compatible partners in your Lunch Group</string>
 
-
+    <string name="update_url">https://repkap11.com/burger/Burger.apk</string>
+    <string name="update_app_task_signatures_dont_match">Signatures do not match, are you running a debug version of the app?</string>
+    <string name="update_app_task_no_update_avaliable">You are up to date with repkap11.com</string>
+    <string name="update_app_task_you_are_newer">You have a newer version than the server. Lucky you.</string>
+    <string name="update_app_task_error_updating_burger">Error Updating Burger</string>
 
 
     <string name="title_activity_settings">Settings</string>
@@ -104,6 +107,5 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
-
 
 </resources>

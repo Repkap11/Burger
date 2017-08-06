@@ -1,10 +1,13 @@
 package com.repkap11.burger.activities.base;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,16 +20,13 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.repkap11.burger.R;
+import com.repkap11.burger.UpdateAppTask;
 import com.repkap11.burger.activities.SettingsActivity;
 import com.repkap11.burger.activities.SignInFractivity;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by paul on 8/5/17.
@@ -34,8 +34,11 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class BarMenuFractivity extends Fractivity<Fractivity.FractivityFragment> {
 
+    private static final String TAG = BarMenuFractivity.class.getSimpleName();
+
     public abstract static class BarMenuFragment extends Fractivity.FractivityFragment implements GoogleApiClient.OnConnectionFailedListener {
         private static final String TAG = BarMenuFractivity.class.getSimpleName();
+        private static final int REQUEST_CODE_ASK_FOR_WRITE_EXPERNAL_PERMISSION = 44;
         private GoogleApiClient mGoogleAPIClient;
 
         @Override
@@ -51,6 +54,10 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
                     Intent intent = new Intent(getActivity(), SettingsActivity.class);
                     startActivity(intent);
                     return true;
+
+                case R.id.action_update:
+                    startUpdateAppProcedure();
+                    break;
                 case R.id.action_sign_out:
                     FirebaseAuth.getInstance().signOut();
                     Auth.GoogleSignInApi.signOut(mGoogleAPIClient).setResultCallback(new ResultCallback<Status>() {
@@ -70,6 +77,26 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
 
             }
             return false;
+        }
+
+        private void startUpdateAppProcedure() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (getActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_FOR_WRITE_EXPERNAL_PERMISSION);
+                    return;
+                }
+            }
+            continueUpdateAppWithPermissions();
+        }
+
+        @Override
+        public void resuestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
+            continueUpdateAppWithPermissions();
+
+        }
+
+        private void continueUpdateAppWithPermissions() {
+            new UpdateAppTask(getActivity().getApplicationContext(), true).execute();
         }
 
         @Override
@@ -109,5 +136,4 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
 
         }
     }
-
 }
