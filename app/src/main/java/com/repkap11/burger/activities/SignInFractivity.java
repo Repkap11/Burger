@@ -1,6 +1,8 @@
 package com.repkap11.burger.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -28,14 +30,21 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.FirebaseAdapter;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 import com.repkap11.burger.activities.base.Fractivity;
 import com.repkap11.burger.models.LunchLocation;
 import com.repkap11.burger.models.User;
+
+import java.util.UUID;
 
 
 public class SignInFractivity extends Fractivity {
@@ -54,12 +63,17 @@ public class SignInFractivity extends Fractivity {
         if (currentUser != null) {
             Log.e(TAG, "Sign in done in create for:" + currentUser);
             //continueAfterSignIn();
-            return new LunchGroupsFractivity.LunchGroupFragment();
+            String perferedGroup = BurgerApplication.readUserPerferedGroup(this);
+            Log.e(TAG, "Starting signed in user with preferedGroup:" + perferedGroup);
+            if (perferedGroup == null) {
+                return new LunchGroupsFractivity.LunchGroupFragment<>();
+            } else {
+                return new UsersFractivity.UsersFragment();
+            }
         } else {
             return new SignInFragment();
         }
     }
-
 
     public static class SignInFragment extends Fractivity.FractivityFragment implements GoogleApiClient.OnConnectionFailedListener {
 

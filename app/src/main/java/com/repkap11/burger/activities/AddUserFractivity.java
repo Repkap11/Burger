@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.base.Fractivity;
 import com.repkap11.burger.models.User;
@@ -52,7 +53,7 @@ public class AddUserFractivity extends Fractivity<AddUserFractivity.AddUserFragm
                 getActivity().finish();
                 return;
             }
-            mLunchGroup = startingIntent.getStringExtra(STARTING_INTENT_WHICH_LUNCH_GROUP);
+            mLunchGroup = BurgerApplication.readUserPerferedGroup(getActivity());
             mExistingUser = startingIntent.getStringExtra(STARTING_INTENT_EDIT_EXISTING_USER);
             if (mLunchGroup == null) {
                 Log.e(TAG, "Finishing because we don't have a lunch group");

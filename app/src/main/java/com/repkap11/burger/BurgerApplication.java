@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.repkap11.burger.activities.LunchGroupsFractivity;
+
 import java.util.UUID;
 
 /**
@@ -13,7 +15,9 @@ import java.util.UUID;
 
 
 public class BurgerApplication extends Application {
+    public static final String BURGER_USER_GROUP_PREF = "users_prefered_group";
     private static final String BURGER_GUID = "burger-user-guid";
+
     private static final String TAG = BurgerApplication.class.getSimpleName();
 
     private String mUniqueID;
@@ -32,6 +36,20 @@ public class BurgerApplication extends Application {
         } else {
             Log.e(TAG, "Re-using guid:" + mUniqueID);
         }
+    }
+
+    public static String readUserPerferedGroup(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(BurgerApplication.BURGER_USER_GROUP_PREF, Context.MODE_PRIVATE);
+        String pref = prefs.getString(BurgerApplication.BURGER_USER_GROUP_PREF, null);
+        return pref;
+    }
+
+
+    public static void writeUserPerferedGroup(Context context, String value){
+        SharedPreferences prefs = context.getSharedPreferences(BurgerApplication.BURGER_USER_GROUP_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(BurgerApplication.BURGER_USER_GROUP_PREF, value);
+        editor.apply();
     }
 
     public String getUserGuid() {

@@ -9,16 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
-import com.repkap11.burger.FirebaseAdapter;
+import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
-import com.repkap11.burger.models.LunchLocation;
 import com.repkap11.burger.models.User;
 
 
@@ -29,23 +27,16 @@ public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.H
 
     @Override
     protected FirebaseAdapterFragment createFirebaseFragment() {
-        return new LunchLocationFragment<UsersFractivity.Holder>();
+        return new UsersFragment<Holder>();
     }
 
-    public static class LunchLocationFragment<AdapterHolder> extends FirebaseAdapterFragment {
+    public static class UsersFragment<AdapterHolder> extends FirebaseAdapterFragment {
 
         private String mLunchGroup;
 
         @Override
         protected void create(Bundle savedInstanceState) {
-            super.create(savedInstanceState);
-            Intent startingIntent = getActivity().getIntent();
-            if (startingIntent == null) {
-                Log.e(TAG, "Somehow we want to start, but don't have a starting intent");
-                getActivity().finish();
-                return;
-            }
-            mLunchGroup = startingIntent.getStringExtra(STARTING_INTENT_WHICH_LUNCH_GROUP);
+            mLunchGroup = BurgerApplication.readUserPerferedGroup(getActivity());
             Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
             if (mLunchGroup == null) {
                 getActivity().finish();
@@ -86,6 +77,7 @@ public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.H
         //Put this data
         @Override
         protected String adapterReference() {
+            Log.e(TAG, "Getting adapter with group:" + mLunchGroup);
             return mLunchGroup + "/users";
         }
 

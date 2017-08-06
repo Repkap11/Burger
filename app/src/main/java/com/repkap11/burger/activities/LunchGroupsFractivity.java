@@ -12,8 +12,11 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
+import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 import com.repkap11.burger.models.LunchGroup;
@@ -111,7 +114,14 @@ public class LunchGroupsFractivity extends FirebaseAdapterFractivity<LunchGroups
         protected void onItemClicked(View view, Object holderObject, int position, String key, String link, Object value) {
             Intent intent = new Intent(getContext(), UsersFractivity.class);
             Log.e(TAG, "Starting with group:" + key);
-            intent.putExtra(UsersFractivity.STARTING_INTENT_WHICH_LUNCH_GROUP, key);
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user == null) {
+                Log.e(TAG, "Unexpected null user");
+                getActivity().finish();
+                return;
+            }
+            BurgerApplication.writeUserPerferedGroup(LunchGroupFragment.this.getActivity(), key);
+            Log.e(TAG, "Writing user's prefered group:" + key);
             startActivity(intent);
         }
     }
