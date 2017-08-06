@@ -19,21 +19,41 @@
 
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-        <TextView
-            android:id="@+id/fractivity_about_user_edit_text_full_name"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_person_black"
-            android:padding="20dp" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/fractivity_about_user_edit_text_car_size"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_car_black"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:orientation="vertical">
 
-            android:padding="20dp" />
+                <TextView
+                    android:id="@+id/fractivity_about_user_text_full_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_person_black"
+                    android:padding="20dp" />
+
+                <TextView
+                    android:id="@+id/fractivity_about_user_text_car_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_car_black"
+
+                    android:padding="20dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/fractivity_about_user_edit_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="Edit" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -9,7 +9,7 @@
     <string name="fractivity_users_title">User List</string>
     <string name="fractivity_lunch_locations_title">Lunch Locations</string>
     <string name="fractivity_add_lunch_location_title">Add Location</string>
-    <string name="fractivity_add_user_title">Add User</string>
+    <string name="fractivity_edit_user_title">Edit User</string>
     <string name="fractivity_lunch_groups_title">Lunch Groups</string>
     <string name="fractivity_add_lunch_group_title">Select a Group</string>
     <string name="fractivity_sign_in_title">Welcome to Burger</string>
@@ -29,7 +29,7 @@
 
     <string name="update_url">https://repkap11.com/burger/Burger.apk</string>
     <string name="update_app_task_signatures_dont_match">Signatures do not match, are you running a debug version of the app?</string>
-    <string name="update_app_task_no_update_avaliable">You are up to date with repkap11.com</string>
+    <string name="update_app_task_no_update_avaliable">Already up to date with Repkap11.com</string>
     <string name="update_app_task_you_are_newer">You have a newer version than the server. Lucky you.</string>
     <string name="update_app_task_error_updating_burger">Error Updating Burger</string>
 

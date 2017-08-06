@@ -15,11 +15,13 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 import com.repkap11.burger.models.LunchGroup;
+import com.repkap11.burger.models.User;
 
 
 public class LunchGroupsFractivity extends FirebaseAdapterFractivity<LunchGroupsFractivity.Holder, LunchGroup> {
@@ -112,7 +114,7 @@ public class LunchGroupsFractivity extends FirebaseAdapterFractivity<LunchGroups
 
         @Override
         protected void onItemClicked(View view, Object holderObject, int position, String key, String link, Object value) {
-            Intent intent = new Intent(getContext(), UsersFractivity.class);
+            Intent intent = new Intent(getContext(), AboutUserFractivity.class);
             Log.e(TAG, "Starting with group:" + key);
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if (user == null) {
@@ -122,6 +124,9 @@ public class LunchGroupsFractivity extends FirebaseAdapterFractivity<LunchGroups
             }
             BurgerApplication.writeUserPerferedGroup(LunchGroupFragment.this.getActivity(), key);
             Log.e(TAG, "Writing user's prefered group:" + key);
+            intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_INITIAL_NAME, user.getDisplayName());
+            intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_KEY, BurgerApplication.getUserKey(getActivity()));
+
             startActivity(intent);
         }
     }

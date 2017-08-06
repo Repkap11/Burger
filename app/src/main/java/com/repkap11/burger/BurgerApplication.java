@@ -119,6 +119,15 @@ public class BurgerApplication extends Application {
         }
         //TODO write the user token somewhere in the database where it can be found
         //database.getReference(user)
+    }
 
+    public static String getUserKey(Context context) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String group = readUserPerferedGroup(context);
+        if (group == null || user == null) {
+            return null;
+        }
+        return group + "/users/" + user.getUid();
     }
 }

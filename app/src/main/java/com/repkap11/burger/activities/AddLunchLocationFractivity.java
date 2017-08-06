@@ -19,7 +19,7 @@ import com.repkap11.burger.activities.base.Fractivity;
 import com.repkap11.burger.models.LunchLocation;
 
 public class AddLunchLocationFractivity extends Fractivity<AddLunchLocationFractivity.AddLunchLocationsFragment> {
-    private static final String TAG = AddUserFractivity.class.getSimpleName();
+    private static final String TAG = EditUserFractivity.class.getSimpleName();
     public static final String STARTING_INTENT_WHICH_LUNCH_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_LUNCH_GROUP";
 
     @Override

@@ -28,7 +28,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name=".activities.AddUserFractivity"
+            android:name=".activities.EditUserFractivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible" />
         <activity

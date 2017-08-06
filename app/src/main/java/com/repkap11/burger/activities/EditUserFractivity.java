@@ -22,24 +22,21 @@ import com.repkap11.burger.R;
 import com.repkap11.burger.activities.base.Fractivity;
 import com.repkap11.burger.models.User;
 
-public class AddUserFractivity extends Fractivity<AddUserFractivity.AddUserFragment> {
-
-    public static final String STARTING_INTENT_WHICH_LUNCH_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_LUNCH_GROUP";
+public class EditUserFractivity extends Fractivity<EditUserFractivity.EditUserFragment> {
     public static final String STARTING_INTENT_EDIT_EXISTING_USER = "com.repkap11.burger.STARTING_INTENT_EDIT_EXISTING_USER";
 
-    private static final String TAG = AddUserFractivity.class.getSimpleName();
+    private static final String TAG = EditUserFractivity.class.getSimpleName();
 
     @Override
-    protected AddUserFragment createFragment(Bundle savedInstanceState) {
-        return new AddUserFragment();
+    protected EditUserFragment createFragment(Bundle savedInstanceState) {
+        return new EditUserFragment();
     }
 
-    public static class AddUserFragment extends Fractivity.FractivityFragment {
+    public static class EditUserFragment extends Fractivity.FractivityFragment {
 
         private EditText mEditTextCarSize;
         private Button mSaveLocationButtion;
-        private EditText mEditTextFirstName;
-        private EditText mEditTextLastName;
+        private EditText mEditTextDisplayName;
 
         private String mLunchGroup;
         private String mExistingUser;
@@ -64,9 +61,9 @@ public class AddUserFractivity extends Fractivity<AddUserFractivity.AddUserFragm
 
         @Override
         protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fractivity_add_user, container, false);
+            View rootView = inflater.inflate(R.layout.fractivity_edit_user, container, false);
             Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-            toolbar.setTitle(R.string.fractivity_add_user_title);
+            toolbar.setTitle(R.string.fractivity_edit_user_title);
             Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_clear_black, null);
             toolbar.setNavigationIcon(drawable);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -75,39 +72,22 @@ public class AddUserFractivity extends Fractivity<AddUserFractivity.AddUserFragm
                     getActivity().finish();
                 }
             });
-            mEditTextCarSize = (EditText) rootView.findViewById(R.id.fractivity_add_user_edit_text_car_size);
-            mEditTextFirstName = (EditText) rootView.findViewById(R.id.fractivity_add_user_edit_text_first_name);
-            mEditTextLastName = (EditText) rootView.findViewById(R.id.fractivity_add_user_edit_text_last_name);
-
+            mEditTextCarSize = (EditText) rootView.findViewById(R.id.fractivity_edit_user_edit_text_car_size);
+            mEditTextDisplayName = (EditText) rootView.findViewById(R.id.fractivity_edit_user_edit_text_display_name);
 
             if (mExistingUser != null && mFirstTimeShowing) {
                 final FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference user = database.getReference(mExistingUser);
 
-                final DatabaseReference firstNameRef = user.child(User.getFirstNameLink());
-                final DatabaseReference lastNameRef = user.child(User.getLastNameLink());
+                final DatabaseReference firstNameRef = user.child(User.getDisplayNameLink());
                 final DatabaseReference carSizeRef = user.child(User.getCarSizeLink());
 
                 firstNameRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         firstNameRef.removeEventListener(this);
-                        if (mEditTextFirstName != null) {
-                            mEditTextFirstName.setText(dataSnapshot.getValue(String.class));
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-                lastNameRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        lastNameRef.removeEventListener(this);
-                        if (mEditTextLastName != null) {
-                            mEditTextLastName.setText(dataSnapshot.getValue(String.class));
+                        if (mEditTextDisplayName != null) {
+                            mEditTextDisplayName.setText(dataSnapshot.getValue(String.class));
                         }
                     }
 
@@ -135,7 +115,7 @@ public class AddUserFractivity extends Fractivity<AddUserFractivity.AddUserFragm
             }
             mFirstTimeShowing = false;
 
-            mSaveLocationButtion = (Button) rootView.findViewById(R.id.fractivity_add_user_button_save);
+            mSaveLocationButtion = (Button) rootView.findViewById(R.id.fractivity_edit_user_button_save);
             mSaveLocationButtion.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -144,12 +124,11 @@ public class AddUserFractivity extends Fractivity<AddUserFractivity.AddUserFragm
                     if (mExistingUser == null) {
                         DatabaseReference usersRef = database.getReference(mLunchGroup + "/users");
                         user = usersRef.push();
-                        user.setValue(new User(mEditTextFirstName.getText().toString(), mEditTextLastName.getText().toString(), mEditTextCarSize.getText().toString()));
+                        user.setValue(new User(mEditTextDisplayName.getText().toString(), mEditTextCarSize.getText().toString()));
                     } else {
                         user = database.getReference(mExistingUser);
-                        //user.setValue(new User(mEditTextFirstName.getText().toString(), mEditTextLastName.getText().toString(), mEditTextCarSize.getText().toString()));
-                        user.child(User.getFirstNameLink()).setValue(mEditTextFirstName.getText().toString());
-                        user.child(User.getLastNameLink()).setValue(mEditTextLastName.getText().toString());
+                        //user.setValue(new User(mEditTextDisplayName.getText().toString(), mEditTextLastName.getText().toString(), mEditTextCarSize.getText().toString()));
+                        user.child(User.getDisplayNameLink()).setValue(mEditTextDisplayName.getText().toString());
                         user.child(User.getCarSizeLink()).setValue(mEditTextCarSize.getText().toString());
                     }
                     getActivity().finish();
@@ -161,8 +140,7 @@ public class AddUserFractivity extends Fractivity<AddUserFractivity.AddUserFragm
         @Override
         protected void destroyView() {
             mEditTextCarSize = null;
-            mEditTextFirstName = null;
-            mEditTextLastName = null;
+            mEditTextDisplayName = null;
             mSaveLocationButtion = null;
         }
     }

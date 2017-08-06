@@ -5,7 +5,7 @@ package com.repkap11.burger.models;
  */
 
 public class User {
-    public String firstName;
+    public String displayName;
     public String lastName;
     public String carSize;
     //But it is zero indexed you see, Sunday is day 0.
@@ -18,19 +18,15 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String carSize) {
+    public User(String displayName, String carSize) {
         this();
-        this.firstName = firstName;
+        this.displayName = displayName;
         this.lastName = lastName;
         this.carSize = carSize;
     }
 
-    public static String getFirstNameLink() {
-        return "firstName";
-    }
-
-    public static String getLastNameLink() {
-        return "lastName";
+    public static String getDisplayNameLink() {
+        return "displayName";
     }
 
     public static String getCarSizeLink() {

@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -17,12 +19,13 @@ import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
-import com.repkap11.burger.activities.base.Fractivity;
+import com.repkap11.burger.activities.base.BarMenuFractivity;
 import com.repkap11.burger.models.LunchLocation;
 import com.repkap11.burger.models.User;
 
-public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUserFragment> {
+public class AboutUserFractivity extends BarMenuFractivity {
 
     private static final String TAG = AboutUserFractivity.class.getSimpleName();
     public static final String STARTING_INTENT_USER_INITIAL_NAME = "com.repkap11.burger.STARTING_INTENT_USER_INITIAL_NAME";
@@ -34,16 +37,13 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
 
     @Override
     protected AboutUserFragment createFragment(Bundle savedInstanceState) {
-        Intent startingIntent = getIntent();
-        if (startingIntent == null) {
-            finish();
-        }
         return new AboutUserFragment();
     }
 
-    public static class AboutUserFragment extends Fractivity.FractivityFragment {
+    public static class AboutUserFragment extends BarMenuFragment {
         private TextView mTextFullName;
         private TextView mEditTextCarSize;
+        private Button mButtonEditUser;
         private Toolbar mToolbar;
         private TextView mLunchChoiceLabel1;
         private TextView mLunchChoiceLabel2;
@@ -65,6 +65,7 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
 
         @Override
         protected void create(Bundle savedInstanceState) {
+            super.create(savedInstanceState);
             Intent startingIntent = getActivity().getIntent();
             if (startingIntent == null) {
                 Log.e(TAG, "Somehow we want to start, but don't have a starting intent");
@@ -72,9 +73,11 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                 return;
             }
             mUserKey = startingIntent.getStringExtra(STARTING_INTENT_USER_KEY);
+
             if (mUserKey == null) {
-                Log.e(TAG, "Finishing because we don't have a user key");
-                getActivity().finish();
+                mUserKey = BurgerApplication.getUserKey(getActivity());
+                Log.e(TAG, "Using default user because a user key was not spesified");
+                //getActivity().finish();
             }
         }
 
@@ -102,7 +105,7 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
         }
 
         @Override
-        protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        protected View createBarView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fractivity_about_user, container, false);
             mToolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
             //toolbar.setTitle(R.string.fractivity_about_user_title);
@@ -114,8 +117,17 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                     getActivity().finish();
                 }
             });
-            mTextFullName = (TextView) rootView.findViewById(R.id.fractivity_about_user_edit_text_full_name);
-            mEditTextCarSize = (TextView) rootView.findViewById(R.id.fractivity_about_user_edit_text_car_size);
+            mTextFullName = (TextView) rootView.findViewById(R.id.fractivity_about_user_text_full_name);
+            mEditTextCarSize = (TextView) rootView.findViewById(R.id.fractivity_about_user_text_car_size);
+            mButtonEditUser = (Button) rootView.findViewById(R.id.fractivity_about_user_edit_user);
+            mButtonEditUser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), EditUserFractivity.class);
+                    intent.putExtra(EditUserFractivity.STARTING_INTENT_EDIT_EXISTING_USER, mUserKey);
+                    startActivity(intent);
+                }
+            });
 
 
             View rootDay1 = rootView.findViewById(R.id.fractivity_about_user_day_1);
@@ -197,8 +209,8 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
                     if (mTextFullName == null) {
                         return;
                     }
-                    mTextFullName.setText(user.firstName + " " + user.lastName);
-                    mToolbar.setTitle(user.firstName);
+                    mTextFullName.setText(user.displayName);
+                    mToolbar.setTitle(user.displayName);
                     mEditTextCarSize.setText(user.carSize);
 
                     if (mLunchPreference1Ref != null) {
@@ -375,6 +387,7 @@ public class AboutUserFractivity extends Fractivity<AboutUserFractivity.AboutUse
             }
             mEditTextCarSize = null;
             mTextFullName = null;
+            mButtonEditUser = null;
             mLunchChoiceLabel1 = null;
             mLunchChoiceLabel2 = null;
             mLunchChoiceLabel3 = null;

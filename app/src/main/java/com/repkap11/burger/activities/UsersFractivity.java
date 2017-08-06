@@ -58,8 +58,7 @@ public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.H
             mFab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), AddUserFractivity.class);
-                    intent.putExtra(AddUserFractivity.STARTING_INTENT_WHICH_LUNCH_GROUP, mLunchGroup);
+                    Intent intent = new Intent(getActivity(), EditUserFractivity.class);
                     startActivity(intent);
                 }
             });
@@ -112,7 +111,7 @@ public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.H
         public void populateView(View convertView, Object o, int position, String key, Object value) {
             Holder holder = (Holder) o;
             User user = (User) value;
-            holder.mName.setText(user.firstName + " " + user.lastName);
+            holder.mName.setText(user.displayName);
             holder.mIndex = position;
         }
 
@@ -129,9 +128,8 @@ public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.H
             //intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_INITIAL_NAME, user.firstName);
             //intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_KEY, key);
 
-            Intent intent = new Intent(getActivity(), AddUserFractivity.class);
-            intent.putExtra(AddUserFractivity.STARTING_INTENT_WHICH_LUNCH_GROUP, mLunchGroup);
-            intent.putExtra(AddUserFractivity.STARTING_INTENT_EDIT_EXISTING_USER, key);
+            Intent intent = new Intent(getActivity(), EditUserFractivity.class);
+            intent.putExtra(EditUserFractivity.STARTING_INTENT_EDIT_EXISTING_USER, key);
             startActivity(intent);
         }
     }

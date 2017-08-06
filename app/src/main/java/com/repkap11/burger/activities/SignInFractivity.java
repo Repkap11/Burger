@@ -80,7 +80,8 @@ public class SignInFractivity extends Fractivity {
             if (perferedGroup == null) {
                 return new LunchGroupsFractivity.LunchGroupFragment<>();
             } else {
-                return new UsersFractivity.UsersFragment();
+                return new AboutUserFractivity.AboutUserFragment();
+                //return new UsersFractivity.UsersFragment();
             }
         } else {
             return new SignInFragment();
