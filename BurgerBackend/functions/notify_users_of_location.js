@@ -10,23 +10,34 @@ exports.send_notification_for_date = function send_notification_for_date(req, re
     var groupsLocations = lunchGroup.child('lunch_locations');
     groupsLocations.once('value').then(function(lunchLocationsSnapshot) {
 
-        console.error('Read Lunch Locations:', lunchLocationsSnapshot.key,' val:', lunchLocationsSnapshot.val());
+        //console.error('Read Lunch Locations:', lunchLocationsSnapshot.key,' val:', lunchLocationsSnapshot.val());
         lunchLocationsSnapshot.forEach(function(locationSnapshot) {
 
-            console.error('Read Location:', locationSnapshot.key,' val:', locationSnapshot.val());
+            //console.error('Read Location:', locationSnapshot.key,' val:', locationSnapshot.val());
+            var locationName = locationSnapshot.child('displayName').val();
             locationSnapshot.child('lunch_preference_1').child('users').forEach(function(userKeySnapshot){
 
-                console.error('Read UserKey:', userKeySnapshot.key,' val:', userKeySnapshot.val());
+                //console.error('Read UserKey:', userKeySnapshot.key,' val:', userKeySnapshot.val());
                 lunchGroup.child('users').child(userKeySnapshot.key).once('value').then(function(userSnapshot){
 
-                    console.error('Read ReadUser:', userSnapshot.key,' val:', userSnapshot.val());
+                    //console.error('Read ReadUser:', userSnapshot.key,' val:', userSnapshot.val());
+                    var userName = userSnapshot.child('displayName').val();
                     userSnapshot.child('devices').forEach(function(userDeviceSnapshot){
-
-                        console.error('Will notify device:', userDeviceSnapshot.key,' val:', userDeviceSnapshot.val());
-                        //userDeviceSnapshot.key
+                        console.error('Will notify device:'+ userDeviceSnapshot.key,' val:'+ userDeviceSnapshot.val());
+                        var title = 'Lunch Reminder';
+                        var body = userName+', you have lunch at '+locationName+' today'
+                         const payload = {
+                              notification: {
+                                title: title,
+                                body: body
+                              }
+                        }
+                        console.error('Notifying:',userName,' of lunch at ', locationName);
+                        admin.messaging().sendToDevice(userDeviceSnapshot.key, payload);
                     });
                 });
             });
         });
     });
+    res.status(200).send("Triggering notifications");
 }
