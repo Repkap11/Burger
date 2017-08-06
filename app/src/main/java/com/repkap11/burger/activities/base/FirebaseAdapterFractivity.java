@@ -22,6 +22,13 @@ import com.repkap11.burger.FirebaseAdapter;
 public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> extends Fractivity<FirebaseAdapterFractivity.FirebaseAdapterFragment> {
     private static final String TAG = FirebaseAdapterFractivity.class.getSimpleName();
 
+
+    //Since Fractivity onCreate needs to not be final (for version string checking) enfore that here
+    @Override
+    protected final void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     protected FirebaseAdapterFragment createFragment(Bundle savedInstanceState) {
         //use the bundle to create the fragment

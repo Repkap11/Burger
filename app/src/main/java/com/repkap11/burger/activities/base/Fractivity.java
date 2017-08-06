@@ -18,8 +18,9 @@ public abstract class Fractivity<FragType extends Fractivity.FractivityFragment>
     private static final String TAG = Fractivity.class.getSimpleName();
     protected FragType mFragment;
 
+    //You really should't overwide this
     @Override
-    protected final void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fractivity);
         if (savedInstanceState == null) {
