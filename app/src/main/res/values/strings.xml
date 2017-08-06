@@ -25,7 +25,8 @@
     <string name="fractivity_sign_in_message">Sign up for Burger</string>
     <string name="fractivity_sign_in_with_google">Sign in</string>
 
-    <string name="fractivity_lunch_groups_message">Burger will automatically match you with compatible partners in your Lunch Group</string>
+    <string name="fractivity_lunch_groups_top_message">Burger will automatically match you with compatible partners in your Lunch Group</string>
+    <string name="fractivity_lunch_groups_bottom_message">To change groups log out then back in</string>
 
     <string name="update_url">https://repkap11.com/burger/Burger.apk</string>
     <string name="update_app_task_signatures_dont_match">Signatures do not match, are you running a debug version of the app?</string>

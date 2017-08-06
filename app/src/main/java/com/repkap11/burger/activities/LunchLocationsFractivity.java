@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.repkap11.burger.BurgerApplication;
-import com.repkap11.burger.FirebaseAdapter;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 import com.repkap11.burger.models.LunchLocation;
@@ -49,7 +48,7 @@ public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLoc
         @Override
         protected void create(Bundle savedInstanceState) {
             super.create(savedInstanceState);
-            mLunchGroup = BurgerApplication.readUserPerferedGroup(getActivity());
+            mLunchGroup = BurgerApplication.getUserPerferedLunchGroup(getActivity());
             Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
             if (mLunchGroup == null) {
                 getActivity().finish();

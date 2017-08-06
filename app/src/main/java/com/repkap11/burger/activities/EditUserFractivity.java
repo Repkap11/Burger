@@ -50,7 +50,7 @@ public class EditUserFractivity extends Fractivity<EditUserFractivity.EditUserFr
                 getActivity().finish();
                 return;
             }
-            mLunchGroup = BurgerApplication.readUserPerferedGroup(getActivity());
+            mLunchGroup = BurgerApplication.getUserPerferedLunchGroup(getActivity());
             mExistingUser = startingIntent.getStringExtra(STARTING_INTENT_EDIT_EXISTING_USER);
             if (mLunchGroup == null) {
                 Log.e(TAG, "Finishing because we don't have a lunch group");
@@ -127,7 +127,6 @@ public class EditUserFractivity extends Fractivity<EditUserFractivity.EditUserFr
                         user.setValue(new User(mEditTextDisplayName.getText().toString(), mEditTextCarSize.getText().toString()));
                     } else {
                         user = database.getReference(mExistingUser);
-                        //user.setValue(new User(mEditTextDisplayName.getText().toString(), mEditTextLastName.getText().toString(), mEditTextCarSize.getText().toString()));
                         user.child(User.getDisplayNameLink()).setValue(mEditTextDisplayName.getText().toString());
                         user.child(User.getCarSizeLink()).setValue(mEditTextCarSize.getText().toString());
                     }

@@ -36,7 +36,7 @@ public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivity.H
 
         @Override
         protected void create(Bundle savedInstanceState) {
-            mLunchGroup = BurgerApplication.readUserPerferedGroup(getActivity());
+            mLunchGroup = BurgerApplication.getUserPerferedLunchGroup(getActivity());
             Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
             if (mLunchGroup == null) {
                 getActivity().finish();

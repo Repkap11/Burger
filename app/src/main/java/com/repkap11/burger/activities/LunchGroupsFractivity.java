@@ -122,10 +122,17 @@ public class LunchGroupsFractivity extends FirebaseAdapterFractivity<LunchGroups
                 getActivity().finish();
                 return;
             }
-            BurgerApplication.writeUserPerferedGroup(LunchGroupFragment.this.getActivity(), key);
+            BurgerApplication.setUserPerferedLunchGroup(LunchGroupFragment.this.getActivity(), key);
+            String userKey = BurgerApplication.getUserKey(getActivity());
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference uderRef = database.getReference(BurgerApplication.getUserKey(getActivity()));
+            uderRef.child(User.getDisplayNameLink()).setValue(user.getDisplayName());
+            BurgerApplication.updateDeviceToken(getActivity(), true);
+
             Log.e(TAG, "Writing user's prefered group:" + key);
             intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_INITIAL_NAME, user.getDisplayName());
-            intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_KEY, BurgerApplication.getUserKey(getActivity()));
+            intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_KEY, userKey);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             startActivity(intent);
         }

@@ -6,7 +6,6 @@ package com.repkap11.burger.models;
 
 public class User {
     public String displayName;
-    public String lastName;
     public String carSize;
     //But it is zero indexed you see, Sunday is day 0.
     public String lunch_preference_1 = "-Kqkv66paMYBnZBAzBHJ";//Lunch and Learn
@@ -21,7 +20,6 @@ public class User {
     public User(String displayName, String carSize) {
         this();
         this.displayName = displayName;
-        this.lastName = lastName;
         this.carSize = carSize;
     }
 

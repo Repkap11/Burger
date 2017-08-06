@@ -14,11 +14,9 @@ import android.view.KeyEvent;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.repkap11.burger.activities.LunchGroupsFractivity;
-
-import java.util.UUID;
 
 /**
  * Created by paul on 8/1/17.
@@ -26,19 +24,19 @@ import java.util.UUID;
 
 
 public class BurgerApplication extends Application {
+    public static final String BURGER_PREF_GROUP = "users_prefered_group";
     public static final String BURGER_USER_GROUP_PREF = "users_prefered_group";
 
     private static final String TAG = BurgerApplication.class.getSimpleName();
 
-    public static String readUserPerferedGroup(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(BurgerApplication.BURGER_USER_GROUP_PREF, Context.MODE_PRIVATE);
+    public static String getUserPerferedLunchGroup(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(BurgerApplication.BURGER_PREF_GROUP, Context.MODE_PRIVATE);
         String pref = prefs.getString(BurgerApplication.BURGER_USER_GROUP_PREF, null);
         return pref;
     }
 
-
-    public static void writeUserPerferedGroup(Context context, String value) {
-        SharedPreferences prefs = context.getSharedPreferences(BurgerApplication.BURGER_USER_GROUP_PREF, Context.MODE_PRIVATE);
+    public static void setUserPerferedLunchGroup(Context context, String value) {
+        SharedPreferences prefs = context.getSharedPreferences(BurgerApplication.BURGER_PREF_GROUP, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(BurgerApplication.BURGER_USER_GROUP_PREF, value);
         editor.apply();
@@ -108,23 +106,34 @@ public class BurgerApplication extends Application {
         editor.apply();
     }
 
-    public static void uploadUserToken(Context context) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public static void updateDeviceToken(Context context, boolean add) {
+        String userKey = getUserKey(context);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String instanceToken = FirebaseInstanceId.getInstance().getToken();
-        String lunch_group = readUserPerferedGroup(context);
-        if (user == null || instanceToken == null) {
-            Log.e(TAG, "Unable to upload user token user:" + user + " instanceId:" + instanceToken);
+        String newInstanceToken = FirebaseInstanceId.getInstance().getToken();
+        if (newInstanceToken == null || userKey == null) {
+            Log.e(TAG, "Unable to upload user token user:" + user + " instanceId:" + newInstanceToken);
             return;
         }
-        //TODO write the user token somewhere in the database where it can be found
-        //database.getReference(user)
+        final SharedPreferences prefs = context.getSharedPreferences(BURGER_PREF_GROUP, Context.MODE_PRIVATE);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference userRef = database.getReference(userKey);
+
+        String previousInstanceToken = prefs.getString("current-instance-id", null);
+        if (!newInstanceToken.equals(previousInstanceToken) && previousInstanceToken != null) {
+            userRef.child("devices").child(previousInstanceToken).removeValue();
+        }
+        if (add) {
+            userRef.child("devices").child(newInstanceToken).setValue("");
+        } else {
+            userRef.child("devices").child(newInstanceToken).removeValue(null);
+
+        }
     }
 
     public static String getUserKey(Context context) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String group = readUserPerferedGroup(context);
+        String group = getUserPerferedLunchGroup(context);
         if (group == null || user == null) {
             return null;
         }

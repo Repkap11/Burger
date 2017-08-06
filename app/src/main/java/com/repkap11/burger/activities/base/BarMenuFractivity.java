@@ -24,6 +24,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
 import com.repkap11.burger.UpdateAppTask;
 import com.repkap11.burger.activities.SettingsActivity;
@@ -51,7 +54,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
         public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_settings:
-                    Toast.makeText(getActivity(), "Settings selected", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Settings selected", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), SettingsActivity.class);
                     startActivity(intent);
                     return true;
@@ -60,6 +63,8 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
                     startUpdateAppProcedure();
                     break;
                 case R.id.action_sign_out:
+                    BurgerApplication.updateDeviceToken(getActivity(), false);
+                    BurgerApplication.setUserPerferedLunchGroup(getActivity(), null);
                     FirebaseAuth.getInstance().signOut();
                     Auth.GoogleSignInApi.signOut(mGoogleAPIClient).setResultCallback(new ResultCallback<Status>() {
                         @Override
@@ -69,7 +74,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
                             startActivity(intent);
                         }
                     });
-                    Toast.makeText(getActivity(), "Sign Out selected", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Sign Out selected", Toast.LENGTH_SHORT).show();
 
                     break;
                 default:
