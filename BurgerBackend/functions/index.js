@@ -20,3 +20,6 @@ exports.add_user_to_locations_pref5 = functions.database.ref('/lunch_groups/{gro
     .onWrite(event => {return match_users_and_locations.add_user_to_locations_pref(event)});
 
 var notify_users_of_location = require('./notify_users_of_location');
+exports.test = functions.https.onRequest((req, res) => {
+    return notify_users_of_location.send_notification_for_date(req, res);
+});
