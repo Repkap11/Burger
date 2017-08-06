@@ -12,6 +12,10 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.repkap11.burger.activities.LunchGroupsFractivity;
 
 import java.util.UUID;
@@ -102,5 +106,19 @@ public class BurgerApplication extends Application {
         Log.e(TAG, "Negative button clicked");
         editor.putBoolean("has-shown-prefs-" + currentVersionCode, true);
         editor.apply();
+    }
+
+    public static void uploadUserToken(Context context) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String instanceToken = FirebaseInstanceId.getInstance().getToken();
+        String lunch_group = readUserPerferedGroup(context);
+        if (user == null || instanceToken == null) {
+            Log.e(TAG, "Unable to upload user token user:" + user + " instanceId:" + instanceToken);
+            return;
+        }
+        //TODO write the user token somewhere in the database where it can be found
+        //database.getReference(user)
+
     }
 }

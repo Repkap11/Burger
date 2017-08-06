@@ -38,6 +38,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.FirebaseAdapter;
 import com.repkap11.burger.R;
@@ -69,6 +70,8 @@ public class SignInFractivity extends Fractivity {
         mAuth = FirebaseAuth.getInstance();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        String instanceToken = FirebaseInstanceId.getInstance().getToken();
+        Log.e(TAG, "instanceToken:" + instanceToken);
         if (currentUser != null) {
             Log.e(TAG, "Sign in done in create for:" + currentUser);
             //continueAfterSignIn();
