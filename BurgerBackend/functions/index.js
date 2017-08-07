@@ -23,3 +23,8 @@ var notify_users_of_location = require('./notify_users_of_location');
 exports.test = functions.https.onRequest((req, res) => {
     return notify_users_of_location.send_notification_for_date(req, res);
 });
+
+var cron = require('./cron');
+exports.weekly_job = functions.https.onRequest((req, res) => {
+    return notify_users_of_location.send_notification_for_date(req, res);
+});
