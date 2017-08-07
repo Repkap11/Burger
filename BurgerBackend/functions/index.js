@@ -7,7 +7,6 @@ admin.initializeApp(functions.config().firebase);
 
 
 var match_users_and_locations = require('./match_users_and_locations');
-
 exports.add_user_to_locations_pref1 = functions.database.ref('/lunch_groups/{groupID}/users/{userId}/lunch_preference_1')
     .onWrite(event => {return match_users_and_locations.add_user_to_locations_pref(event)});
 exports.add_user_to_locations_pref2 = functions.database.ref('/lunch_groups/{groupID}/users/{userId}/lunch_preference_2')
@@ -25,6 +24,7 @@ exports.test = functions.https.onRequest((req, res) => {
 });
 
 var cron = require('./cron');
-exports.weekly_job = functions.https.onRequest((req, res) => {
-    return notify_users_of_location.send_notification_for_date(req, res);
-});
+exports.test2 = functions.pubsub.topic('hourly-tick')
+    .onPublish((event) => {
+    console.error("Triggered!!!!!");
+    return cron.daily_job(event, 1)});
