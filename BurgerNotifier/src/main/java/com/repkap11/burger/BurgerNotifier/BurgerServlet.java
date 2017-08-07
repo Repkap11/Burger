@@ -104,7 +104,8 @@ public class BurgerServlet extends HttpServlet {
                             new InternetAddress("repkap11@gmail.com", "Recipient"));
                     msg.setSubject("Things to do today");
                     msg.setText(todoText);
-                    //Transport.send(msg);
+                    Transport.send(msg);
+                    Log.warning("Just send an email");
                 } catch (MessagingException | UnsupportedEncodingException e) {
                     Log.warning(e.getMessage());
                 }
