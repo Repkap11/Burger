@@ -11,5 +11,6 @@
         android:layout_height="@android:dimen/app_icon_size"
         android:gravity="center_vertical"
         android:padding="10dp"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        tools:text="Paul Repka" />
 </RelativeLayout>

@@ -16,8 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        tools:listitem="@layout/fractivity_lunch_locations_list_element"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/fractivity_lunch_locations_list_element" />
 
     <include layout="@layout/fractivity_fab_add" />
 

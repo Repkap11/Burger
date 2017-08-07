@@ -35,15 +35,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_person_black"
-                    android:padding="20dp" />
+                    android:padding="20dp"
+                    android:textSize="18sp"
+                    tools:text="Paul Repka" />
 
                 <TextView
                     android:id="@+id/fractivity_about_user_text_car_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_car_black"
-
-                    android:padding="20dp" />
+                    android:padding="20dp"
+                    android:textSize="18sp"
+                    tools:text="4" />
             </LinearLayout>
 
             <Button
