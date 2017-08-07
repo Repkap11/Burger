@@ -66,16 +66,6 @@
         </provider>
 
 
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/burger_notification_icon" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
-
-
         <service android:name=".activities.base.ServiceInstanceIdChange">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />

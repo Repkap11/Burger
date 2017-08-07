@@ -75,7 +75,10 @@ public class EditUserFractivity extends Fractivity<EditUserFractivity.EditUserFr
             mEditTextCarSize = (EditText) rootView.findViewById(R.id.fractivity_edit_user_edit_text_car_size);
             mEditTextDisplayName = (EditText) rootView.findViewById(R.id.fractivity_edit_user_edit_text_display_name);
 
+            mEditTextDisplayName.requestFocus();
+
             if (mExistingUser != null && mFirstTimeShowing) {
+                mEditTextCarSize.requestFocus();
                 final FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference user = database.getReference(mExistingUser);
 
@@ -101,7 +104,9 @@ public class EditUserFractivity extends Fractivity<EditUserFractivity.EditUserFr
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         carSizeRef.removeEventListener(this);
                         if (mEditTextCarSize != null) {
-                            mEditTextCarSize.setText(dataSnapshot.getValue(String.class));
+                            String carSize = dataSnapshot.getValue(String.class);
+                            mEditTextCarSize.setText(carSize);
+                            mEditTextCarSize.setSelection(carSize.length());
                         }
                     }
 
