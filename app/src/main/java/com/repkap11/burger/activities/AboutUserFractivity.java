@@ -109,8 +109,10 @@ public class AboutUserFractivity extends BarMenuFractivity {
             View rootView = inflater.inflate(R.layout.fractivity_about_user, container, false);
             mToolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
             //toolbar.setTitle(R.string.fractivity_about_user_title);
-            Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_clear_black, null);
-            mToolbar.setNavigationIcon(drawable);
+            if (!getActivity().isTaskRoot()) {
+                Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_clear_black, null);
+                mToolbar.setNavigationIcon(drawable);
+            }
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -190,7 +192,6 @@ public class AboutUserFractivity extends BarMenuFractivity {
                 getActivity().finish();
             }
             String initialName = startingIntent.getStringExtra(STARTING_INTENT_USER_INITIAL_NAME);
-            mToolbar.setTitle(initialName);
 
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
             final DatabaseReference userRef = database.getReference(mUserKey);
@@ -210,7 +211,6 @@ public class AboutUserFractivity extends BarMenuFractivity {
                         return;
                     }
                     mTextFullName.setText(user.displayName);
-                    mToolbar.setTitle(user.displayName);
                     mEditTextCarSize.setText(user.carSize);
 
                     if (mLunchPreference1Ref != null) {
