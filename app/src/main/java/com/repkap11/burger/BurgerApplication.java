@@ -8,8 +8,10 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.util.Pair;
 import android.view.KeyEvent;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.repkap11.burger.activities.SettingsActivity;
 
 /**
  * Created by paul on 8/1/17.
@@ -33,6 +36,12 @@ public class BurgerApplication extends Application {
         SharedPreferences prefs = context.getSharedPreferences(BurgerApplication.BURGER_PREF_GROUP, Context.MODE_PRIVATE);
         String pref = prefs.getString(BurgerApplication.BURGER_USER_GROUP_PREF, null);
         return pref;
+    }
+
+    public static boolean getUserPerferedNotoficationsEnabled(Context context) {
+        SharedPreferences prefsDefault = PreferenceManager.getDefaultSharedPreferences(context);
+        Boolean nottificationsEnabled = prefsDefault.getBoolean(SettingsActivity.PREF_NOTIFICATIONS_ENABLED, true);
+        return nottificationsEnabled;
     }
 
     public static void setUserPerferedLunchGroup(Context context, String value) {

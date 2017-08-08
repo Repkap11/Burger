@@ -13,13 +13,16 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.SwitchPreference;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
 
 import java.util.List;
@@ -36,37 +39,42 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
+    public static final String PREF_NOTIFICATIONS_ENABLED = "pref_notifications_enabled";
+    private static final String PREF_NOTIFICATIONS_RINGTONE = "pref_notifications_ringtone";
+    private static final String PREF_NOTIFICATIONS_VIBRATE = "pref_notifications_vibrate";
+    private static final String PREF_NOTIFICATIONS_LED = "pref_notifications_led";
+
+
+    private static final String TAG = SettingsActivity.class.getSimpleName();
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
      */
-    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
+    private Preference.OnPreferenceChangeListener mBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
 
             if (preference instanceof ListPreference) {
+                Log.e(TAG, "Updated List:" + preference.getKey() + " to:" + stringValue);
                 // For list preferences, look up the correct display value in
                 // the preference's 'entries' list.
                 ListPreference listPreference = (ListPreference) preference;
                 int index = listPreference.findIndexOfValue(stringValue);
 
                 // Set the summary to reflect the new value.
-                preference.setSummary(
-                        index >= 0
-                                ? listPreference.getEntries()[index]
-                                : null);
+                preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
 
             } else if (preference instanceof RingtonePreference) {
+                Log.e(TAG, "Updated Ringtone:" + preference.getKey() + " to:" + stringValue);
                 // For ringtone preferences, look up the correct display value
                 // using RingtoneManager.
                 if (TextUtils.isEmpty(stringValue)) {
                     // Empty values correspond to 'silent' (no ringtone).
-                    preference.setSummary(R.string.pref_ringtone_silent);
+                    preference.setSummary(R.string.pref_notifications_ringtone_none);
 
                 } else {
-                    Ringtone ringtone = RingtoneManager.getRingtone(
-                            preference.getContext(), Uri.parse(stringValue));
+                    Ringtone ringtone = RingtoneManager.getRingtone(preference.getContext(), Uri.parse(stringValue));
 
                     if (ringtone == null) {
                         // Clear the summary if there was a lookup error.
@@ -82,7 +90,17 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
-                preference.setSummary(stringValue);
+                if (preference instanceof SwitchPreference) {
+                    SwitchPreference switchPref = (SwitchPreference) preference;
+                    //Log.e(TAG, "Updated Switch:" + switchPref.getKey() + " to:" + switchPref.isChecked());
+                    if (preference.getKey().equals(PREF_NOTIFICATIONS_ENABLED)) {
+                        //We need the inverse state, because the pref will be changing?
+                        BurgerApplication.updateDeviceToken(SettingsActivity.this, !switchPref.isChecked());
+                    }
+                } else {
+                    Log.e(TAG, "Updated Other:" + preference.getKey() + " to:" + stringValue);
+                    preference.setSummary(stringValue);
+                }
             }
             return true;
         }
@@ -104,18 +122,17 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * immediately updated upon calling this method. The exact display format is
      * dependent on the type of preference.
      *
-     * @see #sBindPreferenceSummaryToValueListener
+     * @see #mBindPreferenceSummaryToValueListener
      */
-    private static void bindPreferenceSummaryToValue(Preference preference) {
+    private void bindPreferenceSummaryToValue(Preference preference, boolean isBoolean) {
         // Set the listener to watch for value changes.
-        preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
+        preference.setOnPreferenceChangeListener(mBindPreferenceSummaryToValueListener);
 
         // Trigger the listener immediately with the preference's
         // current value.
-        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-        PreferenceManager
-            .getDefaultSharedPreferences(preference.getContext())
-            .getString(preference.getKey(), ""));
+        if (!isBoolean) {
+            mBindPreferenceSummaryToValueListener.onPreferenceChange(preference, PreferenceManager.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
+        }
     }
 
     @Override
@@ -179,8 +196,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("example_text"));
-            bindPreferenceSummaryToValue(findPreference("example_list"));
+            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference("example_text"), false);
+            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference("example_list"), false);
         }
 
         @Override
@@ -210,7 +227,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_ENABLED), true);
+            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_RINGTONE), true);
+            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_VIBRATE), true);
+            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_LED), true);
         }
 
         @Override
@@ -240,7 +260,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference("sync_frequency"), false);
         }
 
         @Override
