@@ -66,13 +66,13 @@
         </provider>
 
 
-        <service android:name=".ServiceInstanceIdChange">
+        <service android:name=".services.ServiceInstanceIdChange">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name=".BurgerNotificationService">
+        <service android:name=".services.ServiceBurgerNotifications">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

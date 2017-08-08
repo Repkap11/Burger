@@ -1,27 +1,26 @@
-package com.repkap11.burger;
+package com.repkap11.burger.services;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.repkap11.burger.R;
 import com.repkap11.burger.activities.SignInFractivity;
 
 import java.util.Map;
 
-public class BurgerNotificationService extends FirebaseMessagingService {
+public class ServiceBurgerNotifications extends FirebaseMessagingService {
 
-    private static final String TAG = BurgerNotificationService.class.getSimpleName();
+    private static final String TAG = ServiceBurgerNotifications.class.getSimpleName();
 
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
