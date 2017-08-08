@@ -1,4 +1,20 @@
 cron:
-- description: Push a "tick" onto pubsub every hour
-  url: /publish/hourly-tick
-  schedule: every 1 hours
+- description: Push a Lunch Notification on Monday
+  url: /publish/lunch-tick-1
+  schedule: every monday 15:55
+
+- description: Push a Lunch Notification on Tuesday
+  url: /publish/lunch-tick-2
+  schedule: every tuesday 15:55
+
+- description: Push a Lunch Notification on Wednesday
+  url: /publish/lunch-tick-3
+  schedule: every wednesday 15:55
+
+- description: Push a Lunch Notification on Thursday
+  url: /publish/lunch-tick-4
+  schedule: every thursday 15:55
+
+- description: Push a Lunch Notification on Friday
+  url: /publish/lunch-tick-5
+  schedule: every friday 15:55

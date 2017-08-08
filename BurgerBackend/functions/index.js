@@ -19,12 +19,13 @@ exports.add_user_to_locations_pref5 = functions.database.ref('/lunch_groups/{gro
     .onWrite(event => {return match_users_and_locations.add_user_to_locations_pref(event)});
 
 var notify_users_of_location = require('./notify_users_of_location');
-exports.test = functions.https.onRequest((req, res) => {
-    return notify_users_of_location.send_notification_for_date(req, res);
-});
-
-var cron = require('./cron');
-exports.test2 = functions.pubsub.topic('hourly-tick')
-    .onPublish((event) => {
-    console.error("Triggered!!!!!");
-    return cron.daily_job(event, 1)});
+exports.lunch_tick_1 = functions.pubsub.topic('lunch-tick-1')
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 1)});
+exports.lunch_tick_2 = functions.pubsub.topic('lunch-tick-2')
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 2)});
+exports.lunch_tick_3 = functions.pubsub.topic('lunch-tick-3')
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 3)});
+exports.lunch_tick_4 = functions.pubsub.topic('lunch-tick-4')
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 4)});
+exports.lunch_tick_5 = functions.pubsub.topic('lunch-tick-5')
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 5)});
