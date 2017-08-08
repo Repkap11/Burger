@@ -40,9 +40,9 @@ import java.util.List;
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
     public static final String PREF_NOTIFICATIONS_ENABLED = "pref_notifications_enabled";
-    private static final String PREF_NOTIFICATIONS_RINGTONE = "pref_notifications_ringtone";
-    private static final String PREF_NOTIFICATIONS_VIBRATE = "pref_notifications_vibrate";
-    private static final String PREF_NOTIFICATIONS_LED = "pref_notifications_led";
+    public static final String PREF_NOTIFICATIONS_RINGTONE = "pref_notifications_ringtone";
+    public static final String PREF_NOTIFICATIONS_VIBRATE = "pref_notifications_vibrate";
+    public static final String PREF_NOTIFICATIONS_LED = "pref_notifications_led";
 
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
@@ -71,7 +71,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 // using RingtoneManager.
                 if (TextUtils.isEmpty(stringValue)) {
                     // Empty values correspond to 'silent' (no ringtone).
-                    preference.setSummary(R.string.pref_notifications_ringtone_none);
+                    preference.setSummary(R.string.pref_notifications_ringtone_sub_text_none);
 
                 } else {
                     Ringtone ringtone = RingtoneManager.getRingtone(preference.getContext(), Uri.parse(stringValue));
@@ -228,7 +228,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_ENABLED), true);
-            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_RINGTONE), true);
+            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_RINGTONE), false);
             ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_VIBRATE), true);
             ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_LED), true);
         }

@@ -6,7 +6,7 @@
         android:title="@string/pref_notifications_enabled_title" />
 
     <RingtonePreference
-        android:defaultValue="content://settings/system/notification_sound"
+        android:defaultValue="@string/pref_notifications_ringtone_default"
         android:dependency="pref_notifications_enabled"
         android:key="pref_notifications_ringtone"
         android:ringtoneType="notification"
