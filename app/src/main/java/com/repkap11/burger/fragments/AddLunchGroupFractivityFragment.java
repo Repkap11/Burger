@@ -1,4 +1,4 @@
-package com.repkap11.burger.activities.fragments;
+package com.repkap11.burger.fragments;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;

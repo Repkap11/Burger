@@ -13,9 +13,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.activities.base.Fractivity;
-import com.repkap11.burger.activities.fragments.AboutUserFractivityFragment;
-import com.repkap11.burger.activities.fragments.LunchGroupFractivityFragment;
-import com.repkap11.burger.activities.fragments.SignInFractivityFragment;
+import com.repkap11.burger.fragments.AboutUserFractivityFragment;
+import com.repkap11.burger.fragments.LunchGroupFractivityFragment;
+import com.repkap11.burger.fragments.SignInFractivityFragment;
 
 
 public class SignInFractivity extends Fractivity {

@@ -1,4 +1,4 @@
-package com.repkap11.burger.activities.fragments;
+package com.repkap11.burger.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,31 +12,28 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
-import com.repkap11.burger.activities.EditUserFractivity;
-import com.repkap11.burger.activities.UsersFractivity;
+import com.repkap11.burger.activities.AboutUserFractivity;
+import com.repkap11.burger.activities.AddLunchGroupFractivity;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
+import com.repkap11.burger.models.LunchGroup;
 import com.repkap11.burger.models.User;
 
 /**
  * Created by paul on 8/8/17.
  */
-public class UsersFractivityFragment<AdapterHolder> extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
+public class LunchGroupFractivityFragment<AdapterHolder> extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
 
-    public static final String STARTING_INTENT_WHICH_LUNCH_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_LUNCH_GROUP";
-    private static final String TAG = UsersFractivityFragment.class.getSimpleName();
-    private String mLunchGroup;
+    private static final String TAG = LunchGroupFractivityFragment.class.getSimpleName();
 
     @Override
     protected void create(Bundle savedInstanceState) {
-        mLunchGroup = BurgerApplication.getUserPerferedLunchGroup(getActivity());
-        Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
-        if (mLunchGroup == null) {
-            getActivity().finish();
-        }
         super.create(savedInstanceState);
     }
 
@@ -46,19 +43,17 @@ public class UsersFractivityFragment<AdapterHolder> extends FirebaseAdapterFract
     //Using this activity view
     @Override
     protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fractivity_users, container, false);
-        mListView = (ListView) rootView.findViewById(R.id.fractivity_users_list);
+        View rootView = inflater.inflate(R.layout.fractivity_lunch_groups, container, false);
+        mListView = (ListView) rootView.findViewById(R.id.fractivity_lunch_groups_list);
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.fractivity_users_title);
+        toolbar.setTitle(R.string.fractivity_lunch_groups_title);
         mFab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), EditUserFractivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getActivity(), AddLunchGroupFractivity.class));
             }
         });
-
         return rootView;
     }
 
@@ -72,8 +67,7 @@ public class UsersFractivityFragment<AdapterHolder> extends FirebaseAdapterFract
     //Put this data
     @Override
     protected String adapterReference() {
-        Log.e(TAG, "Getting adapter with group:" + mLunchGroup);
-        return mLunchGroup + "/users";
+        return "lunch_groups";
     }
 
     //With this filter
@@ -91,14 +85,14 @@ public class UsersFractivityFragment<AdapterHolder> extends FirebaseAdapterFract
     //Where each element uses this view
     @Override
     public int getListResource() {
-        return R.layout.fractivity_users_list_element;
+        return R.layout.fractivity_lunch_groups_list_element;
     }
 
     //And that view has a holder caching position and subviews
     @Override
     public Holder populateHolder(View convertView) {
         Holder holder = new Holder();
-        holder.mName = (TextView) convertView.findViewById(R.id.fractivity_users_list_element_text);
+        holder.mName = (TextView) convertView.findViewById(R.id.fractivity_lunch_groups_list_element_text);
         return holder;
     }
 
@@ -106,26 +100,38 @@ public class UsersFractivityFragment<AdapterHolder> extends FirebaseAdapterFract
     @Override
     public void populateView(View convertView, Object o, int position, String key, Object value) {
         Holder holder = (Holder) o;
-        User user = (User) value;
-        holder.mName.setText(user.displayName);
+        LunchGroup lunchGroup = (LunchGroup) value;
+        holder.mName.setText(lunchGroup.displayName);
         holder.mIndex = position;
     }
 
     @Override
     public Class getAdapterDataClass() {
-        return User.class;
+        return LunchGroup.class;
     }
 
     @Override
     protected void onItemClicked(View view, Object holderObject, int position, String key, String link, Object value) {
-        User user = (User) value;
-        Holder holder = (Holder) holderObject;
-        //Intent intent = new Intent(getActivity(), AboutUserFractivity.class);
-        //intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_INITIAL_NAME, user.firstName);
-        //intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_KEY, key);
+        Intent intent = new Intent(getContext(), AboutUserFractivity.class);
+        Log.e(TAG, "Starting with group:" + key);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Log.e(TAG, "Unexpected null user");
+            getActivity().finish();
+            return;
+        }
+        BurgerApplication.setUserPerferedLunchGroup(LunchGroupFractivityFragment.this.getActivity(), key);
+        String userKey = BurgerApplication.getUserKey(getActivity());
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference uderRef = database.getReference(BurgerApplication.getUserKey(getActivity()));
+        uderRef.child(User.getDisplayNameLink()).setValue(user.getDisplayName());
+        BurgerApplication.updateDeviceToken(getActivity(), true);
 
-        Intent intent = new Intent(getActivity(), EditUserFractivity.class);
-        intent.putExtra(EditUserFractivityFragment.STARTING_INTENT_EDIT_EXISTING_USER, key);
+        Log.e(TAG, "Writing user's prefered group:" + key);
+        intent.putExtra(AboutUserFractivityFragment.STARTING_INTENT_USER_INITIAL_NAME, user.getDisplayName());
+        intent.putExtra(AboutUserFractivityFragment.STARTING_INTENT_USER_KEY, userKey);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
         startActivity(intent);
     }
 

@@ -1,4 +1,4 @@
-package com.repkap11.burger.activities.fragments;
+package com.repkap11.burger.fragments;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -19,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
-import com.repkap11.burger.activities.EditUserFractivity;
 import com.repkap11.burger.activities.base.Fractivity;
 import com.repkap11.burger.models.User;
 

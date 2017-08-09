@@ -1,10 +1,7 @@
 package com.repkap11.burger.activities;
 
-import android.content.Intent;
-import android.widget.TextView;
-
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
-import com.repkap11.burger.activities.fragments.LunchLocationFractivityFragment;
+import com.repkap11.burger.fragments.LunchLocationFractivityFragment;
 import com.repkap11.burger.models.LunchLocation;
 
 
