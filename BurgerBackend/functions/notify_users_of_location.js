@@ -34,7 +34,7 @@ exports.send_notification_for_date = function send_notification_for_date(event, 
                                 body: body,
                               }
                         }
-                        console.error('Notifying:'+userName+' of lunch at '+ locationName);
+                        console.log('Notifying:'+userName+' of lunch at '+ locationName);
                         admin.messaging().sendToDevice(userDeviceSnapshot.key, payload);
                     });
                 });

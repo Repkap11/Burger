@@ -26,3 +26,26 @@ exports.add_user_to_locations_pref = function add_user_to_locations_pref(event){
     }
     return null;
 }
+
+exports.remove_pref_when_location_deleted = function remove_pref_when_location_deleted(event){
+    //When a location is deleted, delete that location from any users perference
+    //console.log('You deleted location' + event.params.locationId + ' from group '+ event.params.groupID);
+
+    var lunchGroup = admin.database().ref('lunch_groups').child(event.params.groupID);
+    lunchGroup.once('value').then(function(lunchGroupSnapshot){
+
+       //console.log('Read Lunch Group:'+ lunchGroupSnapshot.key+' val:'+ lunchGroupSnapshot.val());
+       //var lunchGroupName = lunchGroupSnapshot.child('displayName').val();
+       lunchGroupSnapshot.child('users').forEach(function(userSnapshot) {
+
+            //console.log('Read Location:'+ lunchLocationSnapshot.key+' val:'+ lunchLocationSnapshot.val());
+            //var userName = userSnapshot.child('displayName').val();
+            if (userSnapshot.child('lunch_preference_1').val() == event.params.locationId){userSnapshot.child('lunch_preference_1').ref.remove();}
+            if (userSnapshot.child('lunch_preference_2').val() == event.params.locationId){userSnapshot.child('lunch_preference_2').ref.remove();}
+            if (userSnapshot.child('lunch_preference_3').val() == event.params.locationId){userSnapshot.child('lunch_preference_3').ref.remove();}
+            if (userSnapshot.child('lunch_preference_4').val() == event.params.locationId){userSnapshot.child('lunch_preference_4').ref.remove();}
+            if (userSnapshot.child('lunch_preference_5').val() == event.params.locationId){userSnapshot.child('lunch_preference_5').ref.remove();}
+        });
+     });
+    return null;
+}
