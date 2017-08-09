@@ -39,7 +39,7 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
     protected abstract FirebaseAdapterFragment createFirebaseFragment();
 
 
-    public static abstract class FirebaseAdapterFragment<AdapterHolder, AdapterData> extends BarMenuFractivity.BarMenuFragment implements AdapterView.OnItemClickListener {
+    public static abstract class FirebaseAdapterFragment<AdapterHolder, AdapterData> extends BarMenuFractivity.BarMenuFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
         FirebaseAdapter mAdapter;
 
         protected abstract String adapterReference();
@@ -97,6 +97,7 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
             mListView = getListView(rootView);
             mListView.setAdapter(mAdapter);
             mListView.setOnItemClickListener(this);
+            mListView.setOnItemLongClickListener(this);
             return rootView;
         }
 
@@ -125,6 +126,17 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
         }
 
         protected abstract void onItemClicked(View view, AdapterHolder holder, int position, String key, String link, AdapterData value);
+
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+            FirebaseAdapter.AdapterKeyValue keyValuePair = (FirebaseAdapter.AdapterKeyValue) mAdapter.getItem(position);
+            AdapterHolder holder = (AdapterHolder) view.getTag();
+            return onItemLongClicked(view, holder, position, adapterReference() + "/" + keyValuePair.key, keyValuePair.key, (AdapterData) keyValuePair.value);
+        }
+
+        protected boolean onItemLongClicked(View view, AdapterHolder holder, int position, String key, String link, AdapterData value) {
+            return false;
+        }
 
     }
 }
