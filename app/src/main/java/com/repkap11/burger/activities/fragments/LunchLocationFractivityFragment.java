@@ -17,9 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
-import com.repkap11.burger.activities.AboutUserFractivity;
 import com.repkap11.burger.activities.AddLunchLocationFractivity;
-import com.repkap11.burger.activities.LunchLocationsFractivity;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 import com.repkap11.burger.models.LunchLocation;
 
@@ -28,6 +26,8 @@ import com.repkap11.burger.models.LunchLocation;
  */
 public class LunchLocationFractivityFragment<AdapterHolder> extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
     private static final String TAG = LunchLocationFractivityFragment.class.getSimpleName();
+    public static final int REQUEST_CODE_PICK_LOCATION = 42;
+    public static final String STARTING_INTENT_LOCATION_INDEX = "com.repkap11.burger.STARTING_INTENT_LOCATION_INDEX";
     public static final String STARTING_INTENT_WHICH_LUNCH_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_LUNCH_GROUP";
 
     private ListView mListView;
@@ -38,6 +38,10 @@ public class LunchLocationFractivityFragment<AdapterHolder> extends FirebaseAdap
     @Override
     protected void create(Bundle savedInstanceState) {
         super.create(savedInstanceState);
+        Intent startingIntent = getActivity().getIntent();
+        if (startingIntent == null) {
+            getActivity().finish();
+        }
         mLunchGroup = BurgerApplication.getUserPerferedLunchGroup(getActivity());
         Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
         if (mLunchGroup == null) {
@@ -59,7 +63,7 @@ public class LunchLocationFractivityFragment<AdapterHolder> extends FirebaseAdap
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AddLunchLocationFractivity.class);
-                intent.putExtra(AddLunchLocationsFractivityFragment.STARTING_INTENT_WHICH_LUNCH_GROUP, mLunchGroup);
+                intent.putExtra(AddLunchLocationFractivityFragment.STARTING_INTENT_WHICH_LUNCH_GROUP, mLunchGroup);
                 startActivity(intent);
             }
         });
@@ -101,8 +105,8 @@ public class LunchLocationFractivityFragment<AdapterHolder> extends FirebaseAdap
 
     //And that view has a holder caching position and subviews
     @Override
-    public LunchLocationsFractivity.Holder populateHolder(View convertView) {
-        LunchLocationsFractivity.Holder holder = new LunchLocationsFractivity.Holder();
+    public Holder populateHolder(View convertView) {
+        Holder holder = new Holder();
         holder.mName = (TextView) convertView.findViewById(R.id.fractivity_lunch_locations_list_element_text);
         return holder;
     }
@@ -110,7 +114,7 @@ public class LunchLocationFractivityFragment<AdapterHolder> extends FirebaseAdap
     //And each subview is populated with data
     @Override
     public void populateView(View convertView, Object o, int position, String key, Object value) {
-        LunchLocationsFractivity.Holder holder = (LunchLocationsFractivity.Holder) o;
+        Holder holder = (Holder) o;
         LunchLocation location = (LunchLocation) value;
         holder.mName.setText(location.displayName);
         holder.mIndex = position;
@@ -124,14 +128,14 @@ public class LunchLocationFractivityFragment<AdapterHolder> extends FirebaseAdap
     @Override
     protected void onItemClicked(View view, Object holderObject, int position, String key, String link, Object value) {
         LunchLocation location = (LunchLocation) value;
-        LunchLocationsFractivity.Holder holder = (LunchLocationsFractivity.Holder) holderObject;
+        Holder holder = (Holder) holderObject;
         Intent startingIntent = getActivity().getIntent();
         if (startingIntent == null) {
             Log.e(TAG, "Somehow we want to give a result, but don't have a starting intent");
             getActivity().finish();
             return;
         }
-        int resultIndex = startingIntent.getIntExtra(LunchLocationsFractivity.STARTING_INTENT_LOCATION_INDEX, -1);
+        int resultIndex = startingIntent.getIntExtra(STARTING_INTENT_LOCATION_INDEX, -1);
 
         Intent intent = new Intent();
         intent.putExtra(AboutUserFractivityFragment.RESULT_INTENT_LOCATION_LINK, link);
@@ -139,6 +143,11 @@ public class LunchLocationFractivityFragment<AdapterHolder> extends FirebaseAdap
 
         getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().finish();
+    }
+
+    public static class Holder {
+        public TextView mName;
+        public int mIndex;
     }
 
 }

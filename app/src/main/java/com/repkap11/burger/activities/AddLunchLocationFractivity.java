@@ -3,14 +3,12 @@ package com.repkap11.burger.activities;
 import android.os.Bundle;
 
 import com.repkap11.burger.activities.base.Fractivity;
-import com.repkap11.burger.activities.fragments.AddLunchLocationsFractivityFragment;
+import com.repkap11.burger.activities.fragments.AddLunchLocationFractivityFragment;
 
-public class AddLunchLocationFractivity extends Fractivity<AddLunchLocationsFractivityFragment> {
-
-
+public class AddLunchLocationFractivity extends Fractivity<AddLunchLocationFractivityFragment> {
     @Override
-    protected AddLunchLocationsFractivityFragment createFragment(Bundle savedInstanceState) {
-        return new AddLunchLocationsFractivityFragment();
+    protected AddLunchLocationFractivityFragment createFragment(Bundle savedInstanceState) {
+        return new AddLunchLocationFractivityFragment();
     }
 
 }

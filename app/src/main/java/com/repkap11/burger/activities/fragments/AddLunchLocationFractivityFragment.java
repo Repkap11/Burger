@@ -15,15 +15,14 @@ import android.widget.EditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.repkap11.burger.R;
-import com.repkap11.burger.activities.AddLunchLocationFractivity;
 import com.repkap11.burger.activities.base.Fractivity;
 import com.repkap11.burger.models.LunchLocation;
 
 /**
  * Created by paul on 8/8/17.
  */
-public class AddLunchLocationsFractivityFragment extends Fractivity.FractivityFragment {
-    private static final String TAG = AddLunchLocationsFractivityFragment.class.getSimpleName();
+public class AddLunchLocationFractivityFragment extends Fractivity.FractivityFragment {
+    private static final String TAG = AddLunchLocationFractivityFragment.class.getSimpleName();
     public static final String STARTING_INTENT_WHICH_LUNCH_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_LUNCH_GROUP";
     private EditText mEditTextName;
     private Button mSaveLocationButtion;

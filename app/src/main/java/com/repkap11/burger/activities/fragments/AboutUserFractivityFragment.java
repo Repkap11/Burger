@@ -82,7 +82,7 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFragme
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == LunchLocationsFractivity.REQUEST_CODE_PICK_LOCATION && data != null) {
+        if (resultCode == Activity.RESULT_OK && requestCode == LunchLocationFractivityFragment.REQUEST_CODE_PICK_LOCATION && data != null) {
             Log.e(TAG, "Good result");
             Intent startingIntent = getActivity().getIntent();
             if (startingIntent == null) {
@@ -251,12 +251,11 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFragme
 
     private void launchAddLocation(int i, String lunch_pref_key) {
         Intent intent = new Intent(getContext(), LunchLocationsFractivity.class);
-        intent.putExtra(LunchLocationsFractivity.STARTING_INTENT_LOCATION_INDEX, i);
+        intent.putExtra(LunchLocationFractivityFragment.STARTING_INTENT_LOCATION_INDEX, i);
         DatabaseReference lunchGroupRef = FirebaseDatabase.getInstance().getReference(mUserKey).getParent().getParent();
         String lunchGroupKey = lunchGroupRef.toString().substring(lunchGroupRef.getRoot().toString().length() + 1);
-        intent.putExtra(LunchLocationsFractivity.STARTING_INTENT_WHICH_LUNCH_GROUP, lunchGroupKey);
-
-        startActivityForResult(intent, LunchLocationsFractivity.REQUEST_CODE_PICK_LOCATION);
+        intent.putExtra(AddLunchLocationFractivityFragment.STARTING_INTENT_WHICH_LUNCH_GROUP, lunchGroupKey);
+        startActivityForResult(intent, LunchLocationFractivityFragment.REQUEST_CODE_PICK_LOCATION);
     }
 
 
