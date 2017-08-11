@@ -80,8 +80,8 @@ public class LunchLocationsFractivityFragment extends FirebaseAdapterFractivity.
 
     //Using this activity view
     @Override
-    protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fractivity_lunch_locations, container, false);
+    protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, boolean attachToRoot) {
+        View rootView = inflater.inflate(R.layout.fractivity_lunch_locations, container, attachToRoot);
         mListView = (ListView) rootView.findViewById(R.id.fractivity_lunch_locations_list);
         return rootView;
     }

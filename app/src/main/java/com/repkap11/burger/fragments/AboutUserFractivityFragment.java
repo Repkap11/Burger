@@ -125,8 +125,8 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
     }
 
     @Override
-    protected View createBarView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fractivity_about_user, container, false);
+    protected View createBarView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, boolean attachToRoot) {
+        View rootView = inflater.inflate(R.layout.fractivity_about_user, container, attachToRoot);
         mTextFullName = (TextView) rootView.findViewById(R.id.fractivity_about_user_text_full_name);
         mEditTextCarSize = (TextView) rootView.findViewById(R.id.fractivity_about_user_text_car_size);
         mButtonEditUser = (Button) rootView.findViewById(R.id.fractivity_about_user_edit_user);

@@ -70,8 +70,8 @@ public class UsersFractivityFragment extends FirebaseAdapterFractivity.FirebaseA
 
     //Using this activity view
     @Override
-    protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fractivity_users, container, false);
+    protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, boolean attachToRoot) {
+        View rootView = inflater.inflate(R.layout.fractivity_users, container, attachToRoot);
         mListView = (ListView) rootView.findViewById(R.id.fractivity_users_list);
         return rootView;
     }

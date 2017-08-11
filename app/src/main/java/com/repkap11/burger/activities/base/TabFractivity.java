@@ -36,8 +36,8 @@ public class TabFractivity extends Fractivity<TabFractivity.TabFractivityFragmen
         }
 
         @Override
-        protected View createBarView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fractivity_tab, container, false);
+        protected View createBarView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, boolean attachToRoot) {
+            View rootView = inflater.inflate(R.layout.fractivity_tab, container, attachToRoot);
             TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.fractivity_tab_tablayout);
             ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.fractivity_tab_viewpager);
             BarMenuFractivity.BarMenuFractivityFragment[] fragments = new BarMenuFractivity.BarMenuFractivityFragment[2];

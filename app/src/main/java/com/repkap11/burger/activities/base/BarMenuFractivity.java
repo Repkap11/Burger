@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -50,7 +51,9 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
 
         @Override
         public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-            inflater.inflate(R.menu.menu_main, menu);
+            if (mShowBar) {
+                inflater.inflate(R.menu.menu_main, menu);
+            }
         }
 
         @Override
@@ -124,14 +127,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
 
         protected final View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fractivity_bar_menu, container, false);
-            View childView;
-            if (mShowBar) {
-                childView = createBarView(inflater, rootView, savedInstanceState);
-            } else {
-                childView = createBarView(inflater, container, savedInstanceState);
-                return childView;
-            }
-            rootView.addView(childView);
+            createBarView(inflater, rootView, savedInstanceState, true);
             setHasOptionsMenu(true);
             Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.fractivity_bar_menu_toolbar);
             if (mShowBar) {
@@ -181,7 +177,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
 
         }
 
-        protected abstract View createBarView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
+        protected abstract View createBarView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, boolean intoPatent);
 
 
         @Override

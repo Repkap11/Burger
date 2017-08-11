@@ -66,8 +66,8 @@ public class LunchGroupsFractivityFragment extends FirebaseAdapterFractivity.Fir
 
     //Using this activity view
     @Override
-    protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fractivity_lunch_groups, container, false);
+    protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, boolean attachToRoot) {
+        View rootView = inflater.inflate(R.layout.fractivity_lunch_groups, container, attachToRoot);
         mListView = (ListView) rootView.findViewById(R.id.fractivity_lunch_groups_list);
         return rootView;
     }

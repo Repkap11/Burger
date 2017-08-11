@@ -91,8 +91,8 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
         private AbsListView mListView;
 
         @Override
-        protected View createBarView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = createAdapterView(inflater, container, savedInstanceState);
+        protected View createBarView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, boolean attachToRoot) {
+            View rootView = createAdapterView(inflater, container, savedInstanceState, attachToRoot);
             mListView = getListView(rootView);
             mListView.setAdapter(mAdapter);
             mListView.setOnItemClickListener(this);
@@ -102,7 +102,7 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
 
         protected abstract AbsListView getListView(View rootView);
 
-        protected abstract View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
+        protected abstract View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, boolean attachToRoot);
 
         @Override
         protected void destroyView() {
