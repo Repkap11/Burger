@@ -3,11 +3,14 @@ package com.repkap11.burger.activities.base;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,8 +27,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
 import com.repkap11.burger.UpdateAppTask;
@@ -120,14 +121,48 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
         }
 
         protected final View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = createBarView(inflater, container, savedInstanceState);
+            ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fractivity_bar_menu, container, false);
+            rootView.addView(createBarView(inflater, rootView, savedInstanceState));
             setHasOptionsMenu(true);
             Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-            if (toolbar != null) {
-                ((Fractivity) getActivity()).setSupportActionBar(toolbar);
+            toolbar.setTitle(getBarTitleResource());
+            ((Fractivity) getActivity()).setSupportActionBar(toolbar);
+            boolean showBackIcon = getShowBackIcon();
+            if (showBackIcon) {
+                Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_clear_black, null);
+                toolbar.setNavigationIcon(drawable);
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onBackIconClick();
+                    }
+                });
+            }
+            FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+            boolean showFab = getShowFab();
+            fab.setVisibility(showFab ? View.VISIBLE : View.GONE);
+            if (showFab)
+
+            {
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onFabClick();
+                    }
+                });
             }
             return rootView;
         }
+
+        protected abstract void onBackIconClick();
+
+        protected abstract boolean getShowBackIcon();
+
+        protected abstract void onFabClick();
+
+        protected abstract boolean getShowFab();
+
+        protected abstract int getBarTitleResource();
 
         @Override
         protected void destroyView() {

@@ -1,94 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.repkap11.burger.activities.AboutUserFractivity">
+    android:orientation="vertical"
+    android:padding="10dp"
 
-    <include layout="@layout/fractivity_bar_menu" />
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/fractivity_about_user_text_full_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_person_black"
+                android:padding="20dp"
+                android:textSize="18sp"
+                tools:text="Paul Repka" />
+
+            <TextView
+                android:id="@+id/fractivity_about_user_text_car_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_car_black"
+                android:padding="20dp"
+                android:textSize="18sp"
+                tools:text="4" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/fractivity_about_user_edit_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="Edit" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp"
+        android:background="@android:color/darker_gray"
 
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:orientation="@integer/fractivity_about_user_linear_orientation"
+        android:padding="2dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <include
+            android:id="@+id/fractivity_about_user_day_1"
+            layout="@layout/fractivity_about_user_day_view" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:orientation="vertical">
+        <include
+            android:id="@+id/fractivity_about_user_day_2"
+            layout="@layout/fractivity_about_user_day_view" />
 
-                <TextView
-                    android:id="@+id/fractivity_about_user_text_full_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_person_black"
-                    android:padding="20dp"
-                    android:textSize="18sp"
-                    tools:text="Paul Repka" />
+        <include
+            android:id="@+id/fractivity_about_user_day_3"
+            layout="@layout/fractivity_about_user_day_view" />
 
-                <TextView
-                    android:id="@+id/fractivity_about_user_text_car_size"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_car_black"
-                    android:padding="20dp"
-                    android:textSize="18sp"
-                    tools:text="4" />
-            </LinearLayout>
+        <include
+            android:id="@+id/fractivity_about_user_day_4"
+            layout="@layout/fractivity_about_user_day_view" />
 
-            <Button
-                android:id="@+id/fractivity_about_user_edit_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="Edit" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray"
-
-            android:orientation="@integer/fractivity_about_user_linear_orientation"
-            android:padding="2dp">
-
-            <include
-                android:id="@+id/fractivity_about_user_day_1"
-                layout="@layout/fractivity_about_user_day_view" />
-
-            <include
-                android:id="@+id/fractivity_about_user_day_2"
-                layout="@layout/fractivity_about_user_day_view" />
-
-            <include
-                android:id="@+id/fractivity_about_user_day_3"
-                layout="@layout/fractivity_about_user_day_view" />
-
-            <include
-                android:id="@+id/fractivity_about_user_day_4"
-                layout="@layout/fractivity_about_user_day_view" />
-
-            <include
-                android:id="@+id/fractivity_about_user_day_5"
-                layout="@layout/fractivity_about_user_day_view" />
-        </LinearLayout>
-
+        <include
+            android:id="@+id/fractivity_about_user_day_5"
+            layout="@layout/fractivity_about_user_day_view" />
     </LinearLayout>
-</android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>
 
 
 

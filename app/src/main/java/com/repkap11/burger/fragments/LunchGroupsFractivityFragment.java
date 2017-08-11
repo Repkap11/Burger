@@ -3,7 +3,6 @@ package com.repkap11.burger.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,13 +27,38 @@ import com.repkap11.burger.models.User;
 /**
  * Created by paul on 8/8/17.
  */
-public class LunchGroupFractivityFragment extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
+public class LunchGroupsFractivityFragment extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
 
-    private static final String TAG = LunchGroupFractivityFragment.class.getSimpleName();
+    private static final String TAG = LunchGroupsFractivityFragment.class.getSimpleName();
 
     @Override
     protected void create(Bundle savedInstanceState) {
         super.create(savedInstanceState);
+    }
+
+    @Override
+    protected void onBackIconClick() {
+
+    }
+
+    @Override
+    protected boolean getShowBackIcon() {
+        return false;
+    }
+
+    @Override
+    protected void onFabClick() {
+        startActivity(new Intent(getActivity(), AddLunchGroupFractivity.class));
+    }
+
+    @Override
+    protected boolean getShowFab() {
+        return true;
+    }
+
+    @Override
+    protected int getBarTitleResource() {
+        return R.string.fractivity_lunch_groups_title;
     }
 
     private ListView mListView;
@@ -45,15 +69,6 @@ public class LunchGroupFractivityFragment extends FirebaseAdapterFractivity.Fire
     protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fractivity_lunch_groups, container, false);
         mListView = (ListView) rootView.findViewById(R.id.fractivity_lunch_groups_list);
-        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.fractivity_lunch_groups_title);
-        mFab = (FloatingActionButton) rootView.findViewById(R.id.fab);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), AddLunchGroupFractivity.class));
-            }
-        });
         return rootView;
     }
 
@@ -120,7 +135,7 @@ public class LunchGroupFractivityFragment extends FirebaseAdapterFractivity.Fire
             getActivity().finish();
             return;
         }
-        BurgerApplication.setUserPerferedLunchGroup(LunchGroupFractivityFragment.this.getActivity(), key);
+        BurgerApplication.setUserPerferedLunchGroup(LunchGroupsFractivityFragment.this.getActivity(), key);
         String userKey = BurgerApplication.getUserKey(getActivity());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference uderRef = database.getReference(BurgerApplication.getUserKey(getActivity()));

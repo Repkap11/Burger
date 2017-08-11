@@ -1,13 +1,10 @@
 package com.repkap11.burger.fragments;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.LongClickDeleteDialogFragment;
@@ -29,8 +25,8 @@ import com.repkap11.burger.models.LunchLocation;
 /**
  * Created by paul on 8/8/17.
  */
-public class LunchLocationFractivityFragment extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
-    private static final String TAG = LunchLocationFractivityFragment.class.getSimpleName();
+public class LunchLocationsFractivityFragment extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
+    private static final String TAG = LunchLocationsFractivityFragment.class.getSimpleName();
     public static final int REQUEST_CODE_PICK_LOCATION = 42;
     public static final String STARTING_INTENT_LOCATION_INDEX = "com.repkap11.burger.STARTING_INTENT_LOCATION_INDEX";
     public static final String STARTING_INTENT_WHICH_LUNCH_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_LUNCH_GROUP";
@@ -55,25 +51,38 @@ public class LunchLocationFractivityFragment extends FirebaseAdapterFractivity.F
         super.create(savedInstanceState);
     }
 
+    @Override
+    protected void onBackIconClick() {
+
+    }
+
+    @Override
+    protected boolean getShowBackIcon() {
+        return false;
+    }
+
+    @Override
+    protected void onFabClick() {
+        Intent intent = new Intent(getActivity(), AddLunchLocationFractivity.class);
+        intent.putExtra(AddLunchLocationFractivityFragment.STARTING_INTENT_WHICH_LUNCH_GROUP, mLunchGroup);
+        startActivity(intent);
+    }
+
+    @Override
+    protected boolean getShowFab() {
+        return true;
+    }
+
+    @Override
+    protected int getBarTitleResource() {
+        return R.string.fractivity_lunch_locations_title;
+    }
+
     //Using this activity view
     @Override
     protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fractivity_lunch_locations, container, false);
         mListView = (ListView) rootView.findViewById(R.id.fractivity_lunch_locations_list);
-        //mAddLocationButton = (Button) rootView.findViewById(R.id.fractivity_lunch_locations_button_add_user);
-        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.fractivity_lunch_locations_title);
-        mFab = (FloatingActionButton) rootView.findViewById(R.id.fab);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddLunchLocationFractivity.class);
-                intent.putExtra(AddLunchLocationFractivityFragment.STARTING_INTENT_WHICH_LUNCH_GROUP, mLunchGroup);
-                startActivity(intent);
-            }
-        });
-
-
         return rootView;
     }
 

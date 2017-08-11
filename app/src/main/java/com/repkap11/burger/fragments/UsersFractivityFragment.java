@@ -39,6 +39,32 @@ public class UsersFractivityFragment extends FirebaseAdapterFractivity.FirebaseA
         super.create(savedInstanceState);
     }
 
+    @Override
+    protected void onBackIconClick() {
+
+    }
+
+    @Override
+    protected boolean getShowBackIcon() {
+        return false;
+    }
+
+    @Override
+    protected void onFabClick() {
+        Intent intent = new Intent(getActivity(), EditUserFractivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    protected boolean getShowFab() {
+        return true;
+    }
+
+    @Override
+    protected int getBarTitleResource() {
+        return R.string.fractivity_users_title;
+    }
+
     private ListView mListView;
     private FloatingActionButton mFab;
 
@@ -47,17 +73,6 @@ public class UsersFractivityFragment extends FirebaseAdapterFractivity.FirebaseA
     protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fractivity_users, container, false);
         mListView = (ListView) rootView.findViewById(R.id.fractivity_users_list);
-        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.fractivity_users_title);
-        mFab = (FloatingActionButton) rootView.findViewById(R.id.fab);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), EditUserFractivity.class);
-                startActivity(intent);
-            }
-        });
-
         return rootView;
     }
 

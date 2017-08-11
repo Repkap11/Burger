@@ -14,7 +14,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.activities.base.Fractivity;
 import com.repkap11.burger.fragments.AboutUserFractivityFragment;
-import com.repkap11.burger.fragments.LunchGroupFractivityFragment;
+import com.repkap11.burger.fragments.LunchGroupsFractivityFragment;
 import com.repkap11.burger.fragments.SignInFractivityFragment;
 
 
@@ -46,7 +46,7 @@ public class SignInFractivity extends Fractivity {
             String perferedGroup = BurgerApplication.getUserPerferedLunchGroup(this);
             Log.e(TAG, "Starting signed in user with preferedGroup:" + perferedGroup);
             if (perferedGroup == null) {
-                return new LunchGroupFractivityFragment();
+                return new LunchGroupsFractivityFragment();
             } else {
                 return new AboutUserFractivityFragment();
                 //return new UsersFractivity.UsersFragment();

@@ -1,56 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.repkap11.burger.activities.LunchGroupsFractivity">
-
-    <include layout="@layout/fractivity_bar_menu" />
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/fractivity_lunch_groups_top_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:padding="20dp"
+        android:text="@string/fractivity_lunch_groups_top_message"
+        android:textSize="20sp" />
+
+
+    <TextView
+        android:id="@+id/fractivity_lunch_groups_bottom_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="20dp"
+        android:text="@string/fractivity_lunch_groups_bottom_message"
+        android:textSize="14sp" />
+
+    <ListView
+        android:id="@+id/fractivity_lunch_groups_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_above="@id/fractivity_lunch_groups_bottom_text"
+        android:layout_below="@id/fractivity_lunch_groups_top_text"
+        tools:listitem="@layout/fractivity_lunch_groups_list_element" />
+</RelativeLayout>
 
-
-        <TextView
-            android:id="@+id/fractivity_lunch_groups_top_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:gravity="center_horizontal"
-            android:padding="20dp"
-            android:text="@string/fractivity_lunch_groups_top_message"
-            android:textSize="20sp" />
-
-
-        <TextView
-            android:id="@+id/fractivity_lunch_groups_bottom_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:padding="20dp"
-            android:text="@string/fractivity_lunch_groups_bottom_message"
-            android:textSize="14sp" />
-
-        <ListView
-            android:id="@+id/fractivity_lunch_groups_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/fractivity_lunch_groups_bottom_text"
-            android:layout_below="@id/fractivity_lunch_groups_top_text"
-            tools:listitem="@layout/fractivity_lunch_groups_list_element" />
-    </RelativeLayout>
-
-    <include layout="@layout/fractivity_fab_add" />
-
-</android.support.design.widget.CoordinatorLayout>
 
 
 

@@ -2,10 +2,7 @@ package com.repkap11.burger.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +39,7 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
     private TextView mTextFullName;
     private TextView mEditTextCarSize;
     private Button mButtonEditUser;
-    private Toolbar mToolbar;
+    //private Toolbar mToolbar;
     private TextView mLunchChoiceLabel1;
     private TextView mLunchChoiceLabel2;
     private TextView mLunchChoiceLabel3;
@@ -80,9 +77,34 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
     }
 
     @Override
+    protected void onBackIconClick() {
+        getActivity().finish();
+    }
+
+    @Override
+    protected boolean getShowBackIcon() {
+        return true;
+    }
+
+    @Override
+    protected void onFabClick() {
+
+    }
+
+    @Override
+    protected boolean getShowFab() {
+        return false;
+    }
+
+    @Override
+    protected int getBarTitleResource() {
+        return R.string.app_name;
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == LunchLocationFractivityFragment.REQUEST_CODE_PICK_LOCATION && data != null) {
+        if (resultCode == Activity.RESULT_OK && requestCode == LunchLocationsFractivityFragment.REQUEST_CODE_PICK_LOCATION && data != null) {
             Log.e(TAG, "Good result");
             Intent startingIntent = getActivity().getIntent();
             if (startingIntent == null) {
@@ -105,18 +127,6 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
     @Override
     protected View createBarView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fractivity_about_user, container, false);
-        mToolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-        //toolbar.setTitle(R.string.fractivity_about_user_title);
-        if (!getActivity().isTaskRoot()) {
-            Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_clear_black, null);
-            mToolbar.setNavigationIcon(drawable);
-        }
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
         mTextFullName = (TextView) rootView.findViewById(R.id.fractivity_about_user_text_full_name);
         mEditTextCarSize = (TextView) rootView.findViewById(R.id.fractivity_about_user_text_car_size);
         mButtonEditUser = (Button) rootView.findViewById(R.id.fractivity_about_user_edit_user);
@@ -251,11 +261,11 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
 
     private void launchAddLocation(int i, String lunch_pref_key) {
         Intent intent = new Intent(getContext(), LunchLocationsFractivity.class);
-        intent.putExtra(LunchLocationFractivityFragment.STARTING_INTENT_LOCATION_INDEX, i);
+        intent.putExtra(LunchLocationsFractivityFragment.STARTING_INTENT_LOCATION_INDEX, i);
         DatabaseReference lunchGroupRef = FirebaseDatabase.getInstance().getReference(mUserKey).getParent().getParent();
         String lunchGroupKey = lunchGroupRef.toString().substring(lunchGroupRef.getRoot().toString().length() + 1);
         intent.putExtra(AddLunchLocationFractivityFragment.STARTING_INTENT_WHICH_LUNCH_GROUP, lunchGroupKey);
-        startActivityForResult(intent, LunchLocationFractivityFragment.REQUEST_CODE_PICK_LOCATION);
+        startActivityForResult(intent, LunchLocationsFractivityFragment.REQUEST_CODE_PICK_LOCATION);
     }
 
 
