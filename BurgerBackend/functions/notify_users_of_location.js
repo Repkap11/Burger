@@ -43,5 +43,4 @@ exports.send_notification_for_date = function send_notification_for_date(event, 
             });
         });
      });
-    res.status(200).send("Triggering notifications");
 }
