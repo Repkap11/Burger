@@ -98,7 +98,7 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
 
     @Override
     protected int getBarTitleResource() {
-        return R.string.app_name;
+        return R.string.fractivity_about_user_title;
     }
 
     @Override

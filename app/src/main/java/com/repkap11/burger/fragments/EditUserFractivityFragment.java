@@ -58,7 +58,7 @@ public class EditUserFractivityFragment extends Fractivity.FractivityFragment {
     @Override
     protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fractivity_edit_user, container, false);
-        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.fractivity_bar_menu_app_bar_layout);
         toolbar.setTitle(R.string.fractivity_edit_user_title);
         Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_clear_black, null);
         toolbar.setNavigationIcon(drawable);

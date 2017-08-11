@@ -74,7 +74,8 @@ public abstract class Fractivity<FragType extends Fractivity.FractivityFragment>
 
         protected abstract void destroyView();
 
-        protected void resuestPermissionResult(int requestCode, String[] permissions, int[] grantResults){}
+        protected void requestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
+        }
     }
 
     @Override
@@ -83,7 +84,7 @@ public abstract class Fractivity<FragType extends Fractivity.FractivityFragment>
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             Log.e(TAG, "Permission: " + permissions[0] + "was " + grantResults[0]);
             //resume tasks needing this permission
-            mFragment.resuestPermissionResult(requestCode, permissions, grantResults);
+            mFragment.requestPermissionResult(requestCode, permissions, grantResults);
         } else {
             Log.e(TAG, "Permissions not granted");
         }

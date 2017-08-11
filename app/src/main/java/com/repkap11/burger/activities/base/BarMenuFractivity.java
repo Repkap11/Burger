@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -45,6 +46,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
         private static final String TAG = BarMenuFractivity.class.getSimpleName();
         private static final int REQUEST_CODE_ASK_FOR_WRITE_EXPERNAL_PERMISSION = 44;
         private GoogleApiClient mGoogleAPIClient;
+        private boolean mShowBar = true;
 
         @Override
         public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -97,7 +99,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
         }
 
         @Override
-        public void resuestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
+        public void requestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
             continueUpdateAppWithPermissions();
 
         }
@@ -122,34 +124,44 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
 
         protected final View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fractivity_bar_menu, container, false);
-            rootView.addView(createBarView(inflater, rootView, savedInstanceState));
+            View childView;
+            if (mShowBar) {
+                childView = createBarView(inflater, rootView, savedInstanceState);
+            } else {
+                childView = createBarView(inflater, container, savedInstanceState);
+                return childView;
+            }
+            rootView.addView(childView);
             setHasOptionsMenu(true);
-            Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-            toolbar.setTitle(getBarTitleResource());
-            ((Fractivity) getActivity()).setSupportActionBar(toolbar);
-            boolean showBackIcon = getShowBackIcon();
-            if (showBackIcon) {
-                Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_clear_black, null);
-                toolbar.setNavigationIcon(drawable);
-                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onBackIconClick();
-                    }
-                });
+            Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.fractivity_bar_menu_toolbar);
+            if (mShowBar) {
+                toolbar.setTitle(getBarTitleResource());
+                ((Fractivity) getActivity()).setSupportActionBar(toolbar);
+                boolean showBackIcon = getShowBackIcon();
+                if (showBackIcon) {
+                    Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_clear_black, null);
+                    toolbar.setNavigationIcon(drawable);
+                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onBackIconClick();
+                        }
+                    });
+                }
+            } else {
+                toolbar.setVisibility(View.GONE);
             }
             FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
             boolean showFab = getShowFab();
-            fab.setVisibility(showFab ? View.VISIBLE : View.GONE);
-            if (showFab)
-
-            {
+            if (showFab) {
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         onFabClick();
                     }
                 });
+            } else {
+                fab.setVisibility(View.GONE);
             }
             return rootView;
         }
@@ -175,6 +187,10 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
         @Override
         public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+        }
+
+        public void setShowBar(boolean showBar) {
+            mShowBar = showBar;
         }
     }
 }

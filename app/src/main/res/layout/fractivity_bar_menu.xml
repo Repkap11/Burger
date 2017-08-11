@@ -7,15 +7,15 @@
     android:fitsSystemWindows="true"
     tools:context="com.repkap11.burger.activities.LunchGroupsFractivity">
 
-
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/fractivity_bar_menu_app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         tools:showIn="@layout/fractivity_lunch_groups">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/fractivity_bar_menu_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"

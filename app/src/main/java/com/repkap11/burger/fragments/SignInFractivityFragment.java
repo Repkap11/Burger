@@ -55,7 +55,7 @@ public class SignInFractivityFragment extends Fractivity.FractivityFragment impl
     @Override
     protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fractivity_sign_in, container, false);
-        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.fractivity_bar_menu_app_bar_layout);
         toolbar.setTitle(R.string.fractivity_sign_in_title);
         rootView.findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
             @Override
