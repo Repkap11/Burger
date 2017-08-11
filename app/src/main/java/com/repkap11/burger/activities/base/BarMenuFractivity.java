@@ -40,7 +40,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
 
     private static final String TAG = BarMenuFractivity.class.getSimpleName();
 
-    public abstract static class BarMenuFragment extends Fractivity.FractivityFragment implements GoogleApiClient.OnConnectionFailedListener {
+    public abstract static class BarMenuFractivityFragment extends Fractivity.FractivityFragment implements GoogleApiClient.OnConnectionFailedListener {
         private static final String TAG = BarMenuFractivity.class.getSimpleName();
         private static final int REQUEST_CODE_ASK_FOR_WRITE_EXPERNAL_PERMISSION = 44;
         private GoogleApiClient mGoogleAPIClient;

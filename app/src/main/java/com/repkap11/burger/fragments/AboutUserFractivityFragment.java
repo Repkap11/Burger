@@ -30,7 +30,7 @@ import com.repkap11.burger.models.User;
 /**
  * Created by paul on 8/8/17.
  */
-public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFragment {
+public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFractivityFragment {
 
     private static final String TAG = AboutUserFractivityFragment.class.getSimpleName();
     public static final String STARTING_INTENT_USER_INITIAL_NAME = "com.repkap11.burger.STARTING_INTENT_USER_INITIAL_NAME";

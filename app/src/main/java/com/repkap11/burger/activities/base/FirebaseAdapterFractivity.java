@@ -13,7 +13,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.repkap11.burger.FirebaseAdapter;
@@ -39,7 +38,7 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
     protected abstract FirebaseAdapterFragment createFirebaseFragment();
 
 
-    public static abstract class FirebaseAdapterFragment<AdapterHolder, AdapterData> extends BarMenuFractivity.BarMenuFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+    public static abstract class FirebaseAdapterFragment<AdapterHolder, AdapterData> extends BarMenuFractivity.BarMenuFractivityFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
         FirebaseAdapter mAdapter;
 
         protected abstract String adapterReference();
