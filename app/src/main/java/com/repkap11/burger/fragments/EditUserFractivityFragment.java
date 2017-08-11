@@ -102,7 +102,9 @@ public class EditUserFractivityFragment extends Fractivity.FractivityFragment {
                     if (mEditTextCarSize != null) {
                         String carSize = dataSnapshot.getValue(String.class);
                         mEditTextCarSize.setText(carSize);
-                        mEditTextCarSize.setSelection(carSize.length());
+			if (carSize != null){
+                            mEditTextCarSize.setSelection(carSize.length());
+			}
                     }
                 }
 
