@@ -8,6 +8,6 @@ import com.repkap11.burger.models.User;
 public class UsersFractivity extends FirebaseAdapterFractivity<UsersFractivityFragment.Holder, User> {
     @Override
     protected FirebaseAdapterFragment createFirebaseFragment() {
-        return new UsersFractivityFragment<UsersFractivityFragment.Holder>();
+        return new UsersFractivityFragment();
     }
 }

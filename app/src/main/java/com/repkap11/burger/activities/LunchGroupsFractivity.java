@@ -8,7 +8,7 @@ import com.repkap11.burger.models.LunchGroup;
 public class LunchGroupsFractivity extends FirebaseAdapterFractivity<LunchGroupFractivityFragment.Holder, LunchGroup> {
     @Override
     protected FirebaseAdapterFragment createFirebaseFragment() {
-        return new LunchGroupFractivityFragment<LunchGroupFractivityFragment.Holder>();
+        return new LunchGroupFractivityFragment();
     }
 
 

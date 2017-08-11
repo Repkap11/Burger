@@ -23,7 +23,7 @@ import com.repkap11.burger.models.User;
 /**
  * Created by paul on 8/8/17.
  */
-public class UsersFractivityFragment<AdapterHolder> extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
+public class UsersFractivityFragment extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
 
     public static final String STARTING_INTENT_WHICH_LUNCH_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_LUNCH_GROUP";
     private static final String TAG = UsersFractivityFragment.class.getSimpleName();

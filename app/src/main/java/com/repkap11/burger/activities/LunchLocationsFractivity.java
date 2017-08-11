@@ -8,7 +8,7 @@ import com.repkap11.burger.models.LunchLocation;
 public class LunchLocationsFractivity extends FirebaseAdapterFractivity<LunchLocationFractivityFragment.Holder, LunchLocation> {
     @Override
     protected FirebaseAdapterFragment createFirebaseFragment() {
-        return new LunchLocationFractivityFragment<LunchLocationFractivityFragment.Holder>();
+        return new LunchLocationFractivityFragment();
     }
 
 }

@@ -125,7 +125,6 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
             Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
             if (toolbar != null) {
                 ((Fractivity) getActivity()).setSupportActionBar(toolbar);
-                ((Fractivity) getActivity()).getSupportActionBar();
             }
             return rootView;
         }

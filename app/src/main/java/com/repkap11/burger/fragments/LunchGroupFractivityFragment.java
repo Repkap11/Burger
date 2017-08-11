@@ -28,7 +28,7 @@ import com.repkap11.burger.models.User;
 /**
  * Created by paul on 8/8/17.
  */
-public class LunchGroupFractivityFragment<AdapterHolder> extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
+public class LunchGroupFractivityFragment extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
 
     private static final String TAG = LunchGroupFractivityFragment.class.getSimpleName();
 

@@ -29,7 +29,7 @@ import com.repkap11.burger.models.LunchLocation;
 /**
  * Created by paul on 8/8/17.
  */
-public class LunchLocationFractivityFragment<AdapterHolder> extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
+public class LunchLocationFractivityFragment extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
     private static final String TAG = LunchLocationFractivityFragment.class.getSimpleName();
     public static final int REQUEST_CODE_PICK_LOCATION = 42;
     public static final String STARTING_INTENT_LOCATION_INDEX = "com.repkap11.burger.STARTING_INTENT_LOCATION_INDEX";

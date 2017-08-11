@@ -46,7 +46,7 @@ public class SignInFractivity extends Fractivity {
             String perferedGroup = BurgerApplication.getUserPerferedLunchGroup(this);
             Log.e(TAG, "Starting signed in user with preferedGroup:" + perferedGroup);
             if (perferedGroup == null) {
-                return new LunchGroupFractivityFragment<>();
+                return new LunchGroupFractivityFragment();
             } else {
                 return new AboutUserFractivityFragment();
                 //return new UsersFractivity.UsersFragment();

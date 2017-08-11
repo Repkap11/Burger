@@ -44,10 +44,15 @@
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings" />
 
+        <activity
+            android:name=".activities.base.TabFractivity"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity-alias
             android:name=".Launcher"
             android:label="@string/app_name"
-            android:targetActivity=".activities.SignInFractivity">
+            android:targetActivity=".activities.base.TabFractivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
