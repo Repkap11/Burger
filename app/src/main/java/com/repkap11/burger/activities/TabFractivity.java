@@ -1,22 +1,20 @@
-package com.repkap11.burger.activities.base;
+package com.repkap11.burger.activities;
 
-import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.repkap11.burger.R;
+import com.repkap11.burger.activities.base.BarMenuFractivity;
+import com.repkap11.burger.activities.base.Fractivity;
 import com.repkap11.burger.fragments.AboutUserFractivityFragment;
 import com.repkap11.burger.fragments.LunchLocationsFractivityFragment;
-import com.repkap11.burger.fragments.UsersFractivityFragment;
 
 /**
  * Created by paul on 8/10/17.
@@ -70,7 +68,7 @@ public class TabFractivity extends Fractivity<TabFractivity.TabFractivityFragmen
         }
 
         @Override
-        protected int getBarTitleResource() {
+        public int getBarTitleResource() {
             return R.string.app_name;
         }
 

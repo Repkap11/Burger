@@ -19,6 +19,7 @@ import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.LongClickDeleteDialogFragment;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.AddLunchLocationFractivity;
+import com.repkap11.burger.activities.EditUserFractivity;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 import com.repkap11.burger.models.LunchLocation;
 
@@ -74,7 +75,7 @@ public class LunchLocationsFractivityFragment extends FirebaseAdapterFractivity.
     }
 
     @Override
-    protected int getBarTitleResource() {
+    public int getBarTitleResource() {
         return R.string.fractivity_lunch_locations_title;
     }
 
@@ -149,14 +150,22 @@ public class LunchLocationsFractivityFragment extends FirebaseAdapterFractivity.
             getActivity().finish();
             return;
         }
+
         int resultIndex = startingIntent.getIntExtra(STARTING_INTENT_LOCATION_INDEX, -1);
+        if (resultIndex != -1) {
 
-        Intent intent = new Intent();
-        intent.putExtra(AboutUserFractivityFragment.RESULT_INTENT_LOCATION_LINK, link);
-        intent.putExtra(AboutUserFractivityFragment.RESULT_INTENT_LOCATION_INDEX, resultIndex);
+            Intent intent = new Intent();
+            intent.putExtra(AboutUserFractivityFragment.RESULT_INTENT_LOCATION_LINK, link);
+            intent.putExtra(AboutUserFractivityFragment.RESULT_INTENT_LOCATION_INDEX, resultIndex);
 
-        getActivity().setResult(Activity.RESULT_OK, intent);
-        getActivity().finish();
+            getActivity().setResult(Activity.RESULT_OK, intent);
+            getActivity().finish();
+        } else {
+            //Intent intent = new Intent(getActivity(), EditUserFractivity.class);
+            //intent.putExtra(EditUserFractivityFragment.STARTING_INTENT_EDIT_EXISTING_USER, key);
+            //startActivity(intent);
+            //TODO implement view lunch location users fractivity
+        }
     }
 
     @Override

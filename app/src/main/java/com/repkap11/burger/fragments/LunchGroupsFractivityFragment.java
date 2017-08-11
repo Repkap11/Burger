@@ -18,9 +18,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
-import com.repkap11.burger.activities.AboutUserFractivity;
 import com.repkap11.burger.activities.AddLunchGroupFractivity;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
+import com.repkap11.burger.activities.TabFractivity;
 import com.repkap11.burger.models.LunchGroup;
 import com.repkap11.burger.models.User;
 
@@ -57,7 +57,7 @@ public class LunchGroupsFractivityFragment extends FirebaseAdapterFractivity.Fir
     }
 
     @Override
-    protected int getBarTitleResource() {
+    public int getBarTitleResource() {
         return R.string.fractivity_lunch_groups_title;
     }
 
@@ -127,7 +127,7 @@ public class LunchGroupsFractivityFragment extends FirebaseAdapterFractivity.Fir
 
     @Override
     protected void onItemClicked(View view, Object holderObject, int position, String key, String link, Object value) {
-        Intent intent = new Intent(getContext(), AboutUserFractivity.class);
+        Intent intent = new Intent(getContext(), TabFractivity.class);
         Log.e(TAG, "Starting with group:" + key);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
@@ -143,8 +143,8 @@ public class LunchGroupsFractivityFragment extends FirebaseAdapterFractivity.Fir
         BurgerApplication.updateDeviceToken(getActivity(), true);
 
         Log.e(TAG, "Writing user's prefered group:" + key);
-        intent.putExtra(AboutUserFractivityFragment.STARTING_INTENT_USER_INITIAL_NAME, user.getDisplayName());
-        intent.putExtra(AboutUserFractivityFragment.STARTING_INTENT_USER_KEY, userKey);
+        //intent.putExtra(AboutUserFractivityFragment.STARTING_INTENT_USER_INITIAL_NAME, user.getDisplayName());
+        //intent.putExtra(AboutUserFractivityFragment.STARTING_INTENT_USER_KEY, userKey);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         startActivity(intent);

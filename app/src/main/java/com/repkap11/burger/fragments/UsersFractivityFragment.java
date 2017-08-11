@@ -61,7 +61,7 @@ public class UsersFractivityFragment extends FirebaseAdapterFractivity.FirebaseA
     }
 
     @Override
-    protected int getBarTitleResource() {
+    public int getBarTitleResource() {
         return R.string.fractivity_users_title;
     }
 

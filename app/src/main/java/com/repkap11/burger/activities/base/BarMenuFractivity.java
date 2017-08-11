@@ -170,7 +170,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
 
         protected abstract boolean getShowFab();
 
-        protected abstract int getBarTitleResource();
+        public abstract int getBarTitleResource();
 
         @Override
         protected void destroyView() {

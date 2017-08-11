@@ -16,6 +16,7 @@ import com.repkap11.burger.activities.base.Fractivity;
 import com.repkap11.burger.fragments.AboutUserFractivityFragment;
 import com.repkap11.burger.fragments.LunchGroupsFractivityFragment;
 import com.repkap11.burger.fragments.SignInFractivityFragment;
+import com.repkap11.burger.fragments.TabFractivityFragment;
 
 
 public class SignInFractivity extends Fractivity {
@@ -48,7 +49,7 @@ public class SignInFractivity extends Fractivity {
             if (perferedGroup == null) {
                 return new LunchGroupsFractivityFragment();
             } else {
-                return new AboutUserFractivityFragment();
+                return new TabFractivityFragment();
                 //return new UsersFractivity.UsersFragment();
             }
         } else {
