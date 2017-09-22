@@ -27,11 +27,17 @@ public class UsersFractivityFragment extends FirebaseAdapterFractivity.FirebaseA
 
     public static final String STARTING_INTENT_WHICH_LUNCH_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_LUNCH_GROUP";
     private static final String TAG = UsersFractivityFragment.class.getSimpleName();
+    public static final int REQUEST_CODE_LIST_USERS = 1;
     private String mLunchGroup;
 
     @Override
     protected void create(Bundle savedInstanceState) {
-        mLunchGroup = BurgerApplication.getUserPerferedLunchGroup(getActivity());
+
+        if (getActivity().getIntent() == null) {
+            getActivity().finish();
+        }
+        mLunchGroup = getActivity().getIntent().getStringExtra(STARTING_INTENT_WHICH_LUNCH_GROUP);
+        //mLunchGroup = BurgerApplication.getUserPerferedLunchGroup(getActivity());
         Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
         if (mLunchGroup == null) {
             getActivity().finish();
@@ -120,27 +126,27 @@ public class UsersFractivityFragment extends FirebaseAdapterFractivity.FirebaseA
     @Override
     public void populateView(View convertView, Object o, int position, String key, Object value) {
         Holder holder = (Holder) o;
-        User user = (User) value;
-        holder.mName.setText(user.displayName);
+        String user = (String) value;
+        holder.mName.setText("Name:" + user);
         holder.mIndex = position;
     }
 
     @Override
     public Class getAdapterDataClass() {
-        return User.class;
+        return String.class;
     }
 
     @Override
     protected void onItemClicked(View view, Object holderObject, int position, String key, String link, Object value) {
-        User user = (User) value;
+        //User user = (User) value;
         Holder holder = (Holder) holderObject;
         //Intent intent = new Intent(getActivity(), AboutUserFractivity.class);
         //intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_INITIAL_NAME, user.firstName);
         //intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_KEY, key);
 
-        Intent intent = new Intent(getActivity(), EditUserFractivity.class);
-        intent.putExtra(EditUserFractivityFragment.STARTING_INTENT_EDIT_EXISTING_USER, key);
-        startActivity(intent);
+//        Intent intent = new Intent(getActivity(), EditUserFractivity.class);
+//        intent.putExtra(EditUserFractivityFragment.STARTING_INTENT_EDIT_EXISTING_USER, key);
+//        startActivity(intent);
     }
 
     public static class Holder {

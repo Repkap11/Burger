@@ -86,6 +86,7 @@ public class FirebaseAdapter<AdapterHolder, AdapterData> extends BaseAdapter {
         try {
             value = data.getValue(mFragment.getAdapterDataClass());
         } catch (DatabaseException e) {
+            Log.e(TAG, "Unable to parse data:" + data.toString());
             e.printStackTrace();
         }
         if (value == null) {

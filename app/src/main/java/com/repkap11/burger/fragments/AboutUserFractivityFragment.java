@@ -20,6 +20,7 @@ import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.EditUserFractivity;
 import com.repkap11.burger.activities.LunchLocationsFractivity;
+import com.repkap11.burger.activities.UsersFractivity;
 import com.repkap11.burger.activities.base.BarMenuFractivity;
 import com.repkap11.burger.models.LunchLocation;
 import com.repkap11.burger.models.User;
@@ -167,31 +168,62 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
         mLunchChoiceLabel1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchAddLocation(1, mLunchPreference1Key);
+                showUsersOfLocation(mLunchPreference1Key, 1);
             }
         });
         mLunchChoiceLabel2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchAddLocation(2, mLunchPreference2Key);
+                showUsersOfLocation(mLunchPreference2Key, 2);
             }
         });
         mLunchChoiceLabel3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchAddLocation(3, mLunchPreference3Key);
+                showUsersOfLocation(mLunchPreference3Key, 3);
             }
         });
         mLunchChoiceLabel4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchAddLocation(4, mLunchPreference4Key);
+                showUsersOfLocation(mLunchPreference4Key, 4);
             }
         });
         mLunchChoiceLabel5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchAddLocation(5, mLunchPreference5Key);
+                showUsersOfLocation(mLunchPreference5Key, 5);
+            }
+        });
+
+        dayLabel1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchAddLocation(1);
+            }
+        });
+        dayLabel2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchAddLocation(2);
+            }
+        });
+        dayLabel3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchAddLocation(3);
+            }
+        });
+        dayLabel4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchAddLocation(4);
+            }
+        });
+        dayLabel5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchAddLocation(5);
             }
         });
 
@@ -259,7 +291,17 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
         return rootView;
     }
 
-    private void launchAddLocation(int i, String lunch_pref_key) {
+    private void showUsersOfLocation(String lunchPreferenceKey, int i) {
+        DatabaseReference lunchGroupRef = FirebaseDatabase.getInstance().getReference(mUserKey).getParent().getParent();
+        String lunchGroupKey = lunchGroupRef.toString().substring(lunchGroupRef.getRoot().toString().length() + 1);
+        String lunchLocationUsersKey = lunchGroupKey + "/lunch_locations/" + lunchPreferenceKey + "/lunch_preference_" + i;
+        Log.e(TAG, "Showing pref:" + lunchLocationUsersKey);
+        Intent intent = new Intent(getContext(), UsersFractivity.class);
+        intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_LUNCH_GROUP, lunchLocationUsersKey);
+        startActivityForResult(intent, UsersFractivityFragment.REQUEST_CODE_LIST_USERS);
+    }
+
+    private void launchAddLocation(int i) {
         Intent intent = new Intent(getContext(), LunchLocationsFractivity.class);
         intent.putExtra(LunchLocationsFractivityFragment.STARTING_INTENT_LOCATION_INDEX, i);
         DatabaseReference lunchGroupRef = FirebaseDatabase.getInstance().getReference(mUserKey).getParent().getParent();
@@ -272,17 +314,7 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
     private ValueEventListener mLunchPreference1Listener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            LunchLocation location = null;
-            try {
-                location = dataSnapshot.getValue(LunchLocation.class);
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            }
-            if (location == null) {
-                return;
-            }
-            mLunchChoiceLabel1.setText(location.displayName);
-            mLunchPreference1Key = dataSnapshot.getKey();
+            mLunchPreference1Key = onDayLocationChange(dataSnapshot, mLunchChoiceLabel1);
         }
 
         @Override
@@ -293,17 +325,7 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
     private ValueEventListener mLunchPreference2Listener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            LunchLocation location = null;
-            try {
-                location = dataSnapshot.getValue(LunchLocation.class);
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            }
-            if (location == null) {
-                return;
-            }
-            mLunchChoiceLabel2.setText(location.displayName);
-            mLunchPreference2Key = dataSnapshot.getKey();
+            mLunchPreference2Key = onDayLocationChange(dataSnapshot, mLunchChoiceLabel2);
         }
 
         @Override
@@ -314,17 +336,7 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
     private ValueEventListener mLunchPreference3Listener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            LunchLocation location = null;
-            try {
-                location = dataSnapshot.getValue(LunchLocation.class);
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            }
-            if (location == null) {
-                return;
-            }
-            mLunchChoiceLabel3.setText(location.displayName);
-            mLunchPreference3Key = dataSnapshot.getKey();
+            mLunchPreference3Key = onDayLocationChange(dataSnapshot, mLunchChoiceLabel3);
         }
 
         @Override
@@ -335,17 +347,7 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
     private ValueEventListener mLunchPreference4Listener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            LunchLocation location = null;
-            try {
-                location = dataSnapshot.getValue(LunchLocation.class);
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            }
-            if (location == null) {
-                return;
-            }
-            mLunchChoiceLabel4.setText(location.displayName);
-            mLunchPreference4Key = dataSnapshot.getKey();
+            mLunchPreference4Key = onDayLocationChange(dataSnapshot, mLunchChoiceLabel4);
         }
 
         @Override
@@ -356,17 +358,7 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
     private ValueEventListener mLunchPreference5Listener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            LunchLocation location = null;
-            try {
-                location = dataSnapshot.getValue(LunchLocation.class);
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            }
-            if (location == null) {
-                return;
-            }
-            mLunchChoiceLabel5.setText(location.displayName);
-            mLunchPreference5Key = dataSnapshot.getKey();
+            mLunchPreference5Key = onDayLocationChange(dataSnapshot, mLunchChoiceLabel5);
         }
 
         @Override
@@ -374,6 +366,20 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
 
         }
     };
+
+    private String onDayLocationChange(DataSnapshot dataSnapshot, TextView lunchChoiceLabel) {
+        LunchLocation location = null;
+        try {
+            location = dataSnapshot.getValue(LunchLocation.class);
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+        if (location == null) {
+            return null;
+        }
+        lunchChoiceLabel.setText(location.displayName);
+        return dataSnapshot.getKey();
+    }
 
     @Override
     protected void destroyView() {
