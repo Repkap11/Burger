@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -153,6 +154,12 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
         TextView dayLabel4 = (TextView) rootDay4.findViewById(R.id.fractivity_about_user_day_label);
         TextView dayLabel5 = (TextView) rootDay5.findViewById(R.id.fractivity_about_user_day_label);
 
+        ImageView peopleIcon1 = (ImageView) rootDay1.findViewById(R.id.fractivity_about_user_poeple_icon);
+        ImageView peopleIcon2 = (ImageView) rootDay2.findViewById(R.id.fractivity_about_user_poeple_icon);
+        ImageView peopleIcon3 = (ImageView) rootDay3.findViewById(R.id.fractivity_about_user_poeple_icon);
+        ImageView peopleIcon4 = (ImageView) rootDay4.findViewById(R.id.fractivity_about_user_poeple_icon);
+        ImageView peopleIcon5 = (ImageView) rootDay5.findViewById(R.id.fractivity_about_user_poeple_icon);
+
         dayLabel1.setText(getResources().getText(R.string.fractivity_about_user_day_label1));
         dayLabel2.setText(getResources().getText(R.string.fractivity_about_user_day_label2));
         dayLabel3.setText(getResources().getText(R.string.fractivity_about_user_day_label3));
@@ -165,62 +172,59 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
         mLunchChoiceLabel4 = (TextView) rootDay4.findViewById(R.id.fractivity_about_user_lunch_location_label);
         mLunchChoiceLabel5 = (TextView) rootDay5.findViewById(R.id.fractivity_about_user_lunch_location_label);
 
-        mLunchChoiceLabel1.setOnClickListener(new View.OnClickListener() {
+
+
+        peopleIcon1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                showUsersOfLocation(mLunchPreference1Key, 1);
+            public void onClick(View view) {showUsersOfLocation(mLunchPreference1Key, 1);
             }
         });
-        mLunchChoiceLabel2.setOnClickListener(new View.OnClickListener() {
+        peopleIcon2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                showUsersOfLocation(mLunchPreference2Key, 2);
+            public void onClick(View view) {showUsersOfLocation(mLunchPreference2Key, 2);
             }
         });
-        mLunchChoiceLabel3.setOnClickListener(new View.OnClickListener() {
+        peopleIcon3.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                showUsersOfLocation(mLunchPreference3Key, 3);
+            public void onClick(View view) {showUsersOfLocation(mLunchPreference3Key, 3);
             }
         });
-        mLunchChoiceLabel4.setOnClickListener(new View.OnClickListener() {
+        peopleIcon4.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                showUsersOfLocation(mLunchPreference4Key, 4);
+            public void onClick(View view) {showUsersOfLocation(mLunchPreference4Key, 4);
             }
         });
-        mLunchChoiceLabel5.setOnClickListener(new View.OnClickListener() {
+        peopleIcon5.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                showUsersOfLocation(mLunchPreference5Key, 5);
+            public void onClick(View view) {showUsersOfLocation(mLunchPreference5Key, 5);
             }
         });
 
-        dayLabel1.setOnClickListener(new View.OnClickListener() {
+        mLunchChoiceLabel1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchAddLocation(1);
             }
         });
-        dayLabel2.setOnClickListener(new View.OnClickListener() {
+        mLunchChoiceLabel2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchAddLocation(2);
             }
         });
-        dayLabel3.setOnClickListener(new View.OnClickListener() {
+        mLunchChoiceLabel3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchAddLocation(3);
             }
         });
-        dayLabel4.setOnClickListener(new View.OnClickListener() {
+        mLunchChoiceLabel4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchAddLocation(4);
             }
         });
-        dayLabel5.setOnClickListener(new View.OnClickListener() {
+        mLunchChoiceLabel5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchAddLocation(5);
