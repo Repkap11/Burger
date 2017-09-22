@@ -1,6 +1,7 @@
 package com.repkap11.burger.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,7 +20,6 @@ import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.LongClickDeleteDialogFragment;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.AddLunchLocationFractivity;
-import com.repkap11.burger.activities.EditUserFractivity;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 import com.repkap11.burger.models.LunchLocation;
 
@@ -75,8 +75,8 @@ public class LunchLocationsFractivityFragment extends FirebaseAdapterFractivity.
     }
 
     @Override
-    public int getBarTitleResource() {
-        return R.string.fractivity_lunch_locations_title;
+    public String getBarTitleString(Context context) {
+        return context.getResources().getString(R.string.fractivity_lunch_locations_title);
     }
 
     //Using this activity view

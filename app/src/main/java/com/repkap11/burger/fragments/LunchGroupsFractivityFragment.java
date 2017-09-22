@@ -1,5 +1,6 @@
 package com.repkap11.burger.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -57,8 +58,8 @@ public class LunchGroupsFractivityFragment extends FirebaseAdapterFractivity.Fir
     }
 
     @Override
-    public int getBarTitleResource() {
-        return R.string.fractivity_lunch_groups_title;
+    public String getBarTitleString(Context context) {
+        return context.getResources().getString(R.string.fractivity_lunch_groups_title);
     }
 
     private ListView mListView;

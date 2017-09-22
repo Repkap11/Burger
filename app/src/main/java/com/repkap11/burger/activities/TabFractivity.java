@@ -1,5 +1,6 @@
 package com.repkap11.burger.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -68,8 +69,8 @@ public class TabFractivity extends Fractivity<TabFractivity.TabFractivityFragmen
         }
 
         @Override
-        public int getBarTitleResource() {
-            return R.string.app_name;
+        public String getBarTitleString(Context context) {
+            return context.getResources().getString(R.string.app_name);
         }
 
         @Override
@@ -106,7 +107,7 @@ public class TabFractivity extends Fractivity<TabFractivity.TabFractivityFragmen
         @Override
         public CharSequence getPageTitle(int position) {
             BarMenuFractivity.BarMenuFractivityFragment fragment = mFractivityFragments[position];
-            return mFractivityFragment.getResources().getText(fragment.getBarTitleResource());
+            return fragment.getBarTitleString(mFractivityFragment.getActivity());
         }
     }
 }

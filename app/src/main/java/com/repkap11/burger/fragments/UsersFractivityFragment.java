@@ -1,9 +1,8 @@
 package com.repkap11.burger.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +13,9 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
-import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.EditUserFractivity;
 import com.repkap11.burger.activities.base.FirebaseAdapter2Fractivity;
-import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 import com.repkap11.burger.models.User;
 
 /**
@@ -28,12 +25,14 @@ public class UsersFractivityFragment extends FirebaseAdapter2Fractivity.Firebase
 
     public static final String STARTING_INTENT_WHICH_USERS_SUB_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_USERS_SUB_GROUP";
     public static final String STARTING_INTENT_WHICH_USERS_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_USERS_GROUP";
+    public static final String STARTING_INTENT_TITLE = "com.repkap11.burger.STARTING_INTENT_TITLE";
 
 
     private static final String TAG = UsersFractivityFragment.class.getSimpleName();
     public static final int REQUEST_CODE_LIST_USERS = 1;
     private String mLunchGroup;
     private String mLunchSubGroup;
+    private String mTitleString;
 
     @Override
     protected void create(Bundle savedInstanceState) {
@@ -43,6 +42,11 @@ public class UsersFractivityFragment extends FirebaseAdapter2Fractivity.Firebase
         }
         mLunchSubGroup = getActivity().getIntent().getStringExtra(STARTING_INTENT_WHICH_USERS_SUB_GROUP);
         mLunchGroup = getActivity().getIntent().getStringExtra(STARTING_INTENT_WHICH_USERS_GROUP);
+        mTitleString = getActivity().getIntent().getStringExtra(STARTING_INTENT_TITLE);
+        if (mTitleString == null){
+            mTitleString = getResources().getString(R.string.fractivity_users_title);
+        }
+
 
         //mLunchGroup = BurgerApplication.getUserPerferedLunchGroup(getActivity());
         Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
@@ -74,10 +78,9 @@ public class UsersFractivityFragment extends FirebaseAdapter2Fractivity.Firebase
     }
 
     @Override
-    public int getBarTitleResource() {
-        return R.string.fractivity_users_title;
+    public String getBarTitleString(Context context) {
+        return mTitleString;
     }
-
     private ListView mListView;
 
     //Using this activity view

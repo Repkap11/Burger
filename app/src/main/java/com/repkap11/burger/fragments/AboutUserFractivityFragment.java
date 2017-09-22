@@ -1,6 +1,7 @@
 package com.repkap11.burger.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -99,8 +100,8 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
     }
 
     @Override
-    public int getBarTitleResource() {
-        return R.string.fractivity_about_user_title;
+    public String getBarTitleString(Context context) {
+        return context.getResources().getString(R.string.fractivity_about_user_title);
     }
 
     @Override
@@ -173,30 +174,34 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
         mLunchChoiceLabel5 = (TextView) rootDay5.findViewById(R.id.fractivity_about_user_lunch_location_label);
 
 
-
         peopleIcon1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {showUsersOfLocation(mLunchPreference1Key, 1);
+            public void onClick(View view) {
+                showUsersOfLocation(mLunchPreference1Key, 1, mLunchChoiceLabel1.getText().toString() + " on " + getResources().getText(R.string.fractivity_about_user_day_label1));
             }
         });
         peopleIcon2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {showUsersOfLocation(mLunchPreference2Key, 2);
+            public void onClick(View view) {
+                showUsersOfLocation(mLunchPreference2Key, 2, mLunchChoiceLabel2.getText().toString() + " on " + getResources().getText(R.string.fractivity_about_user_day_label2));
             }
         });
         peopleIcon3.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {showUsersOfLocation(mLunchPreference3Key, 3);
+            public void onClick(View view) {
+                showUsersOfLocation(mLunchPreference3Key, 3, mLunchChoiceLabel3.getText().toString() + " on " + getResources().getText(R.string.fractivity_about_user_day_label3));
             }
         });
         peopleIcon4.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {showUsersOfLocation(mLunchPreference4Key, 4);
+            public void onClick(View view) {
+                showUsersOfLocation(mLunchPreference4Key, 4, mLunchChoiceLabel4.getText().toString() + " on " + getResources().getText(R.string.fractivity_about_user_day_label4));
             }
         });
         peopleIcon5.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {showUsersOfLocation(mLunchPreference5Key, 5);
+            public void onClick(View view) {
+                showUsersOfLocation(mLunchPreference5Key, 5, mLunchChoiceLabel5.getText().toString() + " on " + getResources().getText(R.string.fractivity_about_user_day_label5));
             }
         });
 
@@ -295,7 +300,7 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
         return rootView;
     }
 
-    private void showUsersOfLocation(String lunchPreferenceKey, int i) {
+    private void showUsersOfLocation(String lunchPreferenceKey, int i, String title) {
         DatabaseReference lunchGroupRef = FirebaseDatabase.getInstance().getReference(mUserKey).getParent().getParent();
         String lunchGroupKey = lunchGroupRef.toString().substring(lunchGroupRef.getRoot().toString().length() + 1);
         String lunchLocationUsersKey = lunchGroupKey + "/lunch_locations/" + lunchPreferenceKey + "/lunch_preference_" + i;
@@ -303,6 +308,7 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
         Intent intent = new Intent(getContext(), UsersFractivity.class);
         intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_USERS_SUB_GROUP, lunchLocationUsersKey);
         intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_USERS_GROUP, lunchGroupKey);
+        intent.putExtra(UsersFractivityFragment.STARTING_INTENT_TITLE, title);
 
         startActivityForResult(intent, UsersFractivityFragment.REQUEST_CODE_LIST_USERS);
     }

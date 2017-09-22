@@ -1,6 +1,7 @@
 package com.repkap11.burger.activities.base;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -8,8 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -131,7 +130,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
             setHasOptionsMenu(true);
             Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.fractivity_bar_menu_toolbar);
             if (mShowBar) {
-                toolbar.setTitle(getBarTitleResource());
+                toolbar.setTitle(getBarTitleString(getActivity()));
                 ((Fractivity) getActivity()).setSupportActionBar(toolbar);
                 boolean showBackIcon = getShowBackIcon();
                 if (showBackIcon) {
@@ -170,7 +169,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
 
         protected abstract boolean getShowFab();
 
-        public abstract int getBarTitleResource();
+        public abstract String getBarTitleString(Context context);
 
         @Override
         protected void destroyView() {
