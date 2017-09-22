@@ -17,18 +17,23 @@ import com.google.firebase.database.Query;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.EditUserFractivity;
+import com.repkap11.burger.activities.base.FirebaseAdapter2Fractivity;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 import com.repkap11.burger.models.User;
 
 /**
  * Created by paul on 8/8/17.
  */
-public class UsersFractivityFragment extends FirebaseAdapterFractivity.FirebaseAdapterFragment {
+public class UsersFractivityFragment extends FirebaseAdapter2Fractivity.FirebaseAdapter2Fragment<UsersFractivityFragment.Holder, User> {
 
-    public static final String STARTING_INTENT_WHICH_LUNCH_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_LUNCH_GROUP";
+    public static final String STARTING_INTENT_WHICH_USERS_SUB_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_USERS_SUB_GROUP";
+    public static final String STARTING_INTENT_WHICH_USERS_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_USERS_GROUP";
+
+
     private static final String TAG = UsersFractivityFragment.class.getSimpleName();
     public static final int REQUEST_CODE_LIST_USERS = 1;
     private String mLunchGroup;
+    private String mLunchSubGroup;
 
     @Override
     protected void create(Bundle savedInstanceState) {
@@ -36,10 +41,12 @@ public class UsersFractivityFragment extends FirebaseAdapterFractivity.FirebaseA
         if (getActivity().getIntent() == null) {
             getActivity().finish();
         }
-        mLunchGroup = getActivity().getIntent().getStringExtra(STARTING_INTENT_WHICH_LUNCH_GROUP);
+        mLunchSubGroup = getActivity().getIntent().getStringExtra(STARTING_INTENT_WHICH_USERS_SUB_GROUP);
+        mLunchGroup = getActivity().getIntent().getStringExtra(STARTING_INTENT_WHICH_USERS_GROUP);
+
         //mLunchGroup = BurgerApplication.getUserPerferedLunchGroup(getActivity());
         Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
-        if (mLunchGroup == null) {
+        if (mLunchGroup == null || mLunchSubGroup == null) {
             getActivity().finish();
         }
         super.create(savedInstanceState);
@@ -63,7 +70,7 @@ public class UsersFractivityFragment extends FirebaseAdapterFractivity.FirebaseA
 
     @Override
     protected boolean getShowFab() {
-        return true;
+        return false;
     }
 
     @Override
@@ -72,7 +79,6 @@ public class UsersFractivityFragment extends FirebaseAdapterFractivity.FirebaseA
     }
 
     private ListView mListView;
-    private FloatingActionButton mFab;
 
     //Using this activity view
     @Override
@@ -85,14 +91,19 @@ public class UsersFractivityFragment extends FirebaseAdapterFractivity.FirebaseA
     @Override
     protected void destroyView() {
         mListView = null;
-        mFab = null;
         super.destroyView();
     }
 
     //Put this data
     @Override
     protected String adapterReference() {
-        Log.e(TAG, "Getting adapter with group:" + mLunchGroup);
+        Log.e(TAG, "Getting adapter with group:" + mLunchSubGroup);
+        return mLunchSubGroup + "/users";
+    }
+
+    @Override
+    protected String adapter2Reference() {
+        Log.e(TAG, "Getting adapter2 with group:" + mLunchGroup);
         return mLunchGroup + "/users";
     }
 
@@ -122,24 +133,19 @@ public class UsersFractivityFragment extends FirebaseAdapterFractivity.FirebaseA
         return holder;
     }
 
-    //And each subview is populated with data
     @Override
-    public void populateView(View convertView, Object o, int position, String key, Object value) {
-        Holder holder = (Holder) o;
-        String user = (String) value;
-        holder.mName.setText("Name:" + user);
+    protected void populateView2(View convertView, Holder holder, int position, String key, User user) {
+        holder.mName.setText(user.displayName);
         holder.mIndex = position;
     }
 
     @Override
-    public Class getAdapterDataClass() {
-        return String.class;
+    public Class<User> getAdapter2DataClass() {
+        return User.class;
     }
 
     @Override
-    protected void onItemClicked(View view, Object holderObject, int position, String key, String link, Object value) {
-        //User user = (User) value;
-        Holder holder = (Holder) holderObject;
+    protected void onItem2Clicked(View view, Holder holder, int position, String key, String link, User user) {
         //Intent intent = new Intent(getActivity(), AboutUserFractivity.class);
         //intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_INITIAL_NAME, user.firstName);
         //intent.putExtra(AboutUserFractivity.STARTING_INTENT_USER_KEY, key);

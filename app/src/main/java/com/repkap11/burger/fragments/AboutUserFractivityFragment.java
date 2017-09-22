@@ -295,9 +295,11 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
         DatabaseReference lunchGroupRef = FirebaseDatabase.getInstance().getReference(mUserKey).getParent().getParent();
         String lunchGroupKey = lunchGroupRef.toString().substring(lunchGroupRef.getRoot().toString().length() + 1);
         String lunchLocationUsersKey = lunchGroupKey + "/lunch_locations/" + lunchPreferenceKey + "/lunch_preference_" + i;
-        Log.e(TAG, "Showing pref:" + lunchLocationUsersKey);
+        Log.e(TAG, "Showing subgroup:" + lunchLocationUsersKey + " group:" + lunchGroupKey);
         Intent intent = new Intent(getContext(), UsersFractivity.class);
-        intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_LUNCH_GROUP, lunchLocationUsersKey);
+        intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_USERS_SUB_GROUP, lunchLocationUsersKey);
+        intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_USERS_GROUP, lunchGroupKey);
+
         startActivityForResult(intent, UsersFractivityFragment.REQUEST_CODE_LIST_USERS);
     }
 
