@@ -4,7 +4,7 @@ if [ "$#" -ne 1 ]; then
 	exit
 fi
 APP_VERSION=$1
-LOCAL_FILE=./app/build/outputs/apk/burger-debug-$APP_VERSION.apk
+LOCAL_FILE=./app/build/outputs/apk/burger-live-debug-$APP_VERSION.apk
 REMOTE_USERNAME=paul
 REMOTE_SERVER=repkap11.com
 REMOTE_FILE=/home/paul/website/burger/Burger.apk
