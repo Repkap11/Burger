@@ -47,7 +47,7 @@ public class AddLunchGroupFractivityFragment extends Fractivity.FractivityFragme
             @Override
             public void onClick(View view) {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference locationsRef = database.getReference("lunch_groups");
+                DatabaseReference locationsRef = database.getReference(getResources().getString(R.string.root_key_lunch_groups));
                 DatabaseReference newLocation = locationsRef.push();
                 newLocation.setValue(new LunchLocation(mEditTextName.getText().toString()));
                 getActivity().finish();

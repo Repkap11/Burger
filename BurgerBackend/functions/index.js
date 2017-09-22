@@ -32,3 +32,37 @@ exports.lunch_tick_4 = functions.pubsub.topic('lunch-tick-4')
     .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 4)});
 exports.lunch_tick_5 = functions.pubsub.topic('lunch-tick-5')
     .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 5)});
+
+
+
+
+
+
+//Start DEV
+
+var match_users_and_locations = require('./match_users_and_locations_dev');
+exports.add_user_to_locations_pref1_dev = functions.database.ref('/lunch_groups_dev/{groupId}/users/{userId}/lunch_preference_1')
+    .onWrite(event => {return match_users_and_locations.add_user_to_locations_pref(event)});
+exports.add_user_to_locations_pref2_dev = functions.database.ref('/lunch_groups_dev/{groupId}/users/{userId}/lunch_preference_2')
+    .onWrite(event => {return match_users_and_locations.add_user_to_locations_pref(event)});
+exports.add_user_to_locations_pref3_dev = functions.database.ref('/lunch_groups_dev/{groupId}/users/{userId}/lunch_preference_3')
+    .onWrite(event => {return match_users_and_locations.add_user_to_locations_pref(event)});
+exports.add_user_to_locations_pref4_dev = functions.database.ref('/lunch_groups_dev/{groupId}/users/{userId}/lunch_preference_4')
+    .onWrite(event => {return match_users_and_locations.add_user_to_locations_pref(event)});
+exports.add_user_to_locations_pref5_dev = functions.database.ref('/lunch_groups_dev/{groupId}/users/{userId}/lunch_preference_5')
+    .onWrite(event => {return match_users_and_locations.add_user_to_locations_pref(event)});
+
+exports.remove_pref_when_location_deleted = functions.database.ref('/lunch_groups_dev/{groupID}/lunch_locations/{locationId}')
+    .onDelete(event => {return match_users_and_locations.remove_pref_when_location_deleted(event)});
+
+var notify_users_of_location = require('./notify_users_of_location_dev');
+exports.dev_lunch_tick_1 = functions.pubsub.topic('dev_lunch-tick-1')
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 1)});
+exports.dev_lunch_tick_2 = functions.pubsub.topic('dev_lunch-tick-2')
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 2)});
+exports.dev_lunch_tick_3 = functions.pubsub.topic('dev_lunch-tick-3')
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 3)});
+exports.dev_lunch_tick_4 = functions.pubsub.topic('dev_lunch-tick-4')
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 4)});
+exports.dev_lunch_tick_5 = functions.pubsub.topic('dev_lunch-tick-5')
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 5)});

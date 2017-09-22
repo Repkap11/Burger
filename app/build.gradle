@@ -38,6 +38,12 @@ android {
         exclude 'META-INF/LICENSE-FIREBASE.txt'
         exclude 'META-INF/NOTICE'
     }
+    productFlavors {
+        live {
+        }
+        staging {
+        }
+    }
 }
 
 dependencies {

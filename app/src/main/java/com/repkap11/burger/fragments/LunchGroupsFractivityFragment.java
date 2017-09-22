@@ -82,7 +82,7 @@ public class LunchGroupsFractivityFragment extends FirebaseAdapterFractivity.Fir
     //Put this data
     @Override
     protected String adapterReference() {
-        return "lunch_groups";
+        return getString(R.string.root_key_lunch_groups);
     }
 
     //With this filter

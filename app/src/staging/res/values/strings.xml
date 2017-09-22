@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Burger Dev</string>
+    <string name="root_key_lunch_groups">lunch_groups_dev</string>
+    <string name="fractivity_sign_in_title">Welcome to Burger Dev</string>
+
+
+</resources>

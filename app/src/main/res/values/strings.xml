@@ -45,6 +45,9 @@
             <string name="pref_notifications_led_title">Blink LED</string>
 
 
+    <string name="root_key_lunch_groups">lunch_groups</string>
+
+
 
 
 
