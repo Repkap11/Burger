@@ -11,8 +11,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public abstract class FirebaseKeyLoopupAdapterFractivity<AdapterHolder, AdapterData> extends Fractivity<FirebaseKeyLoopupAdapterFractivity.FirebaseKeyLookupAdapterFragment> {
-    private static final String TAG = FirebaseKeyLoopupAdapterFractivity.class.getSimpleName();
+public abstract class FirebaseKeyLookupAdapterFractivity<AdapterHolder, AdapterData> extends Fractivity<FirebaseKeyLookupAdapterFractivity.FirebaseKeyLookupAdapterFragment> {
+    private static final String TAG = FirebaseKeyLookupAdapterFractivity.class.getSimpleName();
 
 
     //Since Fractivity onCreate needs to not be final (for version string checking) enfore that here
