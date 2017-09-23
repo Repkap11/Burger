@@ -22,22 +22,23 @@ cron:
 
 
 
+
 - description: Dev Push a Lunch Notification on Monday
   url: /publish/dev_lunch-tick-1
-  schedule: every monday 15:55
+  schedule: every monday 15:30
 
 - description: Dev Push a Lunch Notification on Tuesday
   url: /publish/dev_lunch-tick-2
-  schedule: every tuesday 15:55
+  schedule: every tuesday 15:30
 
 - description: Dev Push a Lunch Notification on Wednesday
   url: /publish/dev_lunch-tick-3
-  schedule: every wednesday 15:55
+  schedule: every wednesday 15:30
 
 - description: Dev Push a Lunch Notification on Thursday
   url: /publish/dev_lunch-tick-4
-  schedule: every thursday 15:55
+  schedule: every thursday 15:30
 
 - description: Dev Push a Lunch Notification on Friday
   url: /publish/dev_lunch-tick-5
-  schedule: every friday 15:55
+  schedule: every friday 15:30
