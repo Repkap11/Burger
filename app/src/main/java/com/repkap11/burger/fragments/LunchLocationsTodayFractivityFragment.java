@@ -52,6 +52,7 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
         }
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
+        Log.e(TAG, "calendar day:" + day);
         switch (day) {
             case Calendar.MONDAY:
                 mDayInt = 1;
@@ -75,9 +76,10 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
                 break;
             default:
                 //TODO handle weekends by not showing anything
-                mDayInt = 0;
+                mDayInt = 1;//Use monday for testing
                 mDayNameResource = R.string.app_name;
         }
+        Log.e(TAG, "my day:" + mDayInt);
         super.create(savedInstanceState);
     }
 
@@ -157,6 +159,7 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
         Holder holder = (Holder) o;
         LunchLocation location = (LunchLocation) value;
         LunchPreference todaysPreference = null;
+        Log.e(TAG, "Days Int:" + mDayInt);
         switch (mDayInt) {
             case 1:
                 todaysPreference = location.lunch_preference_1;
