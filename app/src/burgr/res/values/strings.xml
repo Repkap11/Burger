@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Burgr</string>
+    <string name="fractivity_sign_in_title">Welcome to Burgr</string>
+    <string name="fractivity_sign_in_message">Sign up for Burgr</string>
+    <string name="fractivity_lunch_groups_top_message">Burgr will automatically match you with compatible partners in your Lunch Group</string>
+    <string name="update_app_task_error_updating_burger">Error Updating Burgr</string>
+
+</resources>
