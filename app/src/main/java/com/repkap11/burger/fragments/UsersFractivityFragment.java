@@ -15,13 +15,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.EditUserFractivity;
-import com.repkap11.burger.activities.base.FirebaseAdapter2Fractivity;
+import com.repkap11.burger.activities.base.FirebaseKeyLoopupAdapterFractivity;
 import com.repkap11.burger.models.User;
 
 /**
  * Created by paul on 8/8/17.
  */
-public class UsersFractivityFragment extends FirebaseAdapter2Fractivity.FirebaseAdapter2Fragment<UsersFractivityFragment.Holder, User> {
+public class UsersFractivityFragment extends FirebaseKeyLoopupAdapterFractivity.FirebaseKeyLookupAdapterFragment<UsersFractivityFragment.Holder, User> {
 
     public static final String STARTING_INTENT_WHICH_USERS_SUB_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_USERS_SUB_GROUP";
     public static final String STARTING_INTENT_WHICH_USERS_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_USERS_GROUP";

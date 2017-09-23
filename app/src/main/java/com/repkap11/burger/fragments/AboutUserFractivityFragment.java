@@ -301,6 +301,9 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
     }
 
     private void showUsersOfLocation(String lunchPreferenceKey, int i, String title) {
+        if (lunchPreferenceKey == null) {
+            return;
+        }
         DatabaseReference lunchGroupRef = FirebaseDatabase.getInstance().getReference(mUserKey).getParent().getParent();
         String lunchGroupKey = lunchGroupRef.toString().substring(lunchGroupRef.getRoot().toString().length() + 1);
         String lunchLocationUsersKey = lunchGroupKey + "/lunch_locations/" + lunchPreferenceKey + "/lunch_preference_" + i;

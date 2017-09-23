@@ -2,26 +2,17 @@ package com.repkap11.burger.activities.base;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.repkap11.burger.FirebaseAdapter;
 
 
-public abstract class FirebaseAdapter2Fractivity<AdapterHolder, AdapterData> extends Fractivity<FirebaseAdapter2Fractivity.FirebaseAdapter2Fragment> {
-    private static final String TAG = FirebaseAdapter2Fractivity.class.getSimpleName();
+public abstract class FirebaseKeyLoopupAdapterFractivity<AdapterHolder, AdapterData> extends Fractivity<FirebaseKeyLoopupAdapterFractivity.FirebaseKeyLookupAdapterFragment> {
+    private static final String TAG = FirebaseKeyLoopupAdapterFractivity.class.getSimpleName();
 
 
     //Since Fractivity onCreate needs to not be final (for version string checking) enfore that here
@@ -31,16 +22,16 @@ public abstract class FirebaseAdapter2Fractivity<AdapterHolder, AdapterData> ext
     }
 
     @Override
-    protected FirebaseAdapter2Fragment createFragment(Bundle savedInstanceState) {
+    protected FirebaseKeyLookupAdapterFragment createFragment(Bundle savedInstanceState) {
         //use the bundle to create the fragment
-        FirebaseAdapter2Fragment<AdapterHolder, AdapterData> fragment = createFirebaseFragment();
+        FirebaseKeyLookupAdapterFragment<AdapterHolder, AdapterData> fragment = createFirebaseFragment();
         return fragment;
     }
 
-    protected abstract FirebaseAdapter2Fragment createFirebaseFragment();
+    protected abstract FirebaseKeyLookupAdapterFragment createFirebaseFragment();
 
 
-    public static abstract class FirebaseAdapter2Fragment<AdapterHolder, AdapterData> extends FirebaseAdapterFractivity.FirebaseAdapterFragment<AdapterHolder, String> {
+    public static abstract class FirebaseKeyLookupAdapterFragment<AdapterHolder, AdapterData> extends FirebaseAdapterFractivity.FirebaseAdapterFragment<AdapterHolder, String> {
 
         protected abstract String adapter2Reference();
 
@@ -84,6 +75,7 @@ public abstract class FirebaseAdapter2Fractivity<AdapterHolder, AdapterData> ext
         @Override
         protected final void onItemClicked(View view, AdapterHolder adapterHolder, int position, String key, String link, String value) {
             //onItem2Clicked(view, adapterHolder, position, key, link, value);
+            //TODO support clicks
         }
 
         protected abstract void onItem2Clicked(View view, AdapterHolder adapterHolder, int position, String key, String link, AdapterData value);
