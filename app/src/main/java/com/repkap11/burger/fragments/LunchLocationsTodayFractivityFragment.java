@@ -19,6 +19,7 @@ import com.repkap11.burger.LongClickDeleteDialogFragment;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 import com.repkap11.burger.models.LunchLocation;
+import com.repkap11.burger.models.LunchPreference;
 
 import java.util.Calendar;
 
@@ -155,7 +156,32 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
     public void populateView(View convertView, Object o, int position, String key, Object value) {
         Holder holder = (Holder) o;
         LunchLocation location = (LunchLocation) value;
-        holder.mName.setText(location.displayName);
+        LunchPreference todaysPreference = null;
+        switch (mDayInt) {
+            case 1:
+                todaysPreference = location.lunch_preference_1;
+                break;
+            case 2:
+                todaysPreference = location.lunch_preference_2;
+                break;
+            case 3:
+                todaysPreference = location.lunch_preference_3;
+                break;
+            case 4:
+                todaysPreference = location.lunch_preference_4;
+                break;
+            case 5:
+                todaysPreference = location.lunch_preference_5;
+                break;
+        }
+        String numUsersString;
+        if (todaysPreference == null) {
+            numUsersString = getResources().getQuantityString(R.plurals.fractivity_lunch_locations_today_users_plural, 0, 0);
+        } else {
+            numUsersString = getResources().getQuantityString(R.plurals.fractivity_lunch_locations_today_users_plural, todaysPreference.usersSize(), todaysPreference.usersSize());
+        }
+        holder.mName.setText(location.displayName + ":" + numUsersString);
+        Log.e(TAG, "Using string:" + todaysPreference + holder.mName.getText().toString());
         holder.mIndex = position;
     }
 

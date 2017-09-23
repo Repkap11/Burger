@@ -47,6 +47,11 @@
 
 
     <string name="root_key_lunch_groups">lunch_groups</string>
+    <string name="tell_them_im_driving">Tell them: I\'ll Drive</string>
+    <plurals name="fractivity_lunch_locations_today_users_plural">
+        <item quantity="one">%d person</item>
+        <item quantity="other">%d people</item>
+    </plurals>
 
 
 
@@ -114,5 +119,4 @@
     <string-array name="multi_select_list_preference_default_value" />
 
     <string name="pref_title_system_sync_settings">System sync settings</string>
-    <string name="tell_them_im_driving">Tell them: I\'ll Drive</string>
 </resources>

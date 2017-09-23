@@ -16,6 +16,10 @@ public class LunchPreference {
     public LunchPreference() {
     }
 
+    public int usersSize(){
+        return users == null ? 0 : users.size();
+    }
+
     public List<String> enumerateUsers() {
         if (users == null) {
             return new ArrayList<>(0);
