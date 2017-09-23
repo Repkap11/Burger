@@ -6,6 +6,11 @@ package com.repkap11.burger.models;
 
 public class LunchLocation {
     public String displayName;
+    public LunchPreference lunch_preference_1;
+    public LunchPreference lunch_preference_2;
+    public LunchPreference lunch_preference_3;
+    public LunchPreference lunch_preference_4;
+    public LunchPreference lunch_preference_5;
 
     public LunchLocation() {
     }

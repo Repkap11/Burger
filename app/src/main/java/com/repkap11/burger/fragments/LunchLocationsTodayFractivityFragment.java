@@ -1,10 +1,8 @@
 package com.repkap11.burger.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,9 +17,10 @@ import com.google.firebase.database.Query;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.LongClickDeleteDialogFragment;
 import com.repkap11.burger.R;
-import com.repkap11.burger.activities.AddLunchLocationFractivity;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 import com.repkap11.burger.models.LunchLocation;
+
+import java.util.Calendar;
 
 /**
  * Created by paul on 8/8/17.
@@ -35,6 +34,8 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
     private ListView mListView;
 
     private String mLunchGroup;
+    private int mDayInt;
+    private int mDayNameResource;
 
     @Override
     protected void create(Bundle savedInstanceState) {
@@ -47,6 +48,34 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
         Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
         if (mLunchGroup == null) {
             getActivity().finish();
+        }
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        switch (day) {
+            case Calendar.MONDAY:
+                mDayInt = 1;
+                mDayNameResource = R.string.fractivity_day_label1;
+                break;
+            case Calendar.TUESDAY:
+                mDayInt = 2;
+                mDayNameResource = R.string.fractivity_day_label1;
+                break;
+            case Calendar.WEDNESDAY:
+                mDayInt = 3;
+                mDayNameResource = R.string.fractivity_day_label1;
+                break;
+            case Calendar.THURSDAY:
+                mDayInt = 4;
+                mDayNameResource = R.string.fractivity_day_label1;
+                break;
+            case Calendar.FRIDAY:
+                mDayInt = 5;
+                mDayNameResource = R.string.fractivity_day_label1;
+                break;
+            default:
+                //TODO handle weekends by not showing anything
+                mDayInt = 0;
+                mDayNameResource = R.string.app_name;
         }
         super.create(savedInstanceState);
     }

@@ -17,11 +17,11 @@
     <string name="fractivity_settings_title">Settings</string>
     <string name="fractivity_about_user_title">Profile</string>
 
-    <string name="fractivity_about_user_day_label1">Monday</string>
-    <string name="fractivity_about_user_day_label2">Tuesday</string>
-    <string name="fractivity_about_user_day_label3">Wednesday</string>
-    <string name="fractivity_about_user_day_label4">Thursday</string>
-    <string name="fractivity_about_user_day_label5">Friday</string>
+    <string name="fractivity_day_label1">Monday</string>
+    <string name="fractivity_day_label2">Tuesday</string>
+    <string name="fractivity_day_label3">Wednesday</string>
+    <string name="fractivity_day_label4">Thursday</string>
+    <string name="fractivity_day_label5">Friday</string>
 
     <string name="fractivity_sign_in_message">Sign up for Burger</string>
     <string name="fractivity_sign_in_with_google">Sign in</string>
