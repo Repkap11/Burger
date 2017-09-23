@@ -20,6 +20,9 @@
             android:name=".activities.LunchLocationsFractivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".activities.LunchLocationsTodayFractivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".activities.AddLunchLocationFractivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible" />

@@ -31,7 +31,7 @@ public class TabFractivityFragment extends BarMenuFractivity.BarMenuFractivityFr
         ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.fractivity_tab_viewpager);
         BarMenuFractivity.BarMenuFractivityFragment[] fragments = new BarMenuFractivity.BarMenuFractivityFragment[2];
         fragments[0] = new AboutUserFractivityFragment();
-        fragments[1] = new LunchLocationsFractivityFragment();
+        fragments[1] = new LunchLocationsTodayFractivityFragment();
         viewPager.setAdapter(new TabPager(this, getActivity().getSupportFragmentManager(), fragments));
         tabLayout.setupWithViewPager(viewPager, true);
 

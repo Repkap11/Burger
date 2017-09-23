@@ -8,6 +8,7 @@
 
     <string name="fractivity_users_title">User List</string>
     <string name="fractivity_lunch_locations_title">Lunch Locations</string>
+    <string name="fractivity_lunch_locations_today_title">Lunch Today</string>
     <string name="fractivity_add_lunch_location_title">Add Location</string>
     <string name="fractivity_edit_user_title">Edit User</string>
     <string name="fractivity_lunch_groups_title">Lunch Groups</string>
