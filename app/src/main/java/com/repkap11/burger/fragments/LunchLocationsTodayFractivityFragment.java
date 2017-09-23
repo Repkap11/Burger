@@ -36,7 +36,6 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
 
     private String mLunchGroup;
     private int mDayInt;
-    private int mDayNameResource;
 
     @Override
     protected void create(Bundle savedInstanceState) {
@@ -50,36 +49,6 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
         if (mLunchGroup == null) {
             getActivity().finish();
         }
-        Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_WEEK);
-        Log.e(TAG, "calendar day:" + day);
-        switch (day) {
-            case Calendar.MONDAY:
-                mDayInt = 1;
-                mDayNameResource = R.string.fractivity_day_label1;
-                break;
-            case Calendar.TUESDAY:
-                mDayInt = 2;
-                mDayNameResource = R.string.fractivity_day_label1;
-                break;
-            case Calendar.WEDNESDAY:
-                mDayInt = 3;
-                mDayNameResource = R.string.fractivity_day_label1;
-                break;
-            case Calendar.THURSDAY:
-                mDayInt = 4;
-                mDayNameResource = R.string.fractivity_day_label1;
-                break;
-            case Calendar.FRIDAY:
-                mDayInt = 5;
-                mDayNameResource = R.string.fractivity_day_label1;
-                break;
-            default:
-                //TODO handle weekends by not showing anything
-                mDayInt = 1;//Use monday for testing
-                mDayNameResource = R.string.app_name;
-        }
-        Log.e(TAG, "my day:" + mDayInt);
         super.create(savedInstanceState);
     }
 
@@ -104,7 +73,14 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
 
     @Override
     public String getBarTitleString(Context context) {
-        return context.getResources().getString(R.string.fractivity_lunch_locations_today_title);
+        Calendar calendar = Calendar.getInstance();
+        mDayInt = calendar.get(Calendar.DAY_OF_WEEK);
+        mDayInt = 1;
+        Log.e(TAG, "my day:" + mDayInt);
+        String dayOfWeek = context.getResources().getStringArray(R.array.fractivity_day_label)[mDayInt];
+        String lunch = context.getResources().getString(R.string.fractivity_lunch_day_of_week);
+        return lunch + dayOfWeek;
+        //return context.getResources().getString(R.string.fractivity_lunch_locations_today_title);
     }
 
     //Using this activity view
@@ -149,7 +125,8 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
     @Override
     public Holder populateHolder(View convertView) {
         Holder holder = new Holder();
-        holder.mName = (TextView) convertView.findViewById(R.id.fractivity_lunch_locations_today_list_element_text);
+        holder.mName = (TextView) convertView.findViewById(R.id.fractivity_lunch_locations_today_list_element_text_name);
+        holder.mNumPeople = (TextView) convertView.findViewById(R.id.fractivity_lunch_locations_today_list_element_text_people);
         return holder;
     }
 
@@ -183,7 +160,8 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
         } else {
             numUsersString = getResources().getQuantityString(R.plurals.fractivity_lunch_locations_today_users_plural, todaysPreference.usersSize(), todaysPreference.usersSize());
         }
-        holder.mName.setText(location.displayName + ":" + numUsersString);
+        holder.mName.setText(location.displayName);
+        holder.mNumPeople.setText(numUsersString);
         Log.e(TAG, "Using string:" + todaysPreference + holder.mName.getText().toString());
         holder.mIndex = position;
     }
@@ -238,6 +216,7 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
     public static class Holder {
         public TextView mName;
         public int mIndex;
+        public TextView mNumPeople;
     }
 
 }

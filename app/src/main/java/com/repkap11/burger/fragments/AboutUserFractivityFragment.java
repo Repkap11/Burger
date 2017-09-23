@@ -161,11 +161,11 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
         ImageView peopleIcon4 = (ImageView) rootDay4.findViewById(R.id.fractivity_about_user_poeple_icon);
         ImageView peopleIcon5 = (ImageView) rootDay5.findViewById(R.id.fractivity_about_user_poeple_icon);
 
-        dayLabel1.setText(getResources().getText(R.string.fractivity_day_label1));
-        dayLabel2.setText(getResources().getText(R.string.fractivity_day_label2));
-        dayLabel3.setText(getResources().getText(R.string.fractivity_day_label3));
-        dayLabel4.setText(getResources().getText(R.string.fractivity_day_label4));
-        dayLabel5.setText(getResources().getText(R.string.fractivity_day_label5));
+        dayLabel1.setText(getResources().getStringArray(R.array.fractivity_day_label)[1]);
+        dayLabel2.setText(getResources().getStringArray(R.array.fractivity_day_label)[2]);
+        dayLabel3.setText(getResources().getStringArray(R.array.fractivity_day_label)[3]);
+        dayLabel4.setText(getResources().getStringArray(R.array.fractivity_day_label)[4]);
+        dayLabel5.setText(getResources().getStringArray(R.array.fractivity_day_label)[5]);
 
         mLunchChoiceLabel1 = (TextView) rootDay1.findViewById(R.id.fractivity_about_user_lunch_location_label);
         mLunchChoiceLabel2 = (TextView) rootDay2.findViewById(R.id.fractivity_about_user_lunch_location_label);
@@ -177,31 +177,31 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
         peopleIcon1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showUsersOfLocation(mLunchPreference1Key, 1, mLunchChoiceLabel1.getText().toString() + " on " + getResources().getText(R.string.fractivity_day_label1));
+                showUsersOfLocation(mLunchPreference1Key, 1, mLunchChoiceLabel1.getText().toString() + " on " + getResources().getStringArray(R.array.fractivity_day_label)[1]);
             }
         });
         peopleIcon2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showUsersOfLocation(mLunchPreference2Key, 2, mLunchChoiceLabel2.getText().toString() + " on " + getResources().getText(R.string.fractivity_day_label2));
+                showUsersOfLocation(mLunchPreference2Key, 2, mLunchChoiceLabel2.getText().toString() + " on " + getResources().getStringArray(R.array.fractivity_day_label)[2]);
             }
         });
         peopleIcon3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showUsersOfLocation(mLunchPreference3Key, 3, mLunchChoiceLabel3.getText().toString() + " on " + getResources().getText(R.string.fractivity_day_label3));
+                showUsersOfLocation(mLunchPreference3Key, 3, mLunchChoiceLabel3.getText().toString() + " on " + getResources().getStringArray(R.array.fractivity_day_label)[3]);
             }
         });
         peopleIcon4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showUsersOfLocation(mLunchPreference4Key, 4, mLunchChoiceLabel4.getText().toString() + " on " + getResources().getText(R.string.fractivity_day_label4));
+                showUsersOfLocation(mLunchPreference4Key, 4, mLunchChoiceLabel4.getText().toString() + " on " + getResources().getStringArray(R.array.fractivity_day_label)[4]);
             }
         });
         peopleIcon5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showUsersOfLocation(mLunchPreference5Key, 5, mLunchChoiceLabel5.getText().toString() + " on " + getResources().getText(R.string.fractivity_day_label5));
+                showUsersOfLocation(mLunchPreference5Key, 5, mLunchChoiceLabel5.getText().toString() + " on " + getResources().getStringArray(R.array.fractivity_day_label)[5]);
             }
         });
 
