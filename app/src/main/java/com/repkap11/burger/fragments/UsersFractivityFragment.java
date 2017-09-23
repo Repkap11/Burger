@@ -8,11 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.EditUserFractivity;
 import com.repkap11.burger.activities.base.FirebaseKeyLookupAdapterFractivity;
@@ -33,6 +36,7 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
     private String mLunchGroup;
     private String mLunchSubGroup;
     private String mTitleString;
+    private Button mIllDriveButton;
 
     @Override
     protected void create(Bundle savedInstanceState) {
@@ -43,7 +47,7 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
         mLunchSubGroup = getActivity().getIntent().getStringExtra(STARTING_INTENT_WHICH_USERS_SUB_GROUP);
         mLunchGroup = getActivity().getIntent().getStringExtra(STARTING_INTENT_WHICH_USERS_GROUP);
         mTitleString = getActivity().getIntent().getStringExtra(STARTING_INTENT_TITLE);
-        if (mTitleString == null){
+        if (mTitleString == null) {
             mTitleString = getResources().getString(R.string.fractivity_users_title);
         }
 
@@ -81,6 +85,7 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
     public String getBarTitleString(Context context) {
         return mTitleString;
     }
+
     private ListView mListView;
 
     //Using this activity view
@@ -88,12 +93,24 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
     protected View createAdapterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, boolean attachToRoot) {
         View rootView = inflater.inflate(R.layout.fractivity_users, container, attachToRoot);
         mListView = (ListView) rootView.findViewById(R.id.fractivity_users_list);
+        mIllDriveButton = (Button) rootView.findViewById(R.id.fractivity_users_button_tell_them_im_driving);
+        mIllDriveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference pendingDriversRef = database.getReference(mLunchSubGroup).child("pending_drivers");
+                String userLink = database.getReference(BurgerApplication.getUserKey(getActivity())).getKey();
+                pendingDriversRef.child(userLink).setValue("");
+            }
+        });
+
         return rootView;
     }
 
     @Override
     protected void destroyView() {
         mListView = null;
+        mIllDriveButton = null;
         super.destroyView();
     }
 

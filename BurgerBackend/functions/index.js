@@ -65,4 +65,7 @@ exports.dev_lunch_tick_3 = functions.pubsub.topic('dev_lunch-tick-3')
 exports.dev_lunch_tick_4 = functions.pubsub.topic('dev_lunch-tick-4')
     .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 4)});
 exports.dev_lunch_tick_5 = functions.pubsub.topic('dev_lunch-tick-5')
-    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 5)});
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 5)})
+    ;
+exports.dev_notify_users_of_driver_to_location = functions.database.ref('/lunch_groups_dev/{groupId}/lunch_locations/{locationId}/{whichLunchPreference}/pending_drivers/{driverId}')
+    .onWrite((event) => {return notify_users_of_location.send_notification_of_driver_to_location(event)});

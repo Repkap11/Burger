@@ -40,9 +40,70 @@ exports.send_notification_for_date = function send_notification_for_date(event, 
                         admin.messaging().sendToDevice(userDeviceSnapshot.key, payload);
                     });
                 });
-
-
             });
         });
      });
 }
+
+exports.send_notification_of_driver_to_location = function send_notification_of_driver_to_location(event){
+    //console.error('You called this function send_notification_of_driver_to_location' + event.data.current.val());
+    if (event.data.current.val() != null){
+        //Remove this pending driver
+        event.data.ref.remove();
+        //Notify the group of users that one of their members is driving
+
+        //Find information about the location
+        var location = event.data.ref.parent.parent.parent.child("displayName");
+            location.once('value').then(function(locationNameSnapshot){
+            var locationName = locationNameSnapshot.val();
+
+            //console.error('Seeing location:'+locationName);
+
+            //Find information about the driver
+            var driver = event.data.ref.parent.parent.parent.parent.parent.child("users").child(event.data.current.key);
+            driver.once('value').then(function(userSnapshot){
+                var driverName = userSnapshot.child('displayName').val();
+                var driverCarSize = userSnapshot.child('carSize').val();
+                var numGuests = driverCarSize - 1;
+                if (numGuests > 0){
+                    //console.error('Driver is:'+ driverName +' with car size:'+driverCarSize);
+                    //This is the group of users which that member is driving for
+                    var lunch_pref_group = event.data.ref.parent.parent.child("users");
+                    //console.error("Searching users:"+lunch_pref_group.key + ":"+lunch_pref_group);
+                    lunch_pref_group.once('value').then(function(lunchPrefUsersSnapshot){
+
+                        lunchPrefUsersSnapshot.forEach(function(lunchPrefUserSnapshot){
+                            //console.error('I will be notifying:'+lunchPrefUserSnapshot.key);
+                            //Get the list of all users.
+                            var user_to_be_notified = event.data.ref.parent.parent.parent.parent.parent.child("users").child(lunchPrefUserSnapshot.key);
+                            user_to_be_notified.once('value').then(function(userSnapshot){
+                                if (driver.key == userSnapshot.key){
+                                    console.error('Not notifying '+userSnapshot.child('displayName').val()+' since they are the driver.');
+                                } else {
+                                    userSnapshot.child('devices').forEach(function(userDeviceSnapshot){
+                                        var userName = userSnapshot.child('displayName').val();
+                                        //console.error('Will notify device:'+ userDeviceSnapshot.key);
+                                        var title = 'Lunch at ' +locationName;
+                                        var body = driverName+' is leaving and can take '+ numGuests +' extra people.'
+                                         const payload = {
+                                              data: {
+                                                title: title,
+                                                body: body,
+                                              }
+                                        }
+                                        console.log('Notifying User:'+userName+'device:('+userDeviceSnapshot.key+') that '+driverName+' is the driver to '+ locationName);
+                                        admin.messaging().sendToDevice(userDeviceSnapshot.key, payload);
+                                    });
+                                }
+                            });
+                        });
+                    });
+                } else {
+                    //console.error('Driver is:'+ driverName +' with car size:'+driverCarSize+', so theres no room for other people');
+                }
+            });
+        });
+    }
+}
+
+
