@@ -82,7 +82,7 @@ public class SignInFractivityFragment extends Fractivity.FractivityFragment impl
     }
 
     public void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.e(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        //Log.e(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -91,7 +91,7 @@ public class SignInFractivityFragment extends Fractivity.FractivityFragment impl
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.e(TAG, "signInWithCredential:success");
+                            //Log.e(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             ((SignInFractivity) getActivity()).continueAfterSignIn();
 

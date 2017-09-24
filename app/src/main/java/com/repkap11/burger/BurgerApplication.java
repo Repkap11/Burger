@@ -110,7 +110,7 @@ public class BurgerApplication extends Application {
 
     private static void writePrefOnDismiss(SharedPreferences prefs, int currentVersionCode) {
         SharedPreferences.Editor editor = prefs.edit();
-        Log.e(TAG, "Negative button clicked");
+        //Log.e(TAG, "Negative button clicked");
         editor.putBoolean("has-shown-prefs-" + currentVersionCode, true);
         editor.apply();
     }

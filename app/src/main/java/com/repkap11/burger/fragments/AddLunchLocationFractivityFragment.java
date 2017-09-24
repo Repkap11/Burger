@@ -38,7 +38,7 @@ public class AddLunchLocationFractivityFragment extends Fractivity.FractivityFra
             return;
         }
         mLunchGroup = startingIntent.getStringExtra(STARTING_INTENT_WHICH_LUNCH_GROUP);
-        Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
+        //Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
         if (mLunchGroup == null) {
             getActivity().finish();
         }
@@ -63,10 +63,10 @@ public class AddLunchLocationFractivityFragment extends Fractivity.FractivityFra
             @Override
             public void onClick(View view) {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                Log.e(TAG, "Adding lunch location to:" + mLunchGroup + "/lunch_locations");
+                //Log.e(TAG, "Adding lunch location to:" + mLunchGroup + "/lunch_locations");
                 DatabaseReference locationsRef = database.getReference(mLunchGroup + "/lunch_locations");
                 DatabaseReference newLocation = locationsRef.push();
-                Log.e(TAG, "Created new ref lunch location:" + newLocation.toString());
+                //Log.e(TAG, "Created new ref lunch location:" + newLocation.toString());
                 newLocation.setValue(new LunchLocation(mEditTextName.getText().toString()));
 
                 getActivity().finish();

@@ -129,7 +129,7 @@ public class LunchGroupsFractivityFragment extends FirebaseAdapterFractivity.Fir
     @Override
     protected void onItemClicked(View view, Object holderObject, int position, String key, String link, Object value) {
         Intent intent = new Intent(getContext(), TabFractivity.class);
-        Log.e(TAG, "Starting with group:" + key);
+        //Log.e(TAG, "Starting with group:" + key);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
             Log.e(TAG, "Unexpected null user");
@@ -143,7 +143,7 @@ public class LunchGroupsFractivityFragment extends FirebaseAdapterFractivity.Fir
         uderRef.child(User.getDisplayNameLink()).setValue(user.getDisplayName());
         BurgerApplication.updateDeviceToken(getActivity(), true);
 
-        Log.e(TAG, "Writing user's prefered group:" + key);
+        //Log.e(TAG, "Writing user's prefered group:" + key);
         //intent.putExtra(AboutUserFractivityFragment.STARTING_INTENT_USER_INITIAL_NAME, user.getDisplayName());
         //intent.putExtra(AboutUserFractivityFragment.STARTING_INTENT_USER_KEY, userKey);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

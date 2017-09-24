@@ -41,13 +41,12 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
 
     @Override
     protected void create(Bundle savedInstanceState) {
-        super.create(savedInstanceState);
         Intent startingIntent = getActivity().getIntent();
         if (startingIntent == null) {
             getActivity().finish();
         }
         mLunchGroup = BurgerApplication.getUserPerferedLunchGroup(getActivity());
-        Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
+        //Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
         if (mLunchGroup == null) {
             getActivity().finish();
         }

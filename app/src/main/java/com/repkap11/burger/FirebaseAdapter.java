@@ -81,7 +81,7 @@ public class FirebaseAdapter<AdapterHolder, AdapterData> extends BaseAdapter {
     }
 
     public boolean add(DataSnapshot data) {
-        Log.e(TAG, "Adding data:" + data.getKey());
+        //Log.e(TAG, "Adding data:" + data.getKey());
         Object value = null;
         try {
             value = data.getValue(mFragment.getAdapterDataClass());
@@ -100,7 +100,7 @@ public class FirebaseAdapter<AdapterHolder, AdapterData> extends BaseAdapter {
     }
 
     public boolean remove(DataSnapshot data) {
-        Log.e(TAG, "Removing data:" + data.getKey());
+        //Log.e(TAG, "Removing data:" + data.getKey());
         Object value = null;
         try {
             value = data.getValue(mFragment.getAdapterDataClass());

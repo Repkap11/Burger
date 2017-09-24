@@ -109,7 +109,7 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == LunchLocationsFractivityFragment.REQUEST_CODE_PICK_LOCATION && data != null) {
-            Log.e(TAG, "Good result");
+            //Log.e(TAG, "Good result");
             Intent startingIntent = getActivity().getIntent();
             if (startingIntent == null) {
                 Log.e(TAG, "Exiting result because starting intent is gone");
@@ -289,8 +289,8 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
                 mLunchPreference3Ref = database.getReference(mUserKey).getParent().getParent().child("lunch_locations/" + user.lunch_preference_3);
                 mLunchPreference4Ref = database.getReference(mUserKey).getParent().getParent().child("lunch_locations/" + user.lunch_preference_4);
                 mLunchPreference5Ref = database.getReference(mUserKey).getParent().getParent().child("lunch_locations/" + user.lunch_preference_5);
-                Log.e(TAG, "Watching pref1 based:" + database.getReference(mUserKey).toString());
-                Log.e(TAG, "Watching pref1 ref:" + mLunchPreference1Ref.toString());
+                //Log.e(TAG, "Watching pref1 based:" + database.getReference(mUserKey).toString());
+                //Log.e(TAG, "Watching pref1 ref:" + mLunchPreference1Ref.toString());
 
                 mLunchPreference1Ref.addValueEventListener(mLunchPreference1Listener);
                 mLunchPreference2Ref.addValueEventListener(mLunchPreference2Listener);
@@ -314,7 +314,7 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
         DatabaseReference lunchGroupRef = FirebaseDatabase.getInstance().getReference(mUserKey).getParent().getParent();
         String lunchGroupKey = lunchGroupRef.toString().substring(lunchGroupRef.getRoot().toString().length() + 1);
         String lunchLocationUsersKey = lunchGroupKey + "/lunch_locations/" + lunchPreferenceKey + "/lunch_preference_" + i;
-        Log.e(TAG, "Showing subgroup:" + lunchLocationUsersKey + " group:" + lunchGroupKey);
+        //Log.e(TAG, "Showing subgroup:" + lunchLocationUsersKey + " group:" + lunchGroupKey);
         Intent intent = new Intent(getContext(), UsersFractivity.class);
         intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_USERS_SUB_GROUP, lunchLocationUsersKey);
         intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_USERS_GROUP, lunchGroupKey);

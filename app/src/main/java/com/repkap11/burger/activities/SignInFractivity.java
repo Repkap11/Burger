@@ -41,12 +41,12 @@ public class SignInFractivity extends Fractivity {
         String instanceToken = FirebaseInstanceId.getInstance().getToken();
         boolean result = BurgerApplication.getUserPerferedNotoficationsEnabled(this);
         BurgerApplication.updateDeviceToken(this, result);
-        Log.e(TAG, "instanceToken:" + instanceToken);
+        //Log.e(TAG, "instanceToken:" + instanceToken);
         if (currentUser != null) {
-            Log.e(TAG, "Sign in done in create for:" + currentUser);
+            //Log.e(TAG, "Sign in done in create for:" + currentUser);
             //continueAfterSignIn();
             String perferedGroup = BurgerApplication.getUserPerferedLunchGroup(this);
-            Log.e(TAG, "Starting signed in user with preferedGroup:" + perferedGroup);
+            //Log.e(TAG, "Starting signed in user with preferedGroup:" + perferedGroup);
             if (perferedGroup == null) {
                 return new LunchGroupsFractivityFragment();
             } else {
@@ -68,24 +68,24 @@ public class SignInFractivity extends Fractivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e(TAG, "Activity result");
+        //Log.e(TAG, "Activity result");
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == REQUEST_CODE_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
-                Log.e(TAG, "Sign in ok");
+                //Log.e(TAG, "Sign in ok");
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 ((SignInFractivityFragment) mFragment).firebaseAuthWithGoogle(account);
             } else {
-                Log.e(TAG, "Sign in failed");
+                //Log.e(TAG, "Sign in failed");
 
                 // Google Sign In failed, update UI appropriately
                 // ...
             }
         } else {
-            Log.e(TAG, "Activity Wrong code:" + requestCode);
+            //Log.e(TAG, "Activity Wrong code:" + requestCode);
 
         }
     }

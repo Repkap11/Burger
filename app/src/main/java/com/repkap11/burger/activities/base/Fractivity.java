@@ -38,8 +38,6 @@ public abstract class Fractivity<FragType extends Fractivity.FractivityFragment>
     protected void onSaveInstanceState(Bundle outState) {
         getSupportFragmentManager().putFragment(outState, INSTANCE_STATE_FRAGMENT, mFragment);
         super.onSaveInstanceState(outState);
-
-
     }
 
     protected abstract FragType createFragment(Bundle savedInstanceState);

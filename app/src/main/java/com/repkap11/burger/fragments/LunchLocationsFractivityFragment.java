@@ -39,7 +39,6 @@ public class LunchLocationsFractivityFragment extends FirebaseAdapterFractivity.
 
     @Override
     protected void create(Bundle savedInstanceState) {
-        super.create(savedInstanceState);
         Intent startingIntent = getActivity().getIntent();
         if (startingIntent == null) {
             getActivity().finish();

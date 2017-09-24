@@ -11,7 +11,7 @@ public class ServiceInstanceIdChange extends FirebaseInstanceIdService {
     @Override
     public void onTokenRefresh() {
         super.onTokenRefresh();
-        Log.e(TAG, "Token Changed!");
+        //Log.e(TAG, "Token Changed!");
         boolean notificationsEnabled = BurgerApplication.getUserPerferedNotoficationsEnabled(this);
         BurgerApplication.updateDeviceToken(this, notificationsEnabled);
     }

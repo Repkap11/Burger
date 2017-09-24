@@ -60,7 +60,7 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
 
 
         //mLunchGroup = BurgerApplication.getUserPerferedLunchGroup(getActivity());
-        Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
+        //Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
         if (mLunchGroup == null || mLunchSubGroup == null) {
             getActivity().finish();
         }
@@ -151,13 +151,13 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
     //Put this data
     @Override
     protected String adapterReference() {
-        Log.e(TAG, "Getting adapter with group:" + mLunchSubGroup);
+        //Log.e(TAG, "Getting adapter with group:" + mLunchSubGroup);
         return mLunchSubGroup + "/users";
     }
 
     @Override
     protected String adapter2Reference() {
-        Log.e(TAG, "Getting adapter2 with group:" + mLunchGroup);
+        //Log.e(TAG, "Getting adapter2 with group:" + mLunchGroup);
         return mLunchGroup + "/users";
     }
 
