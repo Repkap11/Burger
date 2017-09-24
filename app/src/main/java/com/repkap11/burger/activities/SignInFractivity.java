@@ -4,20 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.repkap11.burger.BurgerApplication;
+import com.repkap11.burger.R;
 import com.repkap11.burger.activities.base.Fractivity;
-import com.repkap11.burger.fragments.AboutUserFractivityFragment;
 import com.repkap11.burger.fragments.LunchGroupsFractivityFragment;
 import com.repkap11.burger.fragments.SignInFractivityFragment;
 import com.repkap11.burger.fragments.TabFractivityFragment;
-import com.repkap11.burger.fragments.UsersFractivityFragment;
 
 
 public class SignInFractivity extends Fractivity {
@@ -42,6 +43,19 @@ public class SignInFractivity extends Fractivity {
         boolean result = BurgerApplication.getUserPerferedNotoficationsEnabled(this);
         BurgerApplication.updateDeviceToken(this, result);
         //Log.e(TAG, "instanceToken:" + instanceToken);
+
+        String groupKey = BurgerApplication.getUserPerferedLunchGroup(this);
+        if (groupKey != null) {
+            String rootGroupsName = FirebaseDatabase.getInstance().getReference(groupKey).getParent().getKey();
+            if (rootGroupsName != null) {
+                String expectedRootGroup = getResources().getString(R.string.root_key_lunch_groups);
+                if (!expectedRootGroup.equals(rootGroupsName)) {
+                    Log.e(TAG, "Wrong root group expected:" + expectedRootGroup + " got:" + rootGroupsName);
+                    Toast.makeText(this, "", Toast.LENGTH_SHORT);
+                    BurgerApplication.setUserPerferedLunchGroup(this, null);
+                }
+            }
+        }
         if (currentUser != null) {
             //Log.e(TAG, "Sign in done in create for:" + currentUser);
             //continueAfterSignIn();
