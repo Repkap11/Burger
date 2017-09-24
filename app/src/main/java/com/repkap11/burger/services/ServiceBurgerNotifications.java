@@ -21,6 +21,7 @@ import com.repkap11.burger.activities.SettingsActivity;
 import com.repkap11.burger.activities.SignInFractivity;
 
 import java.util.Map;
+import java.util.Random;
 
 public class ServiceBurgerNotifications extends FirebaseMessagingService {
 
@@ -81,7 +82,8 @@ public class ServiceBurgerNotifications extends FirebaseMessagingService {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        int randomId = new Random().nextInt();
+        notificationManager.notify(randomId, notificationBuilder.build());
     }
 
 

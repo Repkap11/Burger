@@ -100,11 +100,17 @@ public class EditUserFractivityFragment extends Fractivity.FractivityFragment {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     carSizeRef.removeEventListener(this);
                     if (mEditTextCarSize != null) {
-                        String carSize = dataSnapshot.getValue(String.class);
-                        mEditTextCarSize.setText(carSize);
-			if (carSize != null){
-                            mEditTextCarSize.setSelection(carSize.length());
-			}
+                        Long carSize = dataSnapshot.getValue(Long.class);
+                        String carSizeString;
+                        if (carSize == null) {
+                            carSizeString = "";
+                        } else {
+                            carSizeString = carSize.toString();
+                        }
+                        mEditTextCarSize.setText(carSizeString);
+                        if (carSize != null) {
+                            mEditTextCarSize.setSelection(carSizeString.length());
+                        }
                     }
                 }
 
@@ -127,11 +133,24 @@ public class EditUserFractivityFragment extends Fractivity.FractivityFragment {
                 if (mExistingUser == null) {
                     DatabaseReference usersRef = database.getReference(mLunchGroup + "/users");
                     user = usersRef.push();
-                    user.setValue(new User(mEditTextDisplayName.getText().toString(), mEditTextCarSize.getText().toString()));
+                    Long carSize;
+                    try {
+                        carSize = Long.parseLong(mEditTextCarSize.getText().toString());
+                    } catch (NumberFormatException e) {
+                        carSize = 0L;
+                    }
+                    user.setValue(new User(mEditTextDisplayName.getText().toString(), carSize));
                 } else {
                     user = database.getReference(mExistingUser);
                     user.child(User.getDisplayNameLink()).setValue(mEditTextDisplayName.getText().toString());
-                    user.child(User.getCarSizeLink()).setValue(mEditTextCarSize.getText().toString());
+                    String carSizeString = mEditTextCarSize.getText().toString();
+                    Long carSize;
+                    try {
+                        carSize = Long.parseLong(carSizeString);
+                    } catch (NumberFormatException e) {
+                        carSize = 0L;
+                    }
+                    user.child(User.getCarSizeLink()).setValue(carSize);
                 }
                 getActivity().finish();
             }

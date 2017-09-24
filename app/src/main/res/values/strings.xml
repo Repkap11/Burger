@@ -58,6 +58,11 @@
         <item quantity="other">%d people</item>
     </plurals>
 
+    <plurals name="fractivity_users_seats_plural">
+        <item quantity="one">%d seat</item>
+        <item quantity="other">%d seats</item>
+    </plurals>
+
 
 
 

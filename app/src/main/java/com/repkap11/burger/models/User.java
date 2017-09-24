@@ -6,21 +6,21 @@ package com.repkap11.burger.models;
 
 public class User {
     public String displayName;
-    public String carSize;
+    public Long carSizeNum;
     //But it is zero indexed you see, Sunday is day 0.
-    public String lunch_preference_1 = "-Kqkv66paMYBnZBAzBHJ";//Lunch and Learn
+    public String lunch_preference_1;
     public String lunch_preference_2;
-    public String lunch_preference_3 = "-KqkuqYJxlROl2jbW5BY";//Bill Gray's
+    public String lunch_preference_3;
     public String lunch_preference_4;
     public String lunch_preference_5;
 
     public User() {
     }
 
-    public User(String displayName, String carSize) {
+    public User(String displayName, Long carSize) {
         this();
         this.displayName = displayName;
-        this.carSize = carSize;
+        this.carSizeNum = carSize;
     }
 
     public static String getDisplayNameLink() {
@@ -28,6 +28,6 @@ public class User {
     }
 
     public static String getCarSizeLink() {
-        return "carSize";
+        return "carSizeNum";
     }
 }

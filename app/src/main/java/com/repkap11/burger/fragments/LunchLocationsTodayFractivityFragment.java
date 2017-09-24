@@ -13,10 +13,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.LongClickDeleteDialogFragment;
 import com.repkap11.burger.R;
+import com.repkap11.burger.activities.UsersFractivity;
 import com.repkap11.burger.activities.base.FirebaseAdapterFractivity;
 import com.repkap11.burger.models.LunchLocation;
 import com.repkap11.burger.models.LunchPreference;
@@ -74,8 +76,8 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
     @Override
     public String getBarTitleString(Context context) {
         Calendar calendar = Calendar.getInstance();
-        mDayInt = calendar.get(Calendar.DAY_OF_WEEK);
-        mDayInt = 1;
+        mDayInt = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        //mDayInt = 1;
         Log.e(TAG, "my day:" + mDayInt);
         String dayOfWeek = context.getResources().getStringArray(R.array.fractivity_day_label)[mDayInt];
         String lunch = context.getResources().getString(R.string.fractivity_lunch_day_of_week);
@@ -181,36 +183,33 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
             getActivity().finish();
             return;
         }
-
-//        int resultIndex = startingIntent.getIntExtra(STARTING_INTENT_LOCATION_INDEX, -1);
-//        if (resultIndex != -1) {
-//
-//            Intent intent = new Intent();
-//            intent.putExtra(AboutUserFractivityFragment.RESULT_INTENT_LOCATION_LINK, link);
-//            intent.putExtra(AboutUserFractivityFragment.RESULT_INTENT_LOCATION_INDEX, resultIndex);
-//
-//            getActivity().setResult(Activity.RESULT_OK, intent);
-//            getActivity().finish();
-//        } else {
-//            //Intent intent = new Intent(getActivity(), EditUserFractivity.class);
-//            //intent.putExtra(EditUserFractivityFragment.STARTING_INTENT_EDIT_EXISTING_USER, key);
-//            //startActivity(intent);
-//            //TODO implement view lunch location users fractivity
-//        }
+        showUsersOfLocation(link, mDayInt, holder.mName.getText().toString() + " on " + getResources().getStringArray(R.array.fractivity_day_label)[mDayInt]);
     }
+
+    private void showUsersOfLocation(String lunchPreferenceKey, int i, String title) {
+        if (lunchPreferenceKey == null) {
+            return;
+        }
+        String userKey = BurgerApplication.getUserKey(getActivity());
+
+        DatabaseReference lunchGroupRef = FirebaseDatabase.getInstance().getReference(userKey).getParent().getParent();
+        String lunchGroupKey = lunchGroupRef.toString().substring(lunchGroupRef.getRoot().toString().length() + 1);
+        String lunchLocationUsersKey = lunchGroupKey + "/lunch_locations/" + lunchPreferenceKey + "/lunch_preference_" + i;
+        Log.e(TAG, "Showing subgroup:" + lunchLocationUsersKey + " group:" + lunchGroupKey);
+        Intent intent = new Intent(getContext(), UsersFractivity.class);
+        intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_USERS_SUB_GROUP, lunchLocationUsersKey);
+        intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_USERS_GROUP, lunchGroupKey);
+        intent.putExtra(UsersFractivityFragment.STARTING_INTENT_TITLE, title);
+        intent.putExtra(UsersFractivityFragment.STARTING_INTENT_SHOW_ILL_DRIVE, false);
+
+
+        startActivityForResult(intent, UsersFractivityFragment.REQUEST_CODE_LIST_USERS);
+    }
+
 
     @Override
     protected boolean onItemLongClicked(View view, Object holderObject, int position, final String key, String link, Object value) {
-        LunchLocation location = (LunchLocation) value;
-        Holder holder = (Holder) holderObject;
-        DialogFragment df = new LongClickDeleteDialogFragment();
-        Bundle args = new Bundle();
-        args.putString(LongClickDeleteDialogFragment.ARG_TITLE, "Delete Location");
-        args.putString(LongClickDeleteDialogFragment.ARG_MESSAGE, "Are you sure you want to delete location \"" + location.displayName + "\"");
-        args.putString(LongClickDeleteDialogFragment.ARG_KEY, key);
-        df.setArguments(args);
-        df.show(getActivity().getSupportFragmentManager(), "MyDF");
-        return true;
+        return false;
     }
 
     public static class Holder {

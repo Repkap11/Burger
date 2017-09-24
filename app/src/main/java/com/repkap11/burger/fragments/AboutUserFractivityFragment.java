@@ -260,7 +260,7 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
                     return;
                 }
                 mTextFullName.setText(user.displayName);
-                mEditTextCarSize.setText(user.carSize);
+                mEditTextCarSize.setText(user.carSizeNum == null ? "" : user.carSizeNum.toString());
 
                 if (mLunchPreference1Ref != null) {
                     mLunchPreference1Ref.removeEventListener(mLunchPreference1Listener);
@@ -312,6 +312,7 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
         intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_USERS_SUB_GROUP, lunchLocationUsersKey);
         intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_USERS_GROUP, lunchGroupKey);
         intent.putExtra(UsersFractivityFragment.STARTING_INTENT_TITLE, title);
+        intent.putExtra(UsersFractivityFragment.STARTING_INTENT_SHOW_ILL_DRIVE, true);
 
         startActivityForResult(intent, UsersFractivityFragment.REQUEST_CODE_LIST_USERS);
     }

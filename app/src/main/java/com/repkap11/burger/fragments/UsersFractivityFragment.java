@@ -29,6 +29,7 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
     public static final String STARTING_INTENT_WHICH_USERS_SUB_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_USERS_SUB_GROUP";
     public static final String STARTING_INTENT_WHICH_USERS_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_USERS_GROUP";
     public static final String STARTING_INTENT_TITLE = "com.repkap11.burger.STARTING_INTENT_TITLE";
+    public static final String STARTING_INTENT_SHOW_ILL_DRIVE = "com.repkap11.burger.STARTING_INTENT_SHOW_ILL_DRIVE";
 
 
     private static final String TAG = UsersFractivityFragment.class.getSimpleName();
@@ -37,6 +38,7 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
     private String mLunchSubGroup;
     private String mTitleString;
     private Button mIllDriveButton;
+    private boolean mShowIllDrive;
 
     @Override
     protected void create(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
         mLunchSubGroup = getActivity().getIntent().getStringExtra(STARTING_INTENT_WHICH_USERS_SUB_GROUP);
         mLunchGroup = getActivity().getIntent().getStringExtra(STARTING_INTENT_WHICH_USERS_GROUP);
         mTitleString = getActivity().getIntent().getStringExtra(STARTING_INTENT_TITLE);
+        mShowIllDrive = getActivity().getIntent().getBooleanExtra(STARTING_INTENT_SHOW_ILL_DRIVE, false);
+
         if (mTitleString == null) {
             mTitleString = getResources().getString(R.string.fractivity_users_title);
         }
@@ -94,15 +98,20 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
         View rootView = inflater.inflate(R.layout.fractivity_users, container, attachToRoot);
         mListView = (ListView) rootView.findViewById(R.id.fractivity_users_list);
         mIllDriveButton = (Button) rootView.findViewById(R.id.fractivity_users_button_tell_them_im_driving);
-        mIllDriveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference pendingDriversRef = database.getReference(mLunchSubGroup).child("pending_drivers");
-                String userLink = database.getReference(BurgerApplication.getUserKey(getActivity())).getKey();
-                pendingDriversRef.child(userLink).setValue("");
-            }
-        });
+        if (mShowIllDrive) {
+            mIllDriveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference pendingDriversRef = database.getReference(mLunchSubGroup).child("pending_drivers");
+                    String userLink = database.getReference(BurgerApplication.getUserKey(getActivity())).getKey();
+                    //Log.e(TAG, "Adding driver " + userLink);
+                    pendingDriversRef.child(userLink).setValue("");
+                }
+            });
+        } else {
+            mIllDriveButton.setVisibility(View.GONE);
+        }
 
         return rootView;
     }
@@ -149,13 +158,24 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
     @Override
     public Holder populateHolder(View convertView) {
         Holder holder = new Holder();
-        holder.mName = (TextView) convertView.findViewById(R.id.fractivity_users_list_element_text);
+        holder.mName = (TextView) convertView.findViewById(R.id.fractivity_users_list_element_text_name);
+        holder.mCarSize = (TextView) convertView.findViewById(R.id.fractivity_users_list_element_text_car_size);
+
         return holder;
     }
 
     @Override
     protected void populateView2(View convertView, Holder holder, int position, String key, User user) {
         holder.mName.setText(user.displayName);
+        //Dumb thing can't use longs, so just fake it to find 1 or more than 1
+        int simplifiedCarSize;
+        if (user.carSizeNum == null) {
+            simplifiedCarSize = 0;
+        } else {
+            simplifiedCarSize = user.carSizeNum > 1L ? 2 : 1;
+        }
+        String carSizeString = getResources().getQuantityString(R.plurals.fractivity_users_seats_plural, simplifiedCarSize, user.carSizeNum == null ? 0L : user.carSizeNum);
+        holder.mCarSize.setText(carSizeString);
         holder.mIndex = position;
     }
 
@@ -178,5 +198,6 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
     public static class Holder {
         public TextView mName;
         public int mIndex;
+        public TextView mCarSize;
     }
 }

@@ -52,7 +52,9 @@ public abstract class FirebaseKeyLookupAdapterFractivity<AdapterHolder, AdapterD
                     if (value == null) {
                         return;
                     }
-                    populateView2(convertView, adapterHolder, position, secondaryKey, value);
+                    if (getActivity() != null) {
+                        populateView2(convertView, adapterHolder, position, secondaryKey, value);
+                    }
                 }
 
                 @Override
