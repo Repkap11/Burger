@@ -69,7 +69,15 @@ public class UpdateAppTask extends AsyncTask<Void, Void, Integer> {
             PackageInfo newInfo = mContext.getPackageManager().getPackageArchiveInfo(outputFile.getAbsolutePath(), PackageManager.GET_SIGNATURES);
             PackageInfo oldPackageInfo = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), PackageManager.GET_SIGNATURES);
 
-            boolean sameSignature = Arrays.equals(newInfo.signatures[0].toByteArray(), oldPackageInfo.signatures[0].toByteArray());
+            boolean sameSignature = true;
+            if (oldPackageInfo.signatures.length != newInfo.signatures.length) {
+                sameSignature = false;
+            } else {
+                int numSigs = oldPackageInfo.signatures.length;
+                for (int i = 0; i < numSigs; i++) {
+                    sameSignature = sameSignature && Arrays.equals(newInfo.signatures[i].toByteArray(), oldPackageInfo.signatures[i].toByteArray());
+                }
+            }
             if (!sameSignature) {
                 return R.string.update_app_task_signatures_dont_match;
             }
