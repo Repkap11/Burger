@@ -78,7 +78,7 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
         Calendar calendar = Calendar.getInstance();
         mDayInt = calendar.get(Calendar.DAY_OF_WEEK) - 1;
         //mDayInt = 1;
-        Log.e(TAG, "my day:" + mDayInt);
+        //Log.e(TAG, "my day:" + mDayInt);
         String dayOfWeek = context.getResources().getStringArray(R.array.fractivity_day_label)[mDayInt];
         String lunch = context.getResources().getString(R.string.fractivity_lunch_day_of_week);
         return lunch + dayOfWeek;
@@ -138,7 +138,7 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
         Holder holder = (Holder) o;
         LunchLocation location = (LunchLocation) value;
         LunchPreference todaysPreference = null;
-        Log.e(TAG, "Days Int:" + mDayInt);
+        //Log.e(TAG, "Days Int:" + mDayInt);
         switch (mDayInt) {
             case 1:
                 todaysPreference = location.lunch_preference_1;
@@ -164,7 +164,7 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
         }
         holder.mName.setText(location.displayName);
         holder.mNumPeople.setText(numUsersString);
-        Log.e(TAG, "Using string:" + todaysPreference + holder.mName.getText().toString());
+        //Log.e(TAG, "Using string:" + todaysPreference + holder.mName.getText().toString());
         holder.mIndex = position;
     }
 

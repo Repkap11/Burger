@@ -16,6 +16,7 @@ import com.repkap11.burger.activities.base.BarMenuFractivity;
 import com.repkap11.burger.activities.base.Fractivity;
 import com.repkap11.burger.fragments.AboutUserFractivityFragment;
 import com.repkap11.burger.fragments.LunchLocationsFractivityFragment;
+import com.repkap11.burger.fragments.LunchLocationsTodayFractivityFragment;
 
 /**
  * Created by paul on 8/10/17.
@@ -41,7 +42,7 @@ public class TabFractivity extends Fractivity<TabFractivity.TabFractivityFragmen
             ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.fractivity_tab_viewpager);
             BarMenuFractivity.BarMenuFractivityFragment[] fragments = new BarMenuFractivity.BarMenuFractivityFragment[2];
             fragments[0] = new AboutUserFractivityFragment();
-            fragments[1] = new LunchLocationsFractivityFragment();
+            fragments[1] = new LunchLocationsTodayFractivityFragment();
             viewPager.setAdapter(new TabPager(this, getActivity().getSupportFragmentManager(), fragments));
             tabLayout.setupWithViewPager(viewPager, true);
 
