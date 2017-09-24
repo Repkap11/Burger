@@ -63,7 +63,7 @@ exports.send_notification_of_driver_to_location = function send_notification_of_
             var driver = event.data.ref.parent.parent.parent.parent.parent.child("users").child(event.data.current.key);
             driver.once('value').then(function(driverSnapshot){
                 var driverName = driverSnapshot.child('displayName').val();
-                var driverCarSize = driverSnapshot.child('carSize').val();
+                var driverCarSize = driverSnapshot.child('carSizeNum').val();
                 var numGuests = driverCarSize - 1;
                 if (numGuests > 0){
                     console.error('Driver is:'+ driverName +' with car size:'+driverCarSize);
@@ -94,7 +94,6 @@ exports.send_notification_of_driver_to_location = function send_notification_of_
                                                 body: body,
                                               }
                                         }
-                                        console.log('Notifying User:'+userName+'device:('+userDeviceSnapshot.key+') that '+driverName+' is the driver to '+ locationName);
                                         admin.messaging().sendToDevice(userDeviceSnapshot.key, payload);
                                     });
                                 }
@@ -105,19 +104,30 @@ exports.send_notification_of_driver_to_location = function send_notification_of_
                             console.error('Will notify device:'+ userDeviceSnapshot.key);
                             var title = 'Lunch at ' +locationName;
                             var peopleString = numUsersNotified == 1 ? 'person' : 'people';
-                            var body = 'Notifying '+numUsersNotified+' '+peopleString +' that your are driving to '+locationName;
+                            var body = 'Notifying '+numUsersNotified+' '+peopleString +' you\'re driving to '+locationName;
                              const payload = {
                                   data: {
                                     title: title,
                                     body: body,
                                   }
                             }
-                            console.log('Notifying Driver:'+driverName+'device:('+userDeviceSnapshot.key+') that they are the driver to '+ locationName);
                             admin.messaging().sendToDevice(userDeviceSnapshot.key, payload);
                         });
                     });
                 } else {
-                    //console.error('Driver is:'+ driverName +' with car size:'+driverCarSize+', so theres no room for other people');
+                        console.error('Driver is:'+ driverName +' with car size:'+driverCarSize+', so theres no room for other people');
+                        driverSnapshot.child('devices').forEach(function(userDeviceSnapshot){
+                            console.error('Will notify device:'+ userDeviceSnapshot.key);
+                            var title = 'Lunch at ' +locationName;
+                            var body = 'Not notifying anyone. Get a bigger car!';
+                             const payload = {
+                                  data: {
+                                    title: title,
+                                    body: body,
+                                  }
+                            }
+                            admin.messaging().sendToDevice(userDeviceSnapshot.key, payload);
+                        });
                 }
             });
         });

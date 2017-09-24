@@ -1,5 +1,6 @@
 package com.repkap11.burger.services;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -65,7 +66,8 @@ public class ServiceBurgerNotifications extends FirebaseMessagingService {
                 .setContentText(body)
                 .setAutoCancel(true)
                 .setSound(ringtoneUri)
-                .setContentIntent(pendingIntent);
+                .setContentIntent(pendingIntent)
+                .setPriority(Notification.PRIORITY_HIGH);
         if (enableVibrate) {
             notificationBuilder.setVibrate(new long[]{0, 300, 300, 300});
         }
