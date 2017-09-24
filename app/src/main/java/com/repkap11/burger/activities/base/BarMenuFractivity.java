@@ -3,16 +3,19 @@ package com.repkap11.burger.activities.base;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,6 +31,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
 import com.repkap11.burger.UpdateAppTask;
@@ -47,12 +55,59 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
         private static final int REQUEST_CODE_ASK_FOR_WRITE_EXPERNAL_PERMISSION = 44;
         private GoogleApiClient mGoogleAPIClient;
         private boolean mShowBar = true;
+        private long mCurrentAppVersionNumber;
+        private MenuItem mUpdateMenuItem;
+        private int mShowingAsActionFlag = MenuItem.SHOW_AS_ACTION_NEVER;
 
         @Override
         public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            try {
+                PackageInfo oldPackageInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), PackageManager.GET_SIGNATURES);
+                mCurrentAppVersionNumber = oldPackageInfo.versionCode;
+            } catch (PackageManager.NameNotFoundException e) {
+                mCurrentAppVersionNumber = 0;
+                e.printStackTrace();
+            }
             if (mShowBar) {
                 inflater.inflate(R.menu.menu_main, menu);
+                mUpdateMenuItem = menu.findItem(R.id.action_update);
+                mUpdateMenuItem.setShowAsAction(mShowingAsActionFlag);
+                String groupKey = BurgerApplication.getUserPerferedLunchGroup(getActivity());
+                if (groupKey != null) {
+                    DatabaseReference groupsAppVersionRef = FirebaseDatabase.getInstance().getReference(groupKey).getParent().child("appVersion");
+                    groupsAppVersionRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (mUpdateMenuItem != null) {
+                                Long appVersion = dataSnapshot.getValue(Long.class);
+                                if (appVersion == null) {
+                                    appVersion = 0L;
+                                }
+                                if (mCurrentAppVersionNumber == appVersion) {
+                                    mShowingAsActionFlag = MenuItem.SHOW_AS_ACTION_NEVER;
+                                    mUpdateMenuItem.setShowAsAction(mShowingAsActionFlag);
+                                } else {
+                                    mShowingAsActionFlag = MenuItem.SHOW_AS_ACTION_IF_ROOM;
+                                    mUpdateMenuItem.setShowAsAction(mShowingAsActionFlag);
+                                }
+                                Log.e(TAG, "CurrentAppVersion:" + mCurrentAppVersionNumber + " server recomends:" + appVersion);
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
             }
+        }
+
+        @Override
+        public void onDestroyOptionsMenu() {
+            mUpdateMenuItem = null;
+            super.onDestroyOptionsMenu();
         }
 
         @Override
@@ -125,6 +180,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
                     .build();
             mGoogleAPIClient.connect();
         }
+
 
         protected final View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fractivity_bar_menu, container, false);
