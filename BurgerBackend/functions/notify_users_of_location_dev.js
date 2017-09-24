@@ -48,8 +48,6 @@ exports.send_notification_for_date = function send_notification_for_date(event, 
 exports.send_notification_of_driver_to_location = function send_notification_of_driver_to_location(event){
     //console.error('You called this function send_notification_of_driver_to_location' + event.data.current.val());
     if (event.data.current.val() != null){
-        //Remove this pending driver
-        event.data.ref.remove();
         //Notify the group of users that one of their members is driving
 
         //Find information about the location
@@ -112,6 +110,8 @@ exports.send_notification_of_driver_to_location = function send_notification_of_
                                   }
                             }
                             admin.messaging().sendToDevice(userDeviceSnapshot.key, payload);
+                            //Remove this pending driver
+                            event.data.ref.remove();
                         });
                     });
                 } else {
@@ -127,6 +127,8 @@ exports.send_notification_of_driver_to_location = function send_notification_of_
                               }
                         }
                         admin.messaging().sendToDevice(userDeviceSnapshot.key, payload);
+                        //Remove this pending driver
+                        event.data.ref.remove();
                     });
                 }
             });

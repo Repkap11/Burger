@@ -131,4 +131,5 @@
     <string-array name="multi_select_list_preference_default_value" />
 
     <string name="pref_title_system_sync_settings">System sync settings</string>
+    <string name="tell_them_im_driving_pending">Notification Pending</string>
 </resources>

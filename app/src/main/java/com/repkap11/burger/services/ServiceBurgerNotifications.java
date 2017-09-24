@@ -50,8 +50,11 @@ public class ServiceBurgerNotifications extends FirebaseMessagingService {
         Log.e(TAG, "Notification Message Title: " + title + " body:" + body);
 
         Intent intent = new Intent(this, SignInFractivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean enableLED = prefs.getBoolean(SettingsActivity.PREF_NOTIFICATIONS_LED, true);

@@ -12,9 +12,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.EditUserFractivity;
@@ -107,6 +110,28 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
                     String userLink = database.getReference(BurgerApplication.getUserKey(getActivity())).getKey();
                     //Log.e(TAG, "Adding driver " + userLink);
                     pendingDriversRef.child(userLink).setValue("");
+                }
+            });
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            String userLink = database.getReference(BurgerApplication.getUserKey(getActivity())).getKey();
+            DatabaseReference thisUserPendingRef = FirebaseDatabase.getInstance().getReference(mLunchSubGroup).child("pending_drivers").child(userLink);
+            thisUserPendingRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (mIllDriveButton != null){
+                        if (dataSnapshot.getValue(String.class) == null){
+                            mIllDriveButton.setEnabled(true);
+                            mIllDriveButton.setText(R.string.tell_them_im_driving);
+                        } else {
+                            mIllDriveButton.setEnabled(false);
+                            mIllDriveButton.setText(R.string.tell_them_im_driving_pending);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
                 }
             });
         } else {

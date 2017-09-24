@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="5dp"
-        android:text="@string/tell_them_im_driving" />
+        android:layout_margin="5dp" />
 
     <ListView
         android:id="@+id/fractivity_users_list"
