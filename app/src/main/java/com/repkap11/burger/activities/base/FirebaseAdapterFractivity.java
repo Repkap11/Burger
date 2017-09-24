@@ -50,7 +50,7 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             final FirebaseMessaging messaging = FirebaseMessaging.getInstance();
-            messaging.subscribeToTopic("lunch");
+            messaging.unsubscribeFromTopic("lunch");
 
             String reference = adapterReference();
             Log.e(TAG, "Starting Adapter with key:" + reference);
