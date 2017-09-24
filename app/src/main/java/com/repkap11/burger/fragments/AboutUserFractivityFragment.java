@@ -3,6 +3,7 @@ package com.repkap11.burger.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -260,7 +261,13 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
                     return;
                 }
                 mTextFullName.setText(user.displayName);
-                mEditTextCarSize.setText(user.carSizeNum == null ? "" : user.carSizeNum.toString());
+                if (user.carSizeNum == null) {
+                    mEditTextCarSize.setText(R.string.fractivity_about_user_no_car_size_set);
+                    mEditTextCarSize.setEnabled(false);//Enable sets the color
+                } else {
+                    mEditTextCarSize.setText(user.carSizeNum.toString());
+                    mEditTextCarSize.setEnabled(true);
+                }
 
                 if (mLunchPreference1Ref != null) {
                     mLunchPreference1Ref.removeEventListener(mLunchPreference1Listener);
