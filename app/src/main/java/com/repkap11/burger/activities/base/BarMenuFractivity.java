@@ -68,19 +68,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
                     startUpdateAppProcedure();
                     break;
                 case R.id.action_sign_out:
-                    BurgerApplication.updateDeviceToken(getActivity(), false);
-                    BurgerApplication.setUserPerferedLunchGroup(getActivity(), null);
-                    FirebaseAuth.getInstance().signOut();
-                    Auth.GoogleSignInApi.signOut(mGoogleAPIClient).setResultCallback(new ResultCallback<Status>() {
-                        @Override
-                        public void onResult(@NonNull Status status) {
-                            Intent intent = new Intent(getActivity(), SignInFractivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                        }
-                    });
-                    //Toast.makeText(getActivity(), "Sign Out selected", Toast.LENGTH_SHORT).show();
-
+                    triggerLogOut();
                     break;
                 default:
                     Toast.makeText(getActivity(), "Other selected", Toast.LENGTH_SHORT).show();
@@ -88,6 +76,20 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
 
             }
             return false;
+        }
+
+        private void triggerLogOut() {
+            BurgerApplication.updateDeviceToken(getActivity(), false);
+            BurgerApplication.setUserPerferedLunchGroup(getActivity(), null);
+            FirebaseAuth.getInstance().signOut();
+            Auth.GoogleSignInApi.signOut(mGoogleAPIClient).setResultCallback(new ResultCallback<Status>() {
+                @Override
+                public void onResult(@NonNull Status status) {
+                    Intent intent = new Intent(getActivity(), SignInFractivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            });
         }
 
         private void startUpdateAppProcedure() {
