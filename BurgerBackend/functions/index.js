@@ -36,6 +36,9 @@ exports.lunch_tick_5 = functions.pubsub.topic('lunch-tick-5')
 exports.notify_users_of_driver_to_location = functions.database.ref('/lunch_groups/{groupId}/lunch_locations/{locationId}/{whichLunchPreference}/pending_drivers/{driverId}')
     .onWrite((event) => {return notify_users_of_location.send_notification_of_driver_to_location(event)});
 
+var notify_weird_beer = require('./notify_weird_beer');
+exports.weird_beer = functions.pubsub.topic('weird-beer')
+    .onPublish((event) => {return notify_weird_beer.send_notification_for_beer(event)});
 
 
 

@@ -1,5 +1,3 @@
-root_key_lunch_groups = 'lunch_groups'
-
 // The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
 const functions = require('firebase-functions');
 
@@ -33,7 +31,8 @@ exports.remove_pref_when_location_deleted = function remove_pref_when_location_d
     //When a location is deleted, delete that location from any users perference
     //console.log('You deleted location' + event.params.locationId + ' from group '+ event.params.groupID);
 
-    var lunchGroup = admin.database().ref(root_key_lunch_groups).child(event.params.groupID);
+    //var lunchGroup = admin.database().ref(root_key_lunch_groups).child(event.params.groupID);
+    var lunchGroup = event.data.previous.parent.parent;
     lunchGroup.once('value').then(function(lunchGroupSnapshot){
 
        //console.log('Read Lunch Group:'+ lunchGroupSnapshot.key+' val:'+ lunchGroupSnapshot.val());

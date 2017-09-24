@@ -42,14 +42,12 @@ exports.send_notification_for_date = function send_notification_for_date(event, 
                 });
             });
         });
-     });
+    });
 }
 
 exports.send_notification_of_driver_to_location = function send_notification_of_driver_to_location(event){
-    console.error('You called this function send_notification_of_driver_to_location' + event.data.current.val());
+    //console.error('You called this function send_notification_of_driver_to_location' + event.data.current.val());
     if (event.data.current.val() != null){
-        //Remove this pending driver
-        event.data.ref.remove();
         //Notify the group of users that one of their members is driving
 
         //Find information about the location
@@ -57,7 +55,7 @@ exports.send_notification_of_driver_to_location = function send_notification_of_
             location.once('value').then(function(locationNameSnapshot){
             var locationName = locationNameSnapshot.val();
 
-            console.error('Seeing location:'+locationName);
+            //console.error('Seeing location:'+locationName);
 
             //Find information about the driver
             var driver = event.data.ref.parent.parent.parent.parent.parent.child("users").child(event.data.current.key);
@@ -66,14 +64,14 @@ exports.send_notification_of_driver_to_location = function send_notification_of_
                 var driverCarSize = driverSnapshot.child('carSizeNum').val();
                 var numGuests = driverCarSize - 1;
                 if (numGuests > 0){
-                    console.error('Driver is:'+ driverName +' with car size:'+driverCarSize);
+                    //console.error('Driver is:'+ driverName +' with car size:'+driverCarSize);
                     //This is the group of users which that member is driving for
                     var lunch_pref_group = event.data.ref.parent.parent.child("users");
                     //console.error("Searching users:"+lunch_pref_group.key + ":"+lunch_pref_group);
                     lunch_pref_group.once('value').then(function(lunchPrefUsersSnapshot){
 
                         var numUsersNotified = lunchPrefUsersSnapshot.numChildren() - 1;
-                        console.log('numChildren:'+lunchPrefUsersSnapshot.numChildren()+' numUsersNotified:'+numUsersNotified);
+                        //console.log('numChildren:'+lunchPrefUsersSnapshot.numChildren()+' numUsersNotified:'+numUsersNotified);
                         lunchPrefUsersSnapshot.forEach(function(lunchPrefUserSnapshot){
                             //console.error('I will be notifying:'+lunchPrefUserSnapshot.key);
                             //Get the list of all users.
@@ -82,7 +80,7 @@ exports.send_notification_of_driver_to_location = function send_notification_of_
 
                                 var userName = userSnapshot.child('displayName').val();
                                 if (driver.key == userSnapshot.key){
-                                    console.error('Not notifying '+userName+' since they are the driver.');
+                                    //console.error('Not notifying '+userName+' since they are the driver.');
                                 } else {
                                     userSnapshot.child('devices').forEach(function(userDeviceSnapshot){
                                         //console.error('Will notify device:'+ userDeviceSnapshot.key);
@@ -112,22 +110,26 @@ exports.send_notification_of_driver_to_location = function send_notification_of_
                                   }
                             }
                             admin.messaging().sendToDevice(userDeviceSnapshot.key, payload);
+                            //Remove this pending driver
+                            event.data.ref.remove();
                         });
                     });
                 } else {
-                        console.error('Driver is:'+ driverName +' with car size:'+driverCarSize+', so theres no room for other people');
-                        driverSnapshot.child('devices').forEach(function(userDeviceSnapshot){
-                            console.error('Will notify device:'+ userDeviceSnapshot.key);
-                            var title = 'Lunch at ' +locationName;
-                            var body = 'Not notifying anyone. Get a bigger car!';
-                             const payload = {
-                                  data: {
-                                    title: title,
-                                    body: body,
-                                  }
-                            }
-                            admin.messaging().sendToDevice(userDeviceSnapshot.key, payload);
-                        });
+                    console.error('Driver is:'+ driverName +' with car size:'+driverCarSize+', so theres no room for other people');
+                    driverSnapshot.child('devices').forEach(function(userDeviceSnapshot){
+                        console.error('Will notify device:'+ userDeviceSnapshot.key);
+                        var title = 'Lunch at ' +locationName;
+                        var body = 'Not notifying anyone. Get a bigger car!';
+                         const payload = {
+                              data: {
+                                title: title,
+                                body: body,
+                              }
+                        }
+                        admin.messaging().sendToDevice(userDeviceSnapshot.key, payload);
+                        //Remove this pending driver
+                        event.data.ref.remove();
+                    });
                 }
             });
         });
