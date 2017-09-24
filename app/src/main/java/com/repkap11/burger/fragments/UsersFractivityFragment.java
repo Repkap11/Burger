@@ -154,7 +154,6 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
         //Log.e(TAG, "Getting adapter with group:" + mLunchSubGroup);
         return mLunchSubGroup + "/users";
     }
-
     @Override
     protected String adapter2Reference() {
         //Log.e(TAG, "Getting adapter2 with group:" + mLunchGroup);
