@@ -72,6 +72,6 @@ exports.dev_lunch_tick_5 = functions.pubsub.topic('dev_lunch-tick-5')
 exports.dev_notify_users_of_driver_to_location = functions.database.ref('/lunch_groups_dev/{groupId}/lunch_locations/{locationId}/{whichLunchPreference}/pending_drivers/{driverId}')
     .onWrite((event) => {return notify_users_of_location.send_notification_of_driver_to_location(event)});
 
-var notify_wierd_beer = require('./notify_wierd_beer_dev');
-exports.dev_wierd_beer = functions.pubsub.topic('dev_wierd-beer')
-    .onPublish((event) => {return notify_wierd_beer.send_notification_for_beer(event)});
+var notify_weird_beer = require('./notify_weird_beer_dev');
+exports.dev_weird_beer = functions.pubsub.topic('dev_weird-beer')
+    .onPublish((event) => {return notify_weird_beer.send_notification_for_beer(event)});

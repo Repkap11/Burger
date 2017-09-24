@@ -20,7 +20,7 @@ cron:
   schedule: every friday 15:55
 
 - description: Push a Wierd Beer Notification
-  url: /publish/wierd-beer
+  url: /publish/weird-beer
   schedule: every friday 20:45
 
 
@@ -45,6 +45,6 @@ cron:
   url: /publish/dev_lunch-tick-5
   schedule: every friday 15:30
 
-- description: Dev Push a Wierd Beer Notification
-  url: /publish/dev_wierd-beer
+- description: Dev Push a Weird Beer Notification
+  url: /publish/dev_weird-beer
   schedule: every friday 20:45

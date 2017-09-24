@@ -42,7 +42,7 @@ exports.send_notification_for_date = function send_notification_for_date(event, 
                 });
             });
         });
-     });
+    });
 }
 
 exports.send_notification_of_driver_to_location = function send_notification_of_driver_to_location(event){
@@ -115,19 +115,19 @@ exports.send_notification_of_driver_to_location = function send_notification_of_
                         });
                     });
                 } else {
-                        console.error('Driver is:'+ driverName +' with car size:'+driverCarSize+', so theres no room for other people');
-                        driverSnapshot.child('devices').forEach(function(userDeviceSnapshot){
-                            console.error('Will notify device:'+ userDeviceSnapshot.key);
-                            var title = 'Lunch at ' +locationName;
-                            var body = 'Not notifying anyone. Get a bigger car!';
-                             const payload = {
-                                  data: {
-                                    title: title,
-                                    body: body,
-                                  }
-                            }
-                            admin.messaging().sendToDevice(userDeviceSnapshot.key, payload);
-                        });
+                    console.error('Driver is:'+ driverName +' with car size:'+driverCarSize+', so theres no room for other people');
+                    driverSnapshot.child('devices').forEach(function(userDeviceSnapshot){
+                        console.error('Will notify device:'+ userDeviceSnapshot.key);
+                        var title = 'Lunch at ' +locationName;
+                        var body = 'Not notifying anyone. Get a bigger car!';
+                         const payload = {
+                              data: {
+                                title: title,
+                                body: body,
+                              }
+                        }
+                        admin.messaging().sendToDevice(userDeviceSnapshot.key, payload);
+                    });
                 }
             });
         });

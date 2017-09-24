@@ -42,9 +42,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_location"
+            android:drawablePadding="15dp"
             android:hint="Name"
             android:inputType="textPersonName|textCapWords"
             android:padding="20dp" />
+
+        <CheckBox
+            android:id="@+id/fractivity_add_lunch_group_checkbox_weird_beer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_marginLeft="15dp"
+            android:text="@string/weird_beer_friday"
+            android:textSize="16sp" />
 
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

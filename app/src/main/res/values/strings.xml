@@ -63,6 +63,9 @@
         <item quantity="other">%d seats</item>
     </plurals>
 
+    <string name="fractivity_lunch_day_of_week">Lunch on\u0020</string>
+    <string name="weird_beer_friday">Weird Beer Friday</string>
+
 
 
 
@@ -127,5 +130,4 @@
     <string-array name="multi_select_list_preference_default_value" />
 
     <string name="pref_title_system_sync_settings">System sync settings</string>
-    <string name="fractivity_lunch_day_of_week">Lunch on\u0020</string>
 </resources>

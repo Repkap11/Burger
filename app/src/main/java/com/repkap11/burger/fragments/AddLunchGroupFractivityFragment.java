@@ -8,13 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.repkap11.burger.R;
 import com.repkap11.burger.activities.base.Fractivity;
-import com.repkap11.burger.models.LunchLocation;
+import com.repkap11.burger.models.LunchGroup;
 
 /**
  * Created by paul on 8/8/17.
@@ -22,6 +23,7 @@ import com.repkap11.burger.models.LunchLocation;
 public class AddLunchGroupFractivityFragment extends Fractivity.FractivityFragment {
     private EditText mEditTextName;
     private Button mSaveLocationButtion;
+    private CheckBox mCheckBoxWeirdBeer;
 
     @Override
     protected void create(Bundle savedInstanceState) {
@@ -42,6 +44,8 @@ public class AddLunchGroupFractivityFragment extends Fractivity.FractivityFragme
             }
         });
         mEditTextName = (EditText) rootView.findViewById(R.id.fractivity_add_lunch_group_edit_text_name);
+        mCheckBoxWeirdBeer = (CheckBox) rootView.findViewById(R.id.fractivity_add_lunch_group_checkbox_weird_beer);
+        mCheckBoxWeirdBeer.setChecked(false);
         mSaveLocationButtion = (Button) rootView.findViewById(R.id.fractivity_add_lunch_group_button_save);
         mSaveLocationButtion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +53,7 @@ public class AddLunchGroupFractivityFragment extends Fractivity.FractivityFragme
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference locationsRef = database.getReference(getResources().getString(R.string.root_key_lunch_groups));
                 DatabaseReference newLocation = locationsRef.push();
-                newLocation.setValue(new LunchLocation(mEditTextName.getText().toString()));
+                newLocation.setValue(new LunchGroup(mEditTextName.getText().toString(), mCheckBoxWeirdBeer.isChecked()));
                 getActivity().finish();
             }
         });

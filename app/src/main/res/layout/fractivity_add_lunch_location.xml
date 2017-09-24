@@ -44,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_location"
+            android:drawablePadding="15dp"
             android:hint="Name"
             android:inputType="textPersonName|textCapWords"
             android:padding="20dp" />

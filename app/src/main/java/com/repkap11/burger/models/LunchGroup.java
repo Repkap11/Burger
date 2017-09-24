@@ -6,12 +6,14 @@ package com.repkap11.burger.models;
 
 public class LunchGroup {
     public String displayName;
+    public Boolean hasWeirdBeer;
 
     public LunchGroup() {
     }
 
-    public LunchGroup(String displayName) {
+    public LunchGroup(String displayName, boolean hasWeirdBeer) {
         this();
         this.displayName = displayName;
+        this.hasWeirdBeer = hasWeirdBeer;
     }
 }
