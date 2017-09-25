@@ -33,6 +33,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -79,15 +80,20 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (mUpdateMenuItem != null) {
-                                Long appVersion = dataSnapshot.getValue(Long.class);
+                                Long appVersion;
+                                try {
+                                    appVersion = dataSnapshot.getValue(Long.class);
+                                } catch (DatabaseException e) {
+                                    appVersion = 0l;
+                                }
                                 if (appVersion == null) {
                                     appVersion = 0L;
                                 }
-                                if (mCurrentAppVersionNumber == appVersion) {
-                                    mShowingAsActionFlag = MenuItem.SHOW_AS_ACTION_NEVER;
+                                if (appVersion > mCurrentAppVersionNumber) {
+                                    mShowingAsActionFlag = MenuItem.SHOW_AS_ACTION_IF_ROOM;
                                     mUpdateMenuItem.setShowAsAction(mShowingAsActionFlag);
                                 } else {
-                                    mShowingAsActionFlag = MenuItem.SHOW_AS_ACTION_IF_ROOM;
+                                    mShowingAsActionFlag = MenuItem.SHOW_AS_ACTION_NEVER;
                                     mUpdateMenuItem.setShowAsAction(mShowingAsActionFlag);
                                 }
                                 Log.e(TAG, "CurrentAppVersion:" + mCurrentAppVersionNumber + " server recomends:" + appVersion);
