@@ -22,6 +22,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.repkap11.burger.BuildConfig;
 import com.repkap11.burger.BurgerApplication;
 import com.repkap11.burger.R;
 
@@ -44,6 +45,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public static final String PREF_NOTIFICATIONS_VIBRATE = "pref_notifications_vibrate";
     public static final String PREF_NOTIFICATIONS_LED = "pref_notifications_led";
 
+    public static final String PREF_APP_VERSION = "pref_app_version";
+    public static final String PREF_APP_BUILD_FLAVOR = "pref_app_build_flavor";
+
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
     /**
@@ -53,9 +57,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     private Preference.OnPreferenceChangeListener mBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
 
-            if (preference instanceof ListPreference) {
+
+            String stringValue = value.toString();
+            Log.e(TAG, "Looking at pref:" + preference.getKey());
+            if (preference.getKey().equals(PREF_APP_VERSION)) {
+                preference.setSummary(BurgerApplication.getAppVersionName(getApplicationContext()));
+            } else if (preference.getKey().equals(PREF_APP_BUILD_FLAVOR)) {
+                preference.setSummary(BuildConfig.FLAVOR);
+            } else if (preference instanceof ListPreference) {
                 Log.e(TAG, "Updated List:" + preference.getKey() + " to:" + stringValue);
                 // For list preferences, look up the correct display value in
                 // the preference's 'entries' list.
@@ -86,7 +96,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         preference.setSummary(name);
                     }
                 }
-
             } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
@@ -124,13 +133,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      *
      * @see #mBindPreferenceSummaryToValueListener
      */
-    private void bindPreferenceSummaryToValue(Preference preference, boolean isBoolean) {
+    private void bindPreferenceSummaryToValue(Preference preference, boolean updateNow) {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(mBindPreferenceSummaryToValueListener);
 
         // Trigger the listener immediately with the preference's
         // current value.
-        if (!isBoolean) {
+        if (updateNow) {
             mBindPreferenceSummaryToValueListener.onPreferenceChange(preference, PreferenceManager.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
         }
     }
@@ -187,7 +196,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
-                || NotificationPreferenceFragment.class.getName().equals(fragmentName);
+                || NotificationPreferenceFragment.class.getName().equals(fragmentName)
+                || AboutPreferenceFragment.class.getName().equals(fragmentName);
+
+
     }
 
     /**
@@ -206,10 +218,43 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_ENABLED), true);
-            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_RINGTONE), false);
-            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_VIBRATE), true);
-            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_LED), true);
+            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_ENABLED), false);
+            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_RINGTONE), true);
+            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_VIBRATE), false);
+            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_NOTIFICATIONS_LED), false);
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * This fragment shows version preferences only. It is used when the
+     * activity is showing a two-pane settings UI.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class AboutPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_about);
+            setHasOptionsMenu(true);
+
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
+            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_APP_VERSION), true);
+            ((SettingsActivity) getActivity()).bindPreferenceSummaryToValue(findPreference(PREF_APP_BUILD_FLAVOR), true);
+
+
         }
 
         @Override

@@ -1,0 +1,18 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="pref_app_version"
+        android:persistent="false"
+        android:title="@string/pref_about_app_version" />
+    <Preference
+        android:key="pref_app_creator"
+        android:persistent="false"
+        android:summary="@string/pref_about_creator_name"
+        android:title="@string/pref_about_reator_title" />
+
+    <Preference
+        android:key="pref_app_build_flavor"
+        android:persistent="false"
+        android:title="@string/pref_about_build_flavor" />
+
+</PreferenceScreen>

@@ -3,4 +3,8 @@
         android:fragment="com.repkap11.burger.activities.SettingsActivity$NotificationPreferenceFragment"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/pref_header_notifications" />
+    <header
+        android:fragment="com.repkap11.burger.activities.SettingsActivity$AboutPreferenceFragment"
+        android:icon="@drawable/ic_info_outline_black_24dp"
+        android:title="@string/pref_header_about" />
 </preference-headers>
