@@ -71,10 +71,11 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
             }
             if (mShowBar) {
                 inflater.inflate(R.menu.menu_main, menu);
+                boolean needsNewTrigger = mUpdateMenuItem == null;
                 mUpdateMenuItem = menu.findItem(R.id.action_update);
                 mUpdateMenuItem.setShowAsAction(mShowingAsActionFlag);
                 String groupKey = BurgerApplication.getUserPerferedLunchGroup(getActivity());
-                if (groupKey != null) {
+                if (groupKey != null && needsNewTrigger) {
                     DatabaseReference groupsAppVersionRef = FirebaseDatabase.getInstance().getReference(groupKey).getParent().child("appVersion");
                     groupsAppVersionRef.addValueEventListener(new ValueEventListener() {
                         @Override
