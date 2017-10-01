@@ -23,15 +23,15 @@ exports.remove_pref_when_location_deleted = functions.database.ref('/lunch_group
 
 var notify_users_of_location = require('./notify_users_of_location');
 exports.lunch_tick_1 = functions.pubsub.topic('lunch-tick-1')
-    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 1)});
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 1, 'lunch_groups')});
 exports.lunch_tick_2 = functions.pubsub.topic('lunch-tick-2')
-    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 2)});
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 2, 'lunch_groups')});
 exports.lunch_tick_3 = functions.pubsub.topic('lunch-tick-3')
-    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 3)});
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 3, 'lunch_groups')});
 exports.lunch_tick_4 = functions.pubsub.topic('lunch-tick-4')
-    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 4)});
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 4, 'lunch_groups')});
 exports.lunch_tick_5 = functions.pubsub.topic('lunch-tick-5')
-    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 5)});
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 5, 'lunch_groups')});
 
 exports.notify_users_of_driver_to_location = functions.database.ref('/lunch_groups/{groupId}/lunch_locations/{locationId}/{whichLunchPreference}/pending_drivers/{driverId}')
     .onWrite((event) => {return notify_users_of_location.send_notification_of_driver_to_location(event)});
@@ -62,15 +62,15 @@ exports.remove_pref_when_location_deleted = functions.database.ref('/lunch_group
 
 var notify_users_of_location = require('./notify_users_of_location_dev');
 exports.dev_lunch_tick_1 = functions.pubsub.topic('dev_lunch-tick-1')
-    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 1)});
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 1, 'lunch_groups_dev')});
 exports.dev_lunch_tick_2 = functions.pubsub.topic('dev_lunch-tick-2')
-    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 2)});
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 2, 'lunch_groups_dev')});
 exports.dev_lunch_tick_3 = functions.pubsub.topic('dev_lunch-tick-3')
-    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 3)});
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 3, 'lunch_groups_dev')});
 exports.dev_lunch_tick_4 = functions.pubsub.topic('dev_lunch-tick-4')
-    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 4)});
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 4, 'lunch_groups_dev')});
 exports.dev_lunch_tick_5 = functions.pubsub.topic('dev_lunch-tick-5')
-    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 5)});
+    .onPublish((event) => {return notify_users_of_location.send_notification_for_date(event, 5, 'lunch_groups_dev')});
 
 exports.dev_notify_users_of_driver_to_location = functions.database.ref('/lunch_groups_dev/{groupId}/lunch_locations/{locationId}/{whichLunchPreference}/pending_drivers/{driverId}')
     .onWrite((event) => {return notify_users_of_location.send_notification_of_driver_to_location(event)});
