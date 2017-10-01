@@ -32,8 +32,6 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
     public static final String STARTING_INTENT_WHICH_USERS_SUB_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_USERS_SUB_GROUP";
     public static final String STARTING_INTENT_WHICH_USERS_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_USERS_GROUP";
     public static final String STARTING_INTENT_TITLE = "com.repkap11.burger.STARTING_INTENT_TITLE";
-    public static final String STARTING_INTENT_SHOW_ILL_DRIVE = "com.repkap11.burger.STARTING_INTENT_SHOW_ILL_DRIVE";
-
 
     private static final String TAG = UsersFractivityFragment.class.getSimpleName();
     public static final int REQUEST_CODE_LIST_USERS = 1;
@@ -41,7 +39,6 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
     private String mLunchSubGroup;
     private String mTitleString;
     private Button mIllDriveButton;
-    private boolean mShowIllDrive;
 
     @Override
     protected void create(Bundle savedInstanceState) {
@@ -52,12 +49,10 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
         mLunchSubGroup = getActivity().getIntent().getStringExtra(STARTING_INTENT_WHICH_USERS_SUB_GROUP);
         mLunchGroup = getActivity().getIntent().getStringExtra(STARTING_INTENT_WHICH_USERS_GROUP);
         mTitleString = getActivity().getIntent().getStringExtra(STARTING_INTENT_TITLE);
-        mShowIllDrive = getActivity().getIntent().getBooleanExtra(STARTING_INTENT_SHOW_ILL_DRIVE, false);
 
         if (mTitleString == null) {
             mTitleString = getResources().getString(R.string.fractivity_users_title);
         }
-
 
         //mLunchGroup = BurgerApplication.getUserPerferedLunchGroup(getActivity());
         //Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
@@ -101,42 +96,54 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
         View rootView = inflater.inflate(R.layout.fractivity_users, container, attachToRoot);
         mListView = (ListView) rootView.findViewById(R.id.fractivity_users_list);
         mIllDriveButton = (Button) rootView.findViewById(R.id.fractivity_users_button_tell_them_im_driving);
-        if (mShowIllDrive) {
-            mIllDriveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference pendingDriversRef = database.getReference(mLunchSubGroup).child("pending_drivers");
-                    String userLink = database.getReference(BurgerApplication.getUserKey(getActivity())).getKey();
-                    //Log.e(TAG, "Adding driver " + userLink);
-                    pendingDriversRef.child(userLink).setValue("");
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final String userLink = database.getReference(BurgerApplication.getUserKey(getActivity())).getKey();
+        DatabaseReference thisDriversRef = database.getReference(mLunchSubGroup).child("users").child(userLink);
+        thisDriversRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue(String.class) == null) {
+                    mIllDriveButton.setVisibility(View.GONE);
+                } else {
+                    mIllDriveButton.setVisibility(View.VISIBLE);
                 }
-            });
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            String userLink = database.getReference(BurgerApplication.getUserKey(getActivity())).getKey();
-            DatabaseReference thisUserPendingRef = FirebaseDatabase.getInstance().getReference(mLunchSubGroup).child("pending_drivers").child(userLink);
-            thisUserPendingRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (mIllDriveButton != null){
-                        if (dataSnapshot.getValue(String.class) == null){
-                            mIllDriveButton.setEnabled(true);
-                            mIllDriveButton.setText(R.string.tell_them_im_driving);
-                        } else {
-                            mIllDriveButton.setEnabled(false);
-                            mIllDriveButton.setText(R.string.tell_them_im_driving_pending);
-                        }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        mIllDriveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference pendingDriversRef = database.getReference(mLunchSubGroup).child("pending_drivers");
+                String userLink = database.getReference(BurgerApplication.getUserKey(getActivity())).getKey();
+                //Log.e(TAG, "Adding driver " + userLink);
+                pendingDriversRef.child(userLink).setValue("");
+            }
+        });
+        DatabaseReference thisUserPendingRef = FirebaseDatabase.getInstance().getReference(mLunchSubGroup).child("pending_drivers").child(userLink);
+        thisUserPendingRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (mIllDriveButton != null) {
+                    if (dataSnapshot.getValue(String.class) == null) {
+                        mIllDriveButton.setEnabled(true);
+                        mIllDriveButton.setText(R.string.tell_them_im_driving);
+                    } else {
+                        mIllDriveButton.setEnabled(false);
+                        mIllDriveButton.setText(R.string.tell_them_im_driving_pending);
                     }
                 }
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-                }
-            });
-        } else {
-            mIllDriveButton.setVisibility(View.GONE);
-        }
+            }
+        });
 
         return rootView;
     }
@@ -154,6 +161,7 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
         //Log.e(TAG, "Getting adapter with group:" + mLunchSubGroup);
         return mLunchSubGroup + "/users";
     }
+
     @Override
     protected String adapter2Reference() {
         //Log.e(TAG, "Getting adapter2 with group:" + mLunchGroup);

@@ -319,8 +319,6 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
         intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_USERS_SUB_GROUP, lunchLocationUsersKey);
         intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_USERS_GROUP, lunchGroupKey);
         intent.putExtra(UsersFractivityFragment.STARTING_INTENT_TITLE, title);
-        intent.putExtra(UsersFractivityFragment.STARTING_INTENT_SHOW_ILL_DRIVE, true);
-
         startActivityForResult(intent, UsersFractivityFragment.REQUEST_CODE_LIST_USERS);
     }
 

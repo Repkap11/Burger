@@ -199,8 +199,6 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
         intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_USERS_SUB_GROUP, lunchLocationUsersKey);
         intent.putExtra(UsersFractivityFragment.STARTING_INTENT_WHICH_USERS_GROUP, lunchGroupKey);
         intent.putExtra(UsersFractivityFragment.STARTING_INTENT_TITLE, title);
-        intent.putExtra(UsersFractivityFragment.STARTING_INTENT_SHOW_ILL_DRIVE, false);
-
 
         startActivityForResult(intent, UsersFractivityFragment.REQUEST_CODE_LIST_USERS);
     }
