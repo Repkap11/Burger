@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="fractivity_lunch_locations_today_override_day_int">1</integer>
+</resources>

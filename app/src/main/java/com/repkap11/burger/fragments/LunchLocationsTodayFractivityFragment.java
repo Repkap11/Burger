@@ -75,7 +75,12 @@ public class LunchLocationsTodayFractivityFragment extends FirebaseAdapterFracti
     @Override
     public String getBarTitleString(Context context) {
         Calendar calendar = Calendar.getInstance();
-        mDayInt = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        int overideDayInt = context.getResources().getInteger(R.integer.fractivity_lunch_locations_today_override_day_int);
+        if (overideDayInt >= 0) {
+            mDayInt = overideDayInt;
+        } else {
+            mDayInt = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        }
         //mDayInt = 1;
         //Log.e(TAG, "my day:" + mDayInt);
         String dayOfWeek = context.getResources().getStringArray(R.array.fractivity_day_label)[mDayInt];
