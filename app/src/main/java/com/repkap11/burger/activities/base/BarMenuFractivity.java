@@ -42,6 +42,7 @@ import com.repkap11.burger.R;
 import com.repkap11.burger.UpdateAppTask;
 import com.repkap11.burger.activities.SettingsActivity;
 import com.repkap11.burger.activities.SignInFractivity;
+import com.repkap11.burger.models.User;
 
 /**
  * Created by paul on 8/5/17.
@@ -65,6 +66,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
             try {
                 PackageInfo oldPackageInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), PackageManager.GET_SIGNATURES);
                 mCurrentAppVersionNumber = oldPackageInfo.versionCode;
+
             } catch (PackageManager.NameNotFoundException e) {
                 mCurrentAppVersionNumber = 0;
                 e.printStackTrace();
@@ -76,6 +78,13 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
                 mUpdateMenuItem.setShowAsAction(mShowingAsActionFlag);
                 String groupKey = BurgerApplication.getUserPerferedLunchGroup(getActivity());
                 if (groupKey != null && needsNewTrigger) {
+                    String userKey = BurgerApplication.getUserKey(getActivity());
+                    if (userKey != null) {
+                        //Log.e(TAG, "Starting signed in user:" + userKey);
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference appVersionRef = database.getReference(userKey).child(User.getAppVersionLink());
+                        appVersionRef.setValue(mCurrentAppVersionNumber);
+                    }
                     DatabaseReference groupsAppVersionRef = FirebaseDatabase.getInstance().getReference(groupKey).getParent().child("appVersion");
                     groupsAppVersionRef.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -97,7 +106,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
                                     mShowingAsActionFlag = MenuItem.SHOW_AS_ACTION_NEVER;
                                     mUpdateMenuItem.setShowAsAction(mShowingAsActionFlag);
                                 }
-                                Log.e(TAG, "CurrentAppVersion:" + mCurrentAppVersionNumber + " server recomends:" + appVersion);
+                                //Log.e(TAG, "CurrentAppVersion:" + mCurrentAppVersionNumber + " server recomends:" + appVersion);
 
                             }
                         }

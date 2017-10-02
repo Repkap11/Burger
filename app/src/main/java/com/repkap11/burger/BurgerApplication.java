@@ -140,7 +140,6 @@ public class BurgerApplication extends Application {
     }
 
     public static String getUserKey(Context context) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String group = getUserPerferedLunchGroup(context);
         if (group == null || user == null) {
