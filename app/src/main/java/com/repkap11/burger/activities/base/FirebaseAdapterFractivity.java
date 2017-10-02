@@ -70,6 +70,7 @@ public abstract class FirebaseAdapterFractivity<AdapterHolder, AdapterData> exte
 
                 // The following functions are also required in ChildEventListener implementations.
                 public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                    mAdapter.update(dataSnapshot);
                 }
 
                 public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {

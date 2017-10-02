@@ -117,4 +117,27 @@ public class FirebaseAdapter<AdapterHolder, AdapterData> extends BaseAdapter {
         return result;
 
     }
+
+    public boolean update(DataSnapshot data) {
+        //Log.e(TAG, "Updating data:" + data.getKey());
+        Object value = null;
+        try {
+            value = data.getValue(mFragment.getAdapterDataClass());
+        } catch (DatabaseException e) {
+            Log.e(TAG, "Unable to parse data:" + data.toString());
+            e.printStackTrace();
+        }
+        if (value == null) {
+            return false;
+        }
+        AdapterKeyValue updatedData = new AdapterKeyValue(data.getKey(), value);
+        int newIndex = mData.indexOf(updatedData);
+        if (newIndex == -1) {
+            Log.e(TAG, "Unable to find changed data:" + data.toString());
+            return false;
+        }
+        mData.set(newIndex, new AdapterKeyValue(data.getKey(), value));
+        notifyDataSetChanged();
+        return true;
+    }
 }
