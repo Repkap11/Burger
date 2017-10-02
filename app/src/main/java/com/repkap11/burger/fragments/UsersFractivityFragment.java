@@ -102,10 +102,12 @@ public class UsersFractivityFragment extends FirebaseKeyLookupAdapterFractivity.
         thisDriversRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue(String.class) == null) {
-                    mIllDriveButton.setVisibility(View.GONE);
-                } else {
-                    mIllDriveButton.setVisibility(View.VISIBLE);
+                if (mIllDriveButton != null) {
+                    if (dataSnapshot.getValue(String.class) == null) {
+                        mIllDriveButton.setVisibility(View.GONE);
+                    } else {
+                        mIllDriveButton.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 

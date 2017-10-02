@@ -1,0 +1,34 @@
+{
+  "rules": {
+    "lunch_groups": {
+    //Start Live Rules?
+      ".read": true,
+      "$lunchGroupId": {
+         "users": {
+            "$uid": {
+              ".write": "$uid === auth.uid",
+            }
+         },
+        "lunch_locations": {
+          ".write": true,
+        }
+      },
+    //End Live Rules
+    },
+    "lunch_groups_dev": {
+    //Start Staging Rules
+      ".read": true,
+      "$lunchGroupId": {
+         "users": {
+            "$uid": {
+              ".write": "$uid === auth.uid",
+            }
+         },
+        "lunch_locations": {
+          ".write": true,
+        }
+      },
+    //End Staging Rules
+    },
+  }
+}
