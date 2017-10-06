@@ -38,7 +38,7 @@ exports.notify_users_of_driver_to_location = functions.database.ref('/lunch_grou
 
 var notify_weird_beer = require('./notify_weird_beer');
 exports.weird_beer = functions.pubsub.topic('weird-beer')
-    .onPublish((event) => {return notify_weird_beer.send_notification_for_beer(event)});
+    .onPublish((event) => {return notify_weird_beer.send_notification_for_beer(event, 'lunch_groups')});
 
 
 
@@ -77,4 +77,4 @@ exports.dev_notify_users_of_driver_to_location = functions.database.ref('/lunch_
 
 var notify_weird_beer = require('./notify_weird_beer_dev');
 exports.dev_weird_beer = functions.pubsub.topic('dev_weird-beer')
-    .onPublish((event) => {return notify_weird_beer.send_notification_for_beer(event)});
+    .onPublish((event) => {return notify_weird_beer.send_notification_for_beer(event, 'lunch_groups_dev')});
