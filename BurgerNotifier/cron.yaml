@@ -1,50 +1,62 @@
 cron:
 - description: Push a Lunch Notification on Monday
   url: /publish/lunch-tick-1
-  schedule: every monday 15:30
+  schedule: every monday 11:30
+  timezone: America/New_York
 
 - description: Push a Lunch Notification on Tuesday
   url: /publish/lunch-tick-2
-  schedule: every tuesday 15:30
+  schedule: every tuesday 11:30
+  timezone: America/New_York
 
 - description: Push a Lunch Notification on Wednesday
   url: /publish/lunch-tick-3
-  schedule: every wednesday 15:30
+  schedule: every wednesday 11:30
+  timezone: America/New_York
 
 - description: Push a Lunch Notification on Thursday
   url: /publish/lunch-tick-4
-  schedule: every thursday 15:30
+  schedule: every thursday 11:30
+  timezone: America/New_York
 
 - description: Push a Lunch Notification on Friday
   url: /publish/lunch-tick-5
-  schedule: every friday 15:30
+  schedule: every friday 11:30
+  timezone: America/New_York
 
 - description: Push a Wierd Beer Notification
   url: /publish/weird-beer
-  schedule: every friday 20:45
+  schedule: every friday 16:45
+  timezone: America/New_York
 
 
 
 - description: Dev Push a Lunch Notification on Monday
   url: /publish/dev_lunch-tick-1
-  schedule: every monday 15:30
+  schedule: every monday 11:30
+  timezone: America/New_York
 
 - description: Dev Push a Lunch Notification on Tuesday
   url: /publish/dev_lunch-tick-2
-  schedule: every tuesday 15:30
+  schedule: every tuesday 11:30
+  timezone: America/New_York
 
 - description: Dev Push a Lunch Notification on Wednesday
   url: /publish/dev_lunch-tick-3
-  schedule: every wednesday 15:30
+  schedule: every wednesday 11:30
+  timezone: America/New_York
 
 - description: Dev Push a Lunch Notification on Thursday
   url: /publish/dev_lunch-tick-4
-  schedule: every thursday 15:30
+  schedule: every thursday 11:30
+  timezone: America/New_York
 
 - description: Dev Push a Lunch Notification on Friday
   url: /publish/dev_lunch-tick-5
-  schedule: every friday 15:30
+  schedule: every friday 11:30
+  timezone: America/New_York
 
 - description: Dev Push a Weird Beer Notification
   url: /publish/dev_weird-beer
-  schedule: every friday 20:45
+  schedule: every friday 16:45
+  timezone: America/New_York
