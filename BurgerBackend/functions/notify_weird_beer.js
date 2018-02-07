@@ -7,8 +7,8 @@ const admin = require('firebase-admin');
 exports.send_notification_for_beer = function send_notification_for_beer(event, root_key_lunch_groups){
     console.error('You called send_notification_for_beer');
     var lunchGroups = admin.database().ref(root_key_lunch_groups);
-    lunchGroups.once('value').then(function(lunchGroupsSnapshot){
-
+    return lunchGroups.once('value').then(function(lunchGroupsSnapshot){
+        var allBeedNotifications = [];
         lunchGroupsSnapshot.forEach(function(lunchGroupSnapshot){
 
             var groupName = lunchGroupSnapshot.child('displayName').val();
@@ -27,10 +27,11 @@ exports.send_notification_for_beer = function send_notification_for_beer(event, 
                           }
                     }
                     console.log('Notifying:'+userName+' of weird beer');
-                    admin.messaging().sendToDevice(userDeviceSnapshot.key, payload);
+                    allBeedNotifications.push(admin.messaging().sendToDevice(userDeviceSnapshot.key, payload));
                 });
             });
             }
-       });
+        });
+        return Promise.all(allBeedNotifications)
     });
 }
