@@ -70,12 +70,17 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <service android:name=".services.ServiceInstanceIdChange">
+        <service
+            android:name=".services.ServiceInstanceIdChange"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".services.ServiceBurgerNotifications">
+        <service android:name=".services.ServiceBurgerNotifications"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
