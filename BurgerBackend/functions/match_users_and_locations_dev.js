@@ -72,3 +72,32 @@ exports.remove_pref_when_location_deleted = function remove_pref_when_location_d
     return Promise.all(allRemoves);
   });
 };
+
+exports.sync_users_and_locations = function(req, res, lunchGroupsKey) {
+  var lunchGroups = admin.database().ref(lunchGroupsKey);
+  return lunchGroups.once("value").then(function(lunchGroupsSnapshot) {
+    //console.log("Clearing Lunch Groups:" + lunchGroupsSnapshot.key + " val:" + lunchGroupsSnapshot.val());
+    //var lunchGroupName = lunchGroupSnapshot.child('displayName').val();
+    var allRemoves = [];
+    lunchGroupsSnapshot.forEach(function(lunchGroupSnapshot) {
+      lunchGroupSnapshot.child("lunch_locations").forEach(function(lunchLocationSnapshot) {
+        //console.log("Clearing Location:" + lunchLocationSnapshot.key + " val:" + lunchLocationSnapshot.val());
+        //var locationName = lunchLocationSnapshot.child('displayName').val();
+        for (i = 1; i < 6; i++) {
+          allRemoves.push(lunchLocationSnapshot.child("lunch_preference_" + i).ref.remove());
+        }
+      });
+      lunchGroupSnapshot.child("users").forEach(function(userSnapshot) {
+        //console.log('Read Location:'+ lunchLocationSnapshot.key+' val:'+ lunchLocationSnapshot.val());
+        //var userName = userSnapshot.child('displayName').val();
+        for (i = 1; i < 6; i++) {
+          var lunchPrefShapshot = userSnapshot.child("lunch_preference_" + i);
+          var savedValue = lunchPrefShapshot.val();
+          allRemoves.push(lunchPrefShapshot.ref.remove());
+          allRemoves.push(lunchPrefShapshot.ref.set(savedValue));
+        }
+      });
+      return Promise.all(allRemoves);
+    });
+  });
+};
