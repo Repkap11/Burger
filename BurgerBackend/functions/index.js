@@ -28,12 +28,12 @@ for (var j in modes) {
   exports.remove_pref_when_location_deleted = functions.database.ref("/lunch_groups" + dev_end + "/{groupID}/lunch_locations/{locationId}").onDelete(event => {
     return match_users_and_locations.remove_pref_when_location_deleted(event);
   });
-  exports.dev_notify_users_of_driver_to_location = functions.database
+  exports[dev_start + "notify_users_of_driver_to_location"] = functions.database
     .ref("/lunch_groups" + dev_end + "/{groupId}/lunch_locations/{locationId}/{whichLunchPreference}/pending_drivers/{driverId}")
     .onWrite(event => {
       return notify_users_of_location.send_notification_of_driver_to_location(event);
     });
-  exports.dev_weird_beer = functions.pubsub.topic(dev_start + "weird-beer").onPublish(event => {
+  exports[dev_start + "weird_beer"] = functions.pubsub.topic(dev_start + "weird-beer").onPublish(event => {
     return notify_weird_beer.send_notification_for_beer(event, "lunch_groups" + dev_end);
   });
 }
