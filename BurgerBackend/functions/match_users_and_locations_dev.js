@@ -9,7 +9,7 @@ const admin = require('firebase-admin');
 
 exports.add_user_to_locations_pref = function add_user_to_locations_pref(event){
     //When a user changes their preference for any day, we get a message here
-    //console.log('You changed ',event.params.userId, '\'s lunch pref ', event.data.ref.key, ' from ', event.data.previous.val(),' to ', event.data.current.val());
+    console.log('You changed ',event.params.userId, '\'s lunch pref ', event.data.ref.key, ' from ', event.data.previous.val(),' to ', event.data.current.val());
      //Figure out which lunch preference they are no longer picking for that day.
 
     var val_previous = event.data.previous.val();
@@ -30,7 +30,7 @@ exports.add_user_to_locations_pref = function add_user_to_locations_pref(event){
 
 exports.remove_pref_when_location_deleted = function remove_pref_when_location_deleted(event){
     //When a location is deleted, delete that location from any users perference
-    //console.log('You deleted location' + event.params.locationId + ' from group '+ event.params.groupID);
+    console.log('You deleted location' + event.params.locationId + ' from group '+ event.params.groupID);
 
     //var lunchGroup = admin.database().ref(root_key_lunch_groups).child(event.params.groupID);
     var lunchGroup = event.data.previous.parent.parent;
