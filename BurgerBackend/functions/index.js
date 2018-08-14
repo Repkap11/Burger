@@ -36,12 +36,10 @@ for (var j in modes) {
   exports[dev_start + "weird_beer"] = functions.pubsub.topic(dev_start + "weird-beer").onPublish(event => {
     return notify_weird_beer.send_notification_for_beer(event, "lunch_groups" + dev_end);
   });
+  exports["sync_users_and_locations" + dev_end] = functions.https.onRequest((req, res) => {
+    var result = match_users_and_locations.sync_users_and_locations(req, res, "/lunch_groups" + dev_end);
+    res.status(200).send("Done\n");
+    return result;
+  });
 }
-var dev_start = modes[0].dev_start;
-var dev_end = modes[0].dev_end;
-var match_users_and_locations = require("./match_users_and_locations" + dev_end);
-exports["sync_users_and_locations" + dev_end] = functions.https.onRequest((req, res) => {
-  var result = match_users_and_locations.sync_users_and_locations(req, res, "/lunch_groups" + dev_end);
-  res.status(200).send("Done\n");
-  return result;
-});
+
