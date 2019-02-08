@@ -11,11 +11,11 @@ var modes = [
 ];
 
 for (var j in modes) {
-  var dev_start = modes[j].dev_start;
-  var dev_end = modes[j].dev_end;
-  var match_users_and_locations = require("./match_users_and_locations" + dev_end);
-  var notify_users_of_location = require("./notify_users_of_location" + dev_end);
-  var notify_weird_beer = require("./notify_weird_beer" + dev_end);
+  const dev_start = modes[j].dev_start;
+  const dev_end = modes[j].dev_end;
+  const match_users_and_locations = require("./match_users_and_locations" + dev_end);
+  const notify_users_of_location = require("./notify_users_of_location" + dev_end);
+  const notify_weird_beer = require("./notify_weird_beer" + dev_end);
 
   for (i = 1; i < 6; i++) {
     exports["add_user_to_locations_pref" + i + dev_end] = functions.database.ref("/lunch_groups" + dev_end + "/{groupId}/users/{userId}/lunch_preference_" + i).onWrite(event => {
@@ -38,8 +38,7 @@ for (var j in modes) {
   });
   exports["sync_users_and_locations" + dev_end] = functions.https.onRequest((req, res) => {
     var result = match_users_and_locations.sync_users_and_locations(req, res, "/lunch_groups" + dev_end);
-    res.status(200).send("Done\n");
+    res.status(200).send("Done" + dev_end + "\n");
     return result;
   });
 }
-

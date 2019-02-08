@@ -94,12 +94,16 @@ exports.sync_users_and_locations = function(req, res, lunchGroupsKey) {
           //var userName = userSnapshot.child('displayName').val();
           for (i = 1; i < 6; i++) {
             var lunchPrefShapshot = userSnapshot.child("lunch_preference_" + i);
-            var savedValue = lunchPrefShapshot.val();
+            const savedValue = lunchPrefShapshot.val();
             console.log("Removing a value:" + savedValue);
             if (savedValue != null) {
-              allUserRemoves.push(lunchPrefShapshot.ref.remove());
-              allUserRemoves.push(lunchPrefShapshot.ref.set(savedValue));
-              console.log("Adding back a value:" + savedValue);
+              allUserRemoves.push(
+                lunchPrefShapshot.ref.remove().then(function() {
+                  console.log("Adding back a value:" + savedValue);
+                  return lunchPrefShapshot.ref.set(savedValue);
+                })
+              );
+              allUserRemoves.push();
             }
           }
         });

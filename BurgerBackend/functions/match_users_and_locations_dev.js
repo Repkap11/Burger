@@ -83,26 +83,32 @@ exports.sync_users_and_locations = function(req, res, lunchGroupsKey) {
       lunchGroupSnapshot.child("lunch_locations").forEach(function(lunchLocationSnapshot) {
         //console.log("Clearing Location:" + lunchLocationSnapshot.key + " val:" + lunchLocationSnapshot.val());
         //var locationName = lunchLocationSnapshot.child('displayName').val();
-        for (i = 1; i < 6; i++) {
+        for (var i = 1; i < 6; i++) {
           allRemoves.push(lunchLocationSnapshot.child("lunch_preference_" + i).ref.remove());
         }
       });
       return Promise.all(allRemoves).then(function() {
+        console.error("All removes done");
         allUserRemoves = [];
         lunchGroupSnapshot.child("users").forEach(function(userSnapshot) {
           //console.log('Read Location:'+ lunchLocationSnapshot.key+' val:'+ lunchLocationSnapshot.val());
           //var userName = userSnapshot.child('displayName').val();
-          for (i = 1; i < 6; i++) {
-            var lunchPrefShapshot = userSnapshot.child("lunch_preference_" + i);
-            var savedValue = lunchPrefShapshot.val();
-            console.log("Removing a value:" + savedValue);
+          for (var i = 1; i < 6; i++) {
+            const lunchPrefShapshot = userSnapshot.child("lunch_preference_" + i);
+            const savedValue = lunchPrefShapshot.val();
             if (savedValue != null) {
-              allUserRemoves.push(lunchPrefShapshot.ref.remove());
-              allUserRemoves.push(lunchPrefShapshot.ref.set(savedValue));
-              console.log("Adding back a value:" + savedValue);
+              console.log("Removing a value:" + savedValue);
+              allUserRemoves.push(
+                lunchPrefShapshot.ref.remove().then(function() {
+                  console.log("Adding back a value:" + savedValue);
+                  return lunchPrefShapshot.ref.set(savedValue);
+                })
+              );
+              allUserRemoves.push();
             }
           }
         });
+        console.error("All add backs done");
         return Promise.all(allUserRemoves);
       });
     });
