@@ -58,6 +58,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_car_black"
             android:hint="Car Size"
+            android:importantForAutofill="no"
             android:inputType="number"
             android:padding="20dp" />
 
