@@ -65,19 +65,6 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
     @Override
     protected void create(Bundle savedInstanceState) {
         super.create(savedInstanceState);
-        Intent startingIntent = getActivity().getIntent();
-        if (startingIntent == null) {
-            Log.e(TAG, "Somehow we want to start, but don't have a starting intent");
-            getActivity().finish();
-            return;
-        }
-        mUserKey = startingIntent.getStringExtra(STARTING_INTENT_USER_KEY);
-
-        if (mUserKey == null) {
-            mUserKey = BurgerApplication.getUserKey(getActivity());
-            Log.e(TAG, "Using default user because a user key was not spesified");
-            //getActivity().finish();
-        }
     }
 
     @Override
@@ -93,6 +80,12 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
     @Override
     protected void onFabClick() {
 
+    }
+
+    @Override
+    public void setShowBar(boolean showBar) {
+        Log.w(TAG, "setShowBar: showBar"+showBar);
+        super.setShowBar(showBar);
     }
 
     @Override
@@ -130,6 +123,20 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
 
     @Override
     protected View createBarView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, boolean attachToRoot) {
+        Intent startingIntent = getActivity().getIntent();
+        if (startingIntent == null) {
+            Log.e(TAG, "Somehow we want to start, but don't have a starting intent");
+            getActivity().finish();
+            return null;
+        }
+        mUserKey = startingIntent.getStringExtra(STARTING_INTENT_USER_KEY);
+
+        if (mUserKey == null) {
+            mUserKey = BurgerApplication.getUserKey(getActivity());
+            Log.e(TAG, "Using default user because a user key was not spesified");
+            //getActivity().finish();
+        }
+
         View rootView = inflater.inflate(R.layout.fractivity_about_user, container, attachToRoot);
         mTextFullName = (TextView) rootView.findViewById(R.id.fractivity_about_user_text_full_name);
         mEditTextCarSize = (TextView) rootView.findViewById(R.id.fractivity_about_user_text_car_size);
@@ -237,10 +244,6 @@ public class AboutUserFractivityFragment extends BarMenuFractivity.BarMenuFracti
             }
         });
 
-        Intent startingIntent = getActivity().getIntent();
-        if (startingIntent == null) {
-            getActivity().finish();
-        }
         String initialName = startingIntent.getStringExtra(STARTING_INTENT_USER_INITIAL_NAME);
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();

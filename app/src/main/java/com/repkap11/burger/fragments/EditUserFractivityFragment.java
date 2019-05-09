@@ -3,6 +3,7 @@ package com.repkap11.burger.fragments;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -40,11 +41,26 @@ public class EditUserFractivityFragment extends Fractivity.FractivityFragment {
 
     @Override
     protected void create(Bundle savedInstanceState) {
+        mFirstTimeShowing = true;
+    }
+
+    @Override
+    protected void saveState(Bundle outState) {
+        outState.putBoolean("mFirstTimeShowing", mFirstTimeShowing);
+    }
+
+    @Override
+    protected void restoreState(@NonNull Bundle savedInstanceState) {
+        mFirstTimeShowing = savedInstanceState.getBoolean ("mFirstTimeShowing");
+    }
+
+    @Override
+    protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Intent startingIntent = getActivity().getIntent();
         if (startingIntent == null) {
             Log.e(TAG, "Somehow we want to start, but don't have a starting intent");
             getActivity().finish();
-            return;
+            return null;
         }
         mLunchGroup = BurgerApplication.getUserPerferedLunchGroup(getActivity());
         mExistingUser = startingIntent.getStringExtra(STARTING_INTENT_EDIT_EXISTING_USER);
@@ -52,11 +68,7 @@ public class EditUserFractivityFragment extends Fractivity.FractivityFragment {
             Log.e(TAG, "Finishing because we don't have a lunch group");
             getActivity().finish();
         }
-        mFirstTimeShowing = true;
-    }
 
-    @Override
-    protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fractivity_edit_user, container, false);
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.fractivity_bar_menu_app_bar_layout);
         toolbar.setTitle(R.string.fractivity_edit_user_title);

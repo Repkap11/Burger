@@ -3,6 +3,7 @@ package com.repkap11.burger.fragments;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -31,21 +32,32 @@ public class AddLunchLocationFractivityFragment extends Fractivity.FractivityFra
 
     @Override
     protected void create(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected void saveState(Bundle outState) {
+
+    }
+
+    @Override
+    protected void restoreState(@NonNull Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Intent startingIntent = getActivity().getIntent();
         if (startingIntent == null) {
             Log.e(TAG, "Somehow we want to start, but don't have a starting intent");
             getActivity().finish();
-            return;
+            return null;
         }
         mLunchGroup = startingIntent.getStringExtra(STARTING_INTENT_WHICH_LUNCH_GROUP);
         //Log.e(TAG, "create: mLunchGroup:" + mLunchGroup);
         if (mLunchGroup == null) {
             getActivity().finish();
         }
-    }
-
-    @Override
-    protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fractivity_add_lunch_location, container, false);
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.fractivity_bar_menu_app_bar_layout);
         toolbar.setTitle(R.string.fractivity_add_lunch_location_title);

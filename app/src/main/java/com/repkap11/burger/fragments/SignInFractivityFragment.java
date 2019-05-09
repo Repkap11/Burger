@@ -33,23 +33,18 @@ public class SignInFractivityFragment extends Fractivity.FractivityFragment impl
     public static final String STARTING_INTENT_WHICH_LUNCH_GROUP = "com.repkap11.burger.STARTING_INTENT_WHICH_LUNCH_GROUP";
     private static final String TAG = SignInFractivityFragment.class.getSimpleName();
 
-    private GoogleApiClient mGoogleApiClient;
-    private FirebaseAuth mAuth;
-    private String mLunchGroup;
-
     @Override
     protected void create(Bundle savedInstanceState) {
-        mAuth = FirebaseAuth.getInstance();
+    }
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        mGoogleApiClient = new GoogleApiClient.Builder(
-                getActivity())
-                .enableAutoManage(getActivity() /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+    @Override
+    protected void saveState(Bundle outState) {
+
+    }
+
+    @Override
+    protected void restoreState(@NonNull Bundle savedInstanceState) {
+
     }
 
     @Override
@@ -77,22 +72,32 @@ public class SignInFractivityFragment extends Fractivity.FractivityFragment impl
     }
 
     private void signIn() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(
+                getActivity())
+                .enableAutoManage(getActivity() /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         getActivity().startActivityForResult(signInIntent, SignInFractivity.REQUEST_CODE_SIGN_IN);
     }
 
     public void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         //Log.e(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential)
+        auth.signInWithCredential(credential)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             //Log.e(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            FirebaseUser user = auth.getCurrentUser();
                             ((SignInFractivity) getActivity()).continueAfterSignIn();
 
                             //updateUI(user);

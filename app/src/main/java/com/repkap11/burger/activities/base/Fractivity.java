@@ -2,6 +2,7 @@ package com.repkap11.burger.activities.base;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -49,24 +50,36 @@ public abstract class Fractivity<FragType extends Fractivity.FractivityFragment>
         }
 
         @Override
-        public void onCreate(Bundle savedInstanceState) {
+        final public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             create(savedInstanceState);
         }
 
         protected abstract void create(Bundle savedInstanceState);
 
+        @Override
+        public void onSaveInstanceState(@NonNull Bundle outState) {
+            saveState(outState);
+        }
+
+        protected abstract void saveState(Bundle outState);
+
         @Nullable
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            if (savedInstanceState != null) {
+                restoreState(savedInstanceState);
+            }
             return createView(inflater, container, savedInstanceState);
         }
 
         @Override
-        public void onDestroyView() {
+        final public void onDestroyView() {
             destroyView();
             super.onDestroyView();
         }
+
+        protected abstract void restoreState(@NonNull Bundle savedInstanceState);
 
         protected abstract View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 

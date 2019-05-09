@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -62,7 +63,24 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
         private int mShowingAsActionFlag = MenuItem.SHOW_AS_ACTION_NEVER;
 
         @Override
-        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        public void saveState(@NonNull Bundle outState) {
+            outState.putBoolean("mShowBar", mShowBar);
+            Log.w(TAG, "onSaveInstanceState: Saving mShowBar:" + mShowBar);
+            outState.putLong("mCurrentAppVersionNumber", mCurrentAppVersionNumber);
+            outState.putInt("mShowingAsActionFlag", mShowingAsActionFlag);
+        }
+
+        @Override
+        public void restoreState(@NonNull Bundle savedInstanceState) {
+            mShowBar = savedInstanceState.getBoolean("mShowBar");
+            mCurrentAppVersionNumber = savedInstanceState.getLong("mCurrentAppVersionNumber");
+            mShowingAsActionFlag = savedInstanceState.getInt("mShowingAsActionFlag");
+            Log.w(TAG, "onActivityCreated: Restoring mShowBar:" + mShowBar);
+        }
+
+
+        @Override
+        final public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
             try {
                 PackageInfo oldPackageInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), PackageManager.GET_SIGNATURES);
                 mCurrentAppVersionNumber = oldPackageInfo.versionCode;
@@ -71,6 +89,7 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
                 mCurrentAppVersionNumber = 0;
                 e.printStackTrace();
             }
+            Log.w(TAG, "onCreateOptionsMenu: mShowBar being used as:" + mShowBar);
             if (mShowBar) {
                 inflater.inflate(R.menu.menu_main, menu);
                 boolean needsNewTrigger = mUpdateMenuItem == null;
@@ -121,13 +140,13 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
         }
 
         @Override
-        public void onDestroyOptionsMenu() {
+        final public void onDestroyOptionsMenu() {
             mUpdateMenuItem = null;
             super.onDestroyOptionsMenu();
         }
 
         @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
+        final public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_settings:
                     //Toast.makeText(getActivity(), "Settings selected", Toast.LENGTH_SHORT).show();
@@ -174,7 +193,8 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
         }
 
         @Override
-        public void requestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
+        public void requestPermissionResult(int requestCode, String[] permissions,
+                                            int[] grantResults) {
             continueUpdateAppWithPermissions();
 
         }
@@ -198,11 +218,13 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
         }
 
 
-        protected final View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final protected View createView(LayoutInflater inflater, ViewGroup container, Bundle
+                savedInstanceState) {
             ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fractivity_bar_menu, container, false);
             createBarView(inflater, rootView, savedInstanceState, true);
-            setHasOptionsMenu(true);
+            setHasOptionsMenu(mShowBar);
             Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.fractivity_bar_menu_toolbar);
+            Log.w(TAG, "createView: mShowBar being used as:" + mShowBar);
             if (mShowBar) {
                 toolbar.setTitle(getBarTitleString(getActivity()));
                 ((Fractivity) getActivity()).setSupportActionBar(toolbar);
@@ -250,7 +272,8 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
 
         }
 
-        protected abstract View createBarView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, boolean intoPatent);
+        protected abstract View createBarView(LayoutInflater inflater, ViewGroup
+                container, Bundle savedInstanceState, boolean intoPatent);
 
 
         @Override
@@ -260,6 +283,10 @@ public abstract class BarMenuFractivity extends Fractivity<Fractivity.Fractivity
 
         public void setShowBar(boolean showBar) {
             mShowBar = showBar;
+        }
+
+        public boolean getShowBar() {
+            return mShowBar;
         }
     }
 }

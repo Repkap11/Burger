@@ -2,6 +2,7 @@ package com.repkap11.burger.fragments;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -27,6 +28,16 @@ public class AddLunchGroupFractivityFragment extends Fractivity.FractivityFragme
 
     @Override
     protected void create(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected void saveState(Bundle outState) {
+
+    }
+
+    @Override
+    protected void restoreState(@NonNull Bundle savedInstanceState) {
 
     }
 
