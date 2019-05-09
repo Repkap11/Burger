@@ -22,14 +22,15 @@ for (var j in modes) {
     const notify_users_of_location = require("./notify_users_of_location" + dev_end);
     const notify_weird_beer = require("./notify_weird_beer" + dev_end);
 
-    for (i = 1; i < 6; i++) {
+    for (let i = 1; i < 6; i++) { //Let needed for scoped i in send_notification_for_date
         exports["add_user_to_locations_pref" + i + dev_end] = functions.database.ref("/lunch_groups" + dev_end + "/{groupId}/users/{userId}/lunch_preference_" + i)
             .onWrite((change, event) => {
                 return match_users_and_locations.add_user_to_locations_pref(change, event);
             });
-        exports[dev_start + "lunch_tick_" + i] = functions.pubsub.topic(dev_start + "lunch-tick-" + i).onPublish(event => {
-            return notify_users_of_location.send_notification_for_date(event, i, "lunch_groups" + dev_end);
-        });
+        exports[dev_start + "lunch_tick_" + i] = functions.pubsub.topic(dev_start + "lunch-tick-" + i)
+            .onPublish((message, event) => {
+                return notify_users_of_location.send_notification_for_date(i, "lunch_groups" + dev_end);
+            });
     }
     exports.remove_pref_when_location_deleted = functions.database.ref("/lunch_groups" + dev_end + "/{groupID}/lunch_locations/{locationId}")
         .onDelete((change, event) => {

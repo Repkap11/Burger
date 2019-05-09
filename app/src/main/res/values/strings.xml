@@ -57,9 +57,6 @@
     <string name="pref_about_build_flavor">Build Flavor</string>
 
 
-
-
-
     <string name="root_key_lunch_groups">lunch_groups</string>
     <string name="tell_them_im_driving">Tell them: I\'ll Drive</string>
     <plurals name="fractivity_lunch_locations_today_users_plural">
@@ -76,5 +73,8 @@
     <string name="weird_beer_friday">Weird Beer Friday</string>
     <string name="fractivity_about_user_no_car_size_set">Set car size with \"Edit\"</string>
     <string name="tell_them_im_driving_pending">Notification Pending</string>
+    <string name="notification_channel_name">Lunch and Beer Reminders</string>
+    <string name="notification_channel_description">At the moment every notification is in this default group.</string>
+
 
 </resources>

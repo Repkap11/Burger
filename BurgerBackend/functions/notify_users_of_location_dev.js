@@ -1,8 +1,8 @@
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require("firebase-admin");
 
-exports.send_notification_for_date = function send_notification_for_date(event, dayOfWeek, root_key_lunch_groups) {
-    //console.error('You called this function');
+exports.send_notification_for_date = function send_notification_for_date(dayOfWeek, root_key_lunch_groups) {
+    console.error('send_notification_for_date triggered on:' + dayOfWeek);
     var lunchGroups = admin.database().ref(root_key_lunch_groups);
     return lunchGroups.once("value").then((lunchGroupsSnapshot) => {
         var allChanges = [];
@@ -28,7 +28,7 @@ exports.send_notification_for_date = function send_notification_for_date(event, 
                                 body: body
                             }
                         };
-                        console.log("Notifying:" + userName + " of lunch at " + locationName);
+                        console.log("Notifying:" + userName + " of lunch at " + locationName + " on device:" + userDeviceSnapshot.key);
                         allChanges.push(
                             admin.messaging().sendToDevice(userDeviceSnapshot.key, payload)
                         );

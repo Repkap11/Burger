@@ -54,9 +54,9 @@
         <EditText
             android:id="@+id/fractivity_edit_user_edit_text_car_size"
             android:layout_width="match_parent"
-            android:drawablePadding="15dp"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_car_black"
+            android:drawablePadding="15dp"
             android:hint="Car Size"
             android:importantForAutofill="no"
             android:inputType="number"
