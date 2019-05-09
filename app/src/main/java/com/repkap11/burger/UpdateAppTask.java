@@ -40,7 +40,6 @@ public class UpdateAppTask extends AsyncTask<Void, Void, Integer> {
             URL url = new URL(mContext.getResources().getString(R.string.update_url));
             HttpURLConnection c = (HttpURLConnection) url.openConnection();
             c.setRequestMethod("GET");
-            c.setDoOutput(true);
             String username = "guest";
             String password = "guest";
             String userPassword = username + ":" + password;
@@ -87,7 +86,7 @@ public class UpdateAppTask extends AsyncTask<Void, Void, Integer> {
                     //Uri apkUri = FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", outputFile);
                     Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
                     intent.setData(apkUri);
-                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(intent);
                 } else {
                     Uri apkUri = Uri.fromFile(outputFile);

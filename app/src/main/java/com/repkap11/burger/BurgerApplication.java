@@ -14,11 +14,13 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.repkap11.burger.activities.SettingsActivity;
 
 /**
@@ -115,10 +117,9 @@ public class BurgerApplication extends Application {
         editor.apply();
     }
 
-    public static void updateDeviceToken(Context context, boolean add) {
-        String userKey = getUserKey(context);
+    public static void setNewToken(final Context context, boolean add, String newInstanceToken) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String newInstanceToken = FirebaseInstanceId.getInstance().getToken();
+        String userKey = getUserKey(context);
         if (newInstanceToken == null || userKey == null) {
             Log.e(TAG, "Unable to upload user token user:" + user + " instanceId:" + newInstanceToken);
             return;
@@ -135,8 +136,19 @@ public class BurgerApplication extends Application {
             userRef.child("devices").child(newInstanceToken).setValue("");
         } else {
             userRef.child("devices").child(newInstanceToken).removeValue(null);
-
         }
+    }
+
+    public static void updateDeviceToken(final Activity activity, final boolean add) {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(activity, new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String newToken = instanceIdResult.getToken();
+                Log.e("newToken", newToken);
+                setNewToken(activity, add, newToken);
+
+            }
+        });
     }
 
     public static String getUserKey(Context context) {

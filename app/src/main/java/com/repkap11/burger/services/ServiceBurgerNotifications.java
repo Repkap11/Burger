@@ -30,6 +30,12 @@ public class ServiceBurgerNotifications extends FirebaseMessagingService {
     private static final String NOTIFICATION_CHANNEL_ID = "burger_default_channel";
     private static final long[] vib_pattern = new long[]{0, 300, 300, 300};
 
+    @Override
+    public void onNewToken(String token) {
+        super.onNewToken(token);
+        boolean notificationsEnabled = BurgerApplication.getUserPerferedNotoficationsEnabled(this);
+        BurgerApplication.setNewToken(this, notificationsEnabled, token);
+    }
 
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);

@@ -12,6 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".activities.UsersFractivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -48,7 +49,6 @@
         <activity
             android:name=".activities.TabFractivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Launcher"
             android:label="@string/app_name"
@@ -71,14 +71,7 @@
         </provider>
 
         <service
-            android:name=".services.ServiceInstanceIdChange"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
-        <service android:name=".services.ServiceBurgerNotifications"
+            android:name=".services.ServiceBurgerNotifications"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

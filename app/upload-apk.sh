@@ -5,7 +5,7 @@ if [ "$#" -ne 1 ]; then
 	exit
 fi
 APP_VERSION=$1
-LOCAL_FILE=./build/outputs/apk/live/debug/app-live-debug-$APP_VERSION.apk
+LOCAL_FILE=./build/outputs/apk/live/debug/app-$APP_VERSION-live-debug.apk
 
 cp $LOCAL_FILE ./burger-live-debug-$APP_VERSION.apk
 REMOTE_USERNAME=paul
