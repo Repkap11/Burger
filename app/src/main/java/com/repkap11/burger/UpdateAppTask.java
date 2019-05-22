@@ -65,6 +65,8 @@ public class UpdateAppTask extends AsyncTask<Void, Void, Integer> {
             fos.close();
             is.close();
 
+            Log.w(TAG, "doInBackground: APK downloaded...");
+
             PackageInfo newInfo = mContext.getPackageManager().getPackageArchiveInfo(outputFile.getAbsolutePath(), PackageManager.GET_SIGNATURES);
             PackageInfo oldPackageInfo = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), PackageManager.GET_SIGNATURES);
 
@@ -80,13 +82,15 @@ public class UpdateAppTask extends AsyncTask<Void, Void, Integer> {
             if (!sameSignature) {
                 return R.string.update_app_task_signatures_dont_match;
             }
+            Log.w(TAG, "doInBackground: Signatures match...");
             if (newInfo.versionCode > oldPackageInfo.versionCode) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     Uri apkUri = FileProvider.getUriForFile(mContext, mContext.getApplicationContext().getPackageName() + ".provider", outputFile);
                     //Uri apkUri = FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", outputFile);
                     Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
                     intent.setData(apkUri);
-                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(intent);
                 } else {
                     Uri apkUri = Uri.fromFile(outputFile);

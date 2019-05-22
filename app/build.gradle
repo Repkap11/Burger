@@ -14,14 +14,14 @@ android {
         setProperty("archivesBaseName","app-" + versionCode)
     }
     flavorDimensions "default"
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
     signingConfigs {
         debug {
+            storePassword file('BurgerKeyStorePassword').text.trim()
+            keyAlias "Repkap11"
+            keyPassword file('BurgerKeyStorePassword').text.trim()
+            storeFile file('BurgerKeyStore')
+        }
+        release {
             storePassword file('BurgerKeyStorePassword').text.trim()
             keyAlias "Repkap11"
             keyPassword file('BurgerKeyStorePassword').text.trim()
