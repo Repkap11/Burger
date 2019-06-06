@@ -20,8 +20,10 @@ The Burger project is welcoming pull requests!
 5. Submit a pull request
 
 We will then review your changes.
+## Issues ##
+Issue reports and feature requests are welcome. Please use the GitHub "Issues" tracker to do so.
 ## Authors ##
 * Paul Repka - _Project Founder_
 ## Licensing ##
-This project is licensed under the MIT License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the LICENSE.md file for details.
 
