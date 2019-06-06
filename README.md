@@ -9,7 +9,7 @@ https://developer.android.com/studio
 * Add a text file called "BurgerKeyStorePassword" that has a password in it and store it in the app folder of the cloned repository. The password can be anything. This is done so builds can be completely automated
 * Open the cloned repository in Android Studio. File -> Open
 * Plug in the android phone you want to test the app on. Make sure your device is in developer mode and that you have enabled developer options. Read more on that here: https://developer.android.com/studio/debug/dev-options
-* Now run the program by clicking play button (green triangle in upper-right hand corner) of Android Studio. It will ask you which device you would like to run the application on
+* Now run the program by clicking play button (green triangle in upper-right hand corner) of Android Studio. It will ask you which device you would like to run the application on. Select your device.
 ## Contributing to Burger ##
 The Burger project is welcoming pull requests!
 
