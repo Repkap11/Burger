@@ -1,4 +1,5 @@
 # Burger App #
+Burger in an Android app that makes finding lunch buddies easy!
 ## Getting Started ##
 ### Prerequisites ###
 Make sure that you have Android Studio installed. Android Studio is the official integrated development environment for Google's Android operating system. You can download it here:
